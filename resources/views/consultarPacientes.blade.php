@@ -230,8 +230,8 @@
 		<tbody>
 			@foreach($pacientes as $paciente)
 			<tr data-toggle="modal" data-target=".bd-example-modal-xl">
-				<th scope="row">{{$paciente->codigo}}</th>
-				<td>{{$paciente->apellidos}}, {{$paciente->nombre}}</td>
+				<th scope="row">{{$paciente->codigoP}}</th>
+				<td>{{$paciente->apellidosP}}, {{$paciente->nombreP}}</td>
 				<td>{{$paciente->nombreT}}</td>
 				<td><div class="form-check-inline"><button class="btn btn-outline-warning mr-sm-2 mx-auto" type="submit"><i class="fas fa-trash-alt"></i></button>
 					<button class="btn btn-outline-warning mx-auto" type="submit"><i class="fas fa-sync-alt"></i></button></div>
@@ -245,9 +245,9 @@
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">{{$paciente->apellidos}}, {{$paciente->nombre}}</h5>
+					<h5 class="modal-title" id="exampleModalCenterTitle">{{$paciente->apellidosP}}, {{$paciente->nombreP}}</h5>
 
-					<h5 class="modal-title ml-auto" id="exampleModalCenterTitle">Código: {{$paciente->codigo}}</h5>
+					<h5 class="modal-title ml-auto" id="exampleModalCenterTitle">Código: {{$paciente->codigoP}}</h5>
 				</div>
 				<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
 					@foreach($pacientes as $paciente)

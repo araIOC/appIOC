@@ -13,7 +13,7 @@
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
         "browser-sync": "^2.26.3",
-        "browser-sync-webpack-plugin": "^2.0.1",
+        "browser-sync-webpack-plugin": "^2.2.2",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",
@@ -22,12 +22,11 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
-        "sweetalert": "^2.1.2",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "sweetalert2": "^8.7.0",
+        "sweetalert2": "^8.8.0",
         "yarma": "^1.0.6"
     }
 }
