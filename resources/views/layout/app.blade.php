@@ -33,8 +33,8 @@
 						<i class="fas fa-teeth"></i> TRABAJOS
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#"><i class="fas fa-search"></i> CONSULTAR</a>
-						<a class="dropdown-item" href="#"><i class="fas fa-plus-circle"></i> AGREGAR</a>
+						<a class="dropdown-item" href="{{ route('consultarTrabajos') }}"><i class="fas fa-search"></i> CONSULTAR</a>
+						<a class="dropdown-item" href="{{ route('registroTrabajo') }}"><i class="fas fa-plus-circle"></i> AGREGAR</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

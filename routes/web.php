@@ -17,8 +17,14 @@ Route::get('app', 'AppController@index')->name('app');
 Route::get('pacientes', 'AppController@consultarPacientes')->name('consultar');
 Route::get('paciente', 'AppController@registroPacientes')->name('agregar');
 Route::any('agregarPaciente', 'AppController@agregarPacientes')->name('agregarPaciente');
+
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
+
 Route::any('login', 'Auth\LoginController@login')->name('login');
+
+Route::any('registroTrabajo', 'TrabajosController@registroTrabajo')->name('registroTrabajo');
+Route::any('agregarTrabajo', 'TrabajosController@agregarTrabajo')->name('agregarTrabajo');
+Route::get('trabajos', 'TrabajosController@consultarTrabajos')->name('consultarTrabajos');
 
 Route::fallback(function () {
     return view('bienvenido');
