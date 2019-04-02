@@ -258,7 +258,7 @@
 					</li>
 					@endforeach
 					<li class="ml-auto mr-sm-2">
-						<button type="button" class="btn btn-warning py-2"><i class="fas fa-plus"></i></button>
+						<button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button>
 					</li>
 				</ul>
 				<div class="modal-body">
@@ -331,9 +331,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-lg btn-warning"><i class="fas fa-plus"></i> Trabajo</button>
-					<button class="btn btn-lg btn-warning py-2" type="submit"><i class="fas fa-trash-alt"></i></button>
-					<button class="btn btn-lg btn-warning py-2" type="submit"><i class="fas fa-sync-alt"></i></button>
+					<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
+					<button class="btn btn-lg btn-warning "  data-toggle="tooltip" data-placement="auto" title="Eliminar trabajo" type="submit"><i class="fas fa-trash-alt"></i></button>
+					<button class="btn btn-lg btn-warning "  data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button>
 				</div>
 			</div>
 		</div>
