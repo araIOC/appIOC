@@ -10,22 +10,22 @@
 					<div class="form-group row">
 						<label for="nomprePaciente" class="col-sm-3 col-form-label ">Nombre:</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" name="nombre" placeholder="Nombre...">
+							<input type="text" class="form-control" name="nombre" placeholder="Nombre..." required>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="apellidosPaciente" class="col-sm-3 col-form-label ">Apellidos:</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control"name="apellidos" placeholder="Apellidos...">
+							<input type="text" class="form-control"name="apellidos" placeholder="Apellidos..." required>
 						</div>
 					</div>
 					<div class="form-group row">
 						<label for="codigoPaciente" class="col-sm-3 col-form-label">Código:</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" name="codigo" placeholder="Código...">
+							<input type="text" class="form-control" name="codigo" placeholder="Código..." required>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-warning btn-block "><i class="far fa-save"></i> REGISTRAR PACIENTE</button>
+					<button type="submit" class="btn btn-warning btn-block agregarPaciente"><i class="far fa-save"></i> REGISTRAR PACIENTE</button>
 				</form>
 			</div>
 		</div>

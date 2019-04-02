@@ -95,13 +95,13 @@
 								<div class="form-check ">
 									<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 									<label class="form-check-label" for="defaultCheck1">
-										 provisional
+										provisional
 									</label>
 								</div>
 								<div class="form-check">
 									<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 									<label class="form-check-label" for="defaultCheck1">
-										 definitivo
+										definitivo
 									</label>
 								</div>
 							</div>
@@ -112,13 +112,13 @@
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Pre
+									Pre
 								</label>
 							</div>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Post
+									Post
 								</label>
 							</div>
 						</div>
@@ -127,13 +127,13 @@
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Pre
+									Pre
 								</label>
 							</div>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Post
+									Post
 								</label>
 							</div>
 						</div>
@@ -144,13 +144,13 @@
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Pre
+									Pre
 								</label>
 							</div>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Post
+									Post
 								</label>
 							</div>
 						</div>
@@ -159,7 +159,7 @@
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 								<label class="form-check-label" for="defaultCheck1">
-									 Protesis pre
+									Protesis pre
 								</label>
 							</div>
 							<div class="form-check mr-sm-2">
@@ -192,13 +192,13 @@
 								<div class="form-check mr-sm-2">
 									<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 									<label class="form-check-label" for="defaultCheck1">
-										 Pre
+										Pre
 									</label>
 								</div>
 								<div class="form-check mr-sm-2">
 									<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
 									<label class="form-check-label" for="defaultCheck1">
-										 Post
+										Post
 									</label>
 								</div>
 							</div>
@@ -231,12 +231,14 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-row">
-						<div class=" my-2 my-lg-0 py-2 col-md-6">
-							<button type="button" class="btn btn-outline-warning my-2 my-sm-0 ml-auto btn-block">POWER POINT</button>
+					<div class="form-row pb-3">
+						<div class="col-md-4 mx-auto">
+							<input type="file" class="custom-file-input" id="customFileLang" lang="es">
+							<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> POWER POINT</label>
 						</div>
-						<div class=" my-2 my-lg-0 py-2 col-md-6">
-							<button type="button" class="btn btn-outline-warning my-2 my-sm-0 ml-auto btn-block">PDF</button>
+						<div class="col-md-4 mx-auto">
+							<input type="file" class="custom-file-input" id="customFileLang" lang="es">
+							<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>
 						</div>
 					</div>
 

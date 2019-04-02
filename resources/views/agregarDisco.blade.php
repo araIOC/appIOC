@@ -7,17 +7,9 @@
 			<div class="card border-0 px-4 py-4 text-white bg-dark font-weight-bold">
 				<form action="{{ route('agregarTrabajo') }}" method="POST">
 					<div class="form-row">
-
 						<div class="form-group col-md-6">
-							<label for="inputDoctor">Código del paciente</label>
-							<div class=" my-2 my-lg-0">
-								<div class="input-group">
-									<div class="input-group-prepend">
-										<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-tags"></i></label>
-									</div>
-									<input type="text" class="form-control" placeholder="Código...">
-								</div>
-							</div>
+							<label for="inputEmail4">Código del paciente</label>
+							<input type="text" class="form-control" name="codigo" placeholder="Código...">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="inputTratamiento">Tratamiento</label>

@@ -11,6 +11,7 @@
 	<title>INICIO</title>
 </head>
 <body>
+	@include('sweetalert::alert')
 	<nav class="navbar  navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="{{ route('app') }}"><img src="{{asset('./img/appIOC.png')}}"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,8 +43,8 @@
 						<i class="fas fa-compact-disc"></i> DISCOS
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#"><i class="fas fa-search"></i> CONSULTAR</a>
-						<a class="dropdown-item" href="#"><i class="fas fa-plus-circle"></i> AGREGAR</a>
+						<a class="dropdown-item" href="{{ route('consultarDiscos') }}"><i class="fas fa-search"></i> CONSULTAR</a>
+						<a class="dropdown-item" href="{{ route('registroDisco') }}"><i class="fas fa-plus-circle"></i> AGREGAR</a>
 					</div>
 				</li>
 				<li class="nav-item">
@@ -63,5 +64,6 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.8.0/js/all.js" integrity="sha384-ukiibbYjFS/1dhODSWD+PrZ6+CGCgf8VbyUH7bQQNUulL+2r59uGYToovytTf4Xm" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 	<script type="text/javascript" src="js/appioc.js"></script>
+
 </body>
 </html>

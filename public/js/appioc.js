@@ -15,3 +15,28 @@ $("#btnFiltros").click(function () {
   }
 });
 
+$(".borrar").click(function () {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "¿Desea eliminar este registro?",
+    type: 'warning',
+    confirmButtonText: 'Sí, ¡Eliminar!',
+    showCancelButton: 'Cancelar',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    reverseButtons: true
+
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        '¡Eliminado!',
+        'El registro se ha eliminado con éxito.',
+        'success'
+        )
+    }
+  })
+});
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+  });

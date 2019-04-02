@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
-use Alert;
+use RealRashid\SweetAlert\Facades\Alert;
 class AppController extends Controller{
 	public function __construct(){
 		$this->middleware('auth');
@@ -19,30 +19,38 @@ class AppController extends Controller{
 		$tratamientos = DB::table('tratamientos')->select()->get();
 		$doctores = DB::table('doctores')->select()->get();
 		$asesores = DB::table('asesores')->select()->get();
-		$pacientes = DB::table('pacientes_tratamientos')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		$pacientes = DB::table('pacientes')->select()->get();
+		$pacientes_tratamientos = DB::table('pacientes')
+		->join('pacientes_tratamientos', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
 		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
 		->select()
 		->get();
 
-		return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes]);
+		return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes,'pacientes_tratamientos'=>$pacientes_tratamientos]);
 	}
 
 	public function registroPacientes(){
 		return view('agregarPaciente');
 	}
 	public function agregarPacientes(){
-		$pacientes = DB::table('pacientes')->select('codigo')->get()
-			->where('codigo',request()->codigo);
-		if (count($pacientes)>0) {
-				Alert::error('Failed','Paciente duplicado');
+		$validacion = $this->validate(request(),[
+			'nombre' => 'required|string',
+			'apellidos' => 'required|string',
+			'codigo' => 'required|string'
+		]);
+		if($validacion){
+			$pacientes = DB::table('pacientes')->select()->get()
+			->where('codigoP',request()->codigo);
+			if (count($pacientes)>0) {
+				alert()->error('Error','Paciente duplicado');
 				return view('agregarPaciente');
-		}else{
-			DB::table('pacientes')->insert(
-				['nombre' => request()->nombre,'apellidos' => request()->apellidos,'codigo' => request()->codigo]
-			);
-			alert()->success('Éxito', 'Paciente agregado.');
-			return redirect()->route('consultar');
+			}else{
+				DB::table('pacientes')->insert(
+					['nombreP' => request()->nombre,'apellidosP' => request()->apellidos,'codigoP' => request()->codigo]
+				);
+
+				return redirect()->route('consultar');
+			}
 		}
 	}
 	public function agregarTratamiento(){
@@ -51,5 +59,9 @@ class AppController extends Controller{
 		$doctores = DB::table('doctores')->select()->get();
 		$asesores = DB::table('asesores')->select()->get();
 		return view('agregarTratamiento',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
+	}
+	public function eliminarPaciente(){
+		return view('bienvenido');
+
 	}
 }
