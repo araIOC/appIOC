@@ -29,7 +29,6 @@
 				</div>
 				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 					<option selected>Elija un tratamiento...</option>
-					<option>Sin tratamiento</option>
 					@foreach($tratamientos as $tratamiento)
 					<option value="{{$tratamiento->nombreT}}" class="highlight">{{$tratamiento->nombreT}}</option>
 					@endforeach
@@ -218,7 +217,8 @@
 		</div>
 	</nav>
 </div>
-<div class="table-responsive-sm text-center">
+
+<div class="table-responsive-sm text-center" id="app">
 	<table class="table table-hover table-dark consulta">
 		<thead>
 			<tr>
@@ -235,8 +235,9 @@
 				<td data-toggle="modal" data-target=".modal-ficha-cliente"></td>
 				<th scope="row" data-toggle="modal" data-target=".modal-ficha-cliente" data-codigoP="{{$paciente->codigoP}}">{{$paciente->codigoP}}</th>
 				<td data-toggle="modal" data-target=".modal-ficha-cliente">{{$paciente->apellidosP}}, {{$paciente->nombreP}}</td>
-				<td >
+				<td>
 					<button data-toggle="tooltip" data-placement="auto" title="Eliminar" class="btn btn-outline-warning mr-sm-2 mx-auto borrar px-3 py-3" type="submit" name="{{$paciente->codigoP}}"><i class="fas fa-trash-alt"></i></button>
+
 					<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto px-3 py-3" type="submit"><i class="fas fa-sync-alt"></i></button>
 				</td>
 			</tr>
@@ -337,9 +338,11 @@
 				</div>
 			</div>
 		</div>
+
+
 	</div>
+
 
 	<!-- modal modificar -->
 	@endsection
-
 </div>

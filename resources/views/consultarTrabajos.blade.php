@@ -29,8 +29,8 @@
 				</div>
 				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 					<option selected>Elija un material...</option>
-					@foreach($trabajos as $trabajo)
-					<option value="{{$trabajo->material}}" class="highlight">{{$trabajo->material}}</option>
+					@foreach($materiales as $material)
+					<option value="{{$material->nombreM}}" class="highlight">{{$material->nombreM}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -42,8 +42,8 @@
 				</div>
 				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 					<option selected>Tipo de trabajo...</option>
-					@foreach($trabajos as $trabajo)
-					<option value="{{$trabajo->tipo_trabajo}}" class="highlight">{{$trabajo->tipo_trabajo}}</option>
+					@foreach($tipos_trabajo as $tipo_trabajo)
+					<option value="{{$tipo_trabajo->tipoT}}" class="highlight">{{$tipo_trabajo->tipoT}}</option>
 					@endforeach
 				</select>
 			</div>

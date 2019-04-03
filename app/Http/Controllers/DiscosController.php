@@ -8,29 +8,35 @@ use Alert;
 class DiscosController extends Controller{
 
 	public function consultarDiscos(){
-		$trabajos = DB::table('trabajos')->select()->get();
-		$pacientes = DB::table('pacientes_tratamientos')
-		->join('trabajos', 'pacientes_tratamientos.id', '=', 'trabajos.id_tratamiento')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
-		->select()
-		->get();
+		$colores = DB::table('colores')->select()->get();
+		$materiales = DB::table('material')->select()->get();
+		$marcas = DB::table('marca')->select()->get();
 
-		return view('consultarDiscos',['trabajos'=>$trabajos,'pacientes'=>$pacientes]);
+
+		return view('consultarDiscos',['colores'=>$colores,'materiales'=>$materiales,'marcas'=>$marcas]);
 	}
 
 	public function registroDisco(){
-		$trabajos = DB::table('trabajos')->select()->get();
 		$materiales = DB::table('material')->select()->get();
 		$colores = DB::table('colores')->select()->get();
 		$discos = DB::table('discos')->select()->get();
-		$maquinas = DB::table('maquina')->select()->get();
-		$tratamientos = DB::table('tratamientos')->select()->get();
+		$marcas = DB::table('marca')->select()->get();
 
-		$pacientes = DB::table('pacientes_tratamientos')
-		->join('trabajos', 'pacientes_tratamientos.id', '=', 'trabajos.id_tratamiento')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
-		->select()
-		->get();
-		return view('agregarDisco',['trabajos'=>$trabajos,'materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'maquinas'=>$maquinas,'tratamientos'=>$tratamientos,'pacientes'=>$pacientes]);
+		return view('agregarDisco',['materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'marcas'=>$marcas]);
+	}
+	public function nuevoDisco(){
+		/*$discos = DB::table('discos')->select()->get()
+		->where('codigo',request()->codigo);
+
+		if (count($discos)>0) {
+			return view('agregarDisco');
+		}else{
+			DB::table('discos')->insert(
+				['codigo' => request()->codigo,'material' => request()->material,'marca' => request()->marca,'escala' => request()->escala,'color' => request()->color,'altura' => request()->altura]
+			);
+
+			return redirect()->route('consultarDiscos');
+		}*/
+		return view('bienvenido');
 	}
 }

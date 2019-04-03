@@ -6,22 +6,6 @@
 		<span><i class="fas fa-angle-double-down"></i></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbar2">
-		<form class="form-inline my-2 my-lg-0 ">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1"><i class="fas fa-address-card"></i></span>
-				</div>
-				<input class="form-control mr-sm-2" type="search" placeholder="Nombre del paciente..." aria-label="Search">
-			</div>
-		</form>
-		<form class="form-inline my-2 my-lg-0">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1"><i class="fas fa-tags"></i></span>
-				</div>
-				<input class="form-control mr-sm-2" type="search" placeholder="Código del paciente..." aria-label="Search">
-			</div>
-		</form>
 		<div class=" form-inline my-2 my-lg-0">
 			<div class="input-group">
 				<div class="input-group-prepend">
@@ -29,8 +13,8 @@
 				</div>
 				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 					<option selected>Elija un material...</option>
-					@foreach($trabajos as $trabajo)
-					<option value="{{$trabajo->material}}" class="highlight">{{$trabajo->material}}</option>
+					@foreach($materiales as $material)
+					<option value="{{$material->nombreM}}" class="highlight">{{$material->nombreM}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -38,12 +22,25 @@
 		<div class=" form-inline my-2 my-lg-0">
 			<div class="input-group">
 				<div class="input-group-prepend">
-					<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-briefcase"></i></label>
+					<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-palette"></i></label>
 				</div>
 				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
-					<option selected>Tipo de trabajo...</option>
-					@foreach($trabajos as $trabajo)
-					<option value="{{$trabajo->tipo_trabajo}}" class="highlight">{{$trabajo->tipo_trabajo}}</option>
+					<option selected>Color...</option>
+					@foreach($colores as $color)
+					<option value="{{$color->nombreC}}" class="highlight">{{$color->nombreC}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+		<div class=" form-inline my-2 my-lg-0">
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-hdd"></i></label>
+				</div>
+				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+					<option selected>marca...</option>
+					@foreach($marcas as $marca)
+					<option value="{{$marca->marcaD}}" class="highlight">{{$marca->marcaD}}</option>
 					@endforeach
 				</select>
 			</div>

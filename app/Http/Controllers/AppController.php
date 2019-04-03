@@ -32,6 +32,7 @@ class AppController extends Controller{
 	public function registroPacientes(){
 		return view('agregarPaciente');
 	}
+
 	public function agregarPacientes(){
 		$validacion = $this->validate(request(),[
 			'nombre' => 'required|string',
@@ -53,6 +54,7 @@ class AppController extends Controller{
 			}
 		}
 	}
+
 	public function agregarTratamiento(){
 		$implantes = DB::table('implantes')->select()->get();
 		$tratamientos = DB::table('tratamientos')->select()->get();
@@ -60,8 +62,13 @@ class AppController extends Controller{
 		$asesores = DB::table('asesores')->select()->get();
 		return view('agregarTratamiento',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
 	}
-	public function eliminarPaciente(){
-		return view('bienvenido');
 
-	}
+	/*public function eliminarPaciente($codigoP){
+		if(request()->ajax()){
+			$pacientes = DB::table('pacientes')->select()->get()
+			->where('codigoP',request()->codigo);
+			$pacientes->delete();
+		}
+
+	}*/
 }

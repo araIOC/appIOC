@@ -27,6 +27,7 @@
 										<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-object-ungroup"></i></label>
 									</div>
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+										<!--tratamiento del paciente que escriba -->
 										<option selected>Elija un tratamiento...</option>
 										@foreach($tratamientos as $tratamiento)
 										<option value="{{$tratamiento->nombreT}}" class="highlight">{{$tratamiento->nombreT}}</option>
@@ -63,8 +64,8 @@
 									</div>
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Tipo de trabajo...</option>
-										@foreach($trabajos as $trabajo)
-										<option value="{{$trabajo->tipo_trabajo}}" class="highlight">{{$trabajo->tipo_trabajo}}</option>
+										@foreach($tipos_trabajo as $tipo_trabajo)
+										<option value="{{$tipo_trabajo->tipoT}}" class="highlight">{{$tipo_trabajo->tipoT}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -84,7 +85,7 @@
 							</div>
 						</div>
 						<div class="form-group col-md-3">
-							<label for="inputAsesor">Color real</label>
+							<label for="inputAsesor">Color</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
 									<div class="input-group-prepend">
@@ -114,12 +115,13 @@
 									</select>
 								</div>
 							</div>
-						</div>	<div class="form-group col-md-3">
+						</div>
+						<div class="form-group col-md-3">
 							<label for="inputAsesor">Máquina</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-compact-disc"></i></label>
+										<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-hdd"></i></label>
 									</div>
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Máquina...</option>

@@ -26,7 +26,7 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="{{ route('consultar') }}"><i class="fas fa-search"></i> CONSULTAR</a>
-						<a class="dropdown-item" href="{{ route('agregar') }}"><i class="fas fa-user-plus"></i> AGREGAR</a>
+						<a class="dropdown-item" href="{{ route('registroPaciente') }}"><i class="fas fa-user-plus"></i> AGREGAR</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -54,11 +54,10 @@
 		</div>
 	</nav>
 	<main>
-		<div id="app">
-
+		<section class="content">
 			@yield('content')
 
-		</div>
+		</section>
 	</main>
 
 	<script defer src="https://use.fontawesome.com/releases/v5.8.0/js/all.js" integrity="sha384-ukiibbYjFS/1dhODSWD+PrZ6+CGCgf8VbyUH7bQQNUulL+2r59uGYToovytTf4Xm" crossorigin="anonymous"></script>
