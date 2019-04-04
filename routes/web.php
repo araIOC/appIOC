@@ -29,6 +29,7 @@ Route::any('login', 'Auth\LoginController@login')->name('login');
 Route::any('agregarTrabajo', 'TrabajosController@agregarTrabajo')->name('agregarTrabajo');
 Route::any('registroTrabajo', 'TrabajosController@registroTrabajo')->name('registroTrabajo');
 Route::get('trabajos', 'TrabajosController@consultarTrabajos')->name('consultarTrabajos');
+Route::any('buscadorTrabajo', 'TrabajosController@buscadorTrabajo')->name('buscadorTrabajo');
 
 Route::any('registroDisco', 'DiscosController@registroDisco')->name('registroDisco');
 Route::any('agregarDisco', 'DiscosController@agregarDisco')->name('agregarDisco');

@@ -44,11 +44,11 @@ class DiscosController extends Controller{
 		$marca = request()->marca;
 		$color = request()->color;
 
-		$query ='SELECT * FROM discos where 1 =1';
 		$colores = DB::table('colores')->select()->get();
 		$materiales = DB::table('material')->select()->get();
 		$marcas = DB::table('marca')->select()->get();
 
+		$query ='SELECT * FROM discos where 1 =1';
 		if($material != "Material..."){
 			$query = $query." AND material = '".request()->material."'";
 		}

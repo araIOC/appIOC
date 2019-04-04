@@ -6,99 +6,100 @@
 		<span><i class="fas fa-angle-double-down"></i></span>
 	</button>
 	<div class="collapse navbar-collapse" id="navbar2">
-		<form class="form-inline my-2 my-lg-0 ">
-			<div class="input-group" data-toggle="tooltip" data-placement="auto" title="Nombre del paciente">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1"><i class="fas fa-address-card"></i></span>
+		<form action="{{route('buscadorPaciente')}}" method="POST">
+			{{ csrf_field()}}
+			<div class="form-row">
+				<div class="form-inline my-2 my-lg-0 ">
+					<div class="input-group" data-toggle="tooltip" data-placement="auto" title="Nombre del paciente">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1"><i class="fas fa-address-card"></i></span>
+						</div>
+						<input class="form-control mr-sm-2" type="search" placeholder="Nombre..." aria-label="Search">
+					</div>
 				</div>
-				<input class="form-control mr-sm-2" type="search" placeholder="Nombre..." aria-label="Search">
-			</div>
-		</form>
-		<form class="form-inline my-2 my-lg-0">
-			<div class="input-group" data-toggle="tooltip" data-placement="auto" title="Código del paciente">
-				<div class="input-group-prepend">
-					<span class="input-group-text" id="basic-addon1"><i class="fas fa-tags"></i></span>
+				<div class="form-inline my-2 my-lg-0">
+					<div class="input-group" data-toggle="tooltip" data-placement="auto" title="Código del paciente">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon1"><i class="fas fa-tags"></i></span>
+						</div>
+						<input class="form-control mr-sm-2" type="search" placeholder="Código..." aria-label="Search">
+					</div>
 				</div>
-				<input class="form-control mr-sm-2" type="search" placeholder="Código..." aria-label="Search">
-			</div>
-		</form>
-		<div class=" form-inline my-2 my-lg-0">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-prescription-bottle-alt"></i></label>
+				<div class=" form-inline my-2 my-lg-0">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-prescription-bottle-alt"></i></label>
+						</div>
+						<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+							<option selected>Elija un tratamiento...</option>
+							@foreach($tratamientos as $tratamiento)
+							<option value="{{$tratamiento->nombreT}}" class="highlight">{{$tratamiento->nombreT}}</option>
+							@endforeach
+						</select>
+					</div>
 				</div>
-				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
-					<option selected>Elija un tratamiento...</option>
-					@foreach($tratamientos as $tratamiento)
-					<option value="{{$tratamiento->nombreT}}" class="highlight">{{$tratamiento->nombreT}}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<div class=" form-inline my-2 my-lg-0">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-tooth"></i></label>
+				<div class=" form-inline my-2 my-lg-0">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-tooth"></i></label>
+						</div>
+						<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+							<option selected>Tipo de implante...</option>
+							@foreach($implantes as $implante)
+							<option value="{{$implante->tipo}}" class="highlight">{{$implante->tipo}}</option>
+							@endforeach
+						</select>
+					</div>
 				</div>
-				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
-					<option selected>Tipo de implante...</option>
-					@foreach($implantes as $implante)
-					<option value="{{$implante->tipo}}" class="highlight">{{$implante->tipo}}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<div class=" form-inline my-2 my-lg-0">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-user-md"></i></label>
+				<div class=" form-inline my-2 my-lg-0">
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-user-md"></i></label>
+						</div>
+						<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+							<option selected>Elija un doctor...</option>
+							@foreach($doctores as $doctor)
+							<option value="{{$doctor->nombre}}" class="highlight">{{$doctor->nombre}}</option>
+							@endforeach
+						</select>
+					</div>
 				</div>
-				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
-					<option selected>Elija un doctor...</option>
-					@foreach($doctores as $doctor)
-					<option value="{{$doctor->nombre}}" class="highlight">{{$doctor->nombre}}</option>
-					@endforeach
-				</select>
-			</div>
-		</div>
-		<div>
-			<div class="custom-control custom-radio text-white mr-sm-2" data-toggle="tooltip" data-placement="auto" title="Cirugía estática">
-				<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input">
-				<label class="custom-control-label" for="rbcestatica">Estática</label>
-			</div>
-			<div class="custom-control custom-radio text-white mr-sm-2" data-toggle="tooltip" data-placement="auto" title="Cirugía dinámica">
-				<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input">
-				<label class="custom-control-label" for="rbcdinamica">Dinámica</label>
-			</div>
-		</div>
-		<div class="text-white mr-sm-2">
-			<div class="form-check ">
-				<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				<label class="form-check-label" for="defaultCheck1">
-					PIC provisional
-				</label>
-			</div>
-			<div class="form-check">
-				<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-				<label class="form-check-label" for="defaultCheck1">
-					PIC definitivo
-				</label>
-			</div>
-		</div>
-		<div class="pt-2">
-			<form action="{{route('buscadorPaciente')}}" method="POST">
-				{{ csrf_field()}}
+				<div>
+					<div class="custom-control custom-radio text-white mr-sm-2" data-toggle="tooltip" data-placement="auto" title="Cirugía estática">
+						<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input">
+						<label class="custom-control-label" for="rbcestatica">Estática</label>
+					</div>
+					<div class="custom-control custom-radio text-white mr-sm-2" data-toggle="tooltip" data-placement="auto" title="Cirugía dinámica">
+						<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input">
+						<label class="custom-control-label" for="rbcdinamica">Dinámica</label>
+					</div>
+				</div>
+				<div class="text-white mr-sm-2">
+					<div class="form-check ">
+						<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+						<label class="form-check-label" for="defaultCheck1">
+							PIC provisional
+						</label>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+						<label class="form-check-label" for="defaultCheck1">
+							PIC definitivo
+						</label>
+					</div>
+				</div>
+
 				<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit">Buscar... <i class="fas fa-search"></i></button>
-			</form>
-			<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto mostrarMas" type="button" data-toggle="collapse" data-target="#navbar3" aria-controls="navbar3" aria-expanded="false" aria-label="Toggle navigation" id="btnFiltros">
-			</button>
-		</div>
+				<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto mostrarMas" type="button" data-toggle="collapse" data-target="#navbar3" aria-controls="navbar3" aria-expanded="false" aria-label="Toggle navigation" id="btnFiltros">
+				</button>
+			</div>
+		</form>
 	</div>
+</div>
 </nav>
 
 <div class="collapse navbar-collapse" id="navbar3">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-
 		<div class="mr-sm-2 my-2 my-lg-0">
 			<div class="input-group">
 				<div class="input-group-prepend">
@@ -108,7 +109,6 @@
 				<input class="form-control" type="date" value="2011-08-23" id="example-date-input" data-toggle="tooltip" data-placement="auto" title="Fecha definitiva">
 			</div>
 		</div>
-
 		<div class=" form-inline my-2 my-lg-0">
 			<div class="input-group">
 				<div class="input-group-prepend">
@@ -231,7 +231,6 @@
 				<th scope="col">Cod</th>
 				<th scope="col">Nombre</th>
 				<th scope="col"></th>
-
 			</tr>
 		</thead>
 		<tbody>
@@ -343,11 +342,7 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
-
-
 	<!-- modal modificar -->
 	@endsection
 </div>
