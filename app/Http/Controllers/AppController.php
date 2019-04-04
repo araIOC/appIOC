@@ -39,6 +39,7 @@ class AppController extends Controller{
 			'apellidos' => 'required|string',
 			'codigo' => 'required|string'
 		]);
+
 		if($validacion){
 			$pacientes = DB::table('pacientes')->select()->get()
 			->where('codigoP',request()->codigo);
@@ -60,6 +61,7 @@ class AppController extends Controller{
 		$tratamientos = DB::table('tratamientos')->select()->get();
 		$doctores = DB::table('doctores')->select()->get();
 		$asesores = DB::table('asesores')->select()->get();
+
 		return view('agregarTratamiento',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
 	}
 
@@ -68,7 +70,10 @@ class AppController extends Controller{
 			$pacientes = DB::table('pacientes')->select()->get()
 			->where('codigoP',request()->codigo);
 			$pacientes->delete();
-		}
+		}*/
 
-	}*/
+	public function buscadorPaciente(){
+		return view('bienvenido');
+	}
+
 }

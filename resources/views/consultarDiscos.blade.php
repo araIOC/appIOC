@@ -48,6 +48,33 @@
 		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit">Buscar... <i class="fas fa-search"></i></button>
 	</div>
 </nav>
+<div class="table-responsive-sm text-center" id="app">
+	<table class="table table-hover table-dark consulta">
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col">Cod</th>
+				<th scope="col">Material</th>
+				<th scope="col">Marca</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($discos as $disco)
+			<tr>
+				<td data-toggle="modal" data-target=".modal-ficha-disco"></td>
+				<th scope="row" data-toggle="modal" data-target=".modal-ficha-disco" data-codigoP="{{$disco->codigo}}">{{$disco->codigo}}</th>
+				<td data-toggle="modal" data-target=".modal-ficha-disco">{{$disco->material}}</td>
+				<td data-toggle="modal" data-target=".modal-ficha-disco">{{$disco->marca}}</td>
+				<td>
+					<button data-toggle="tooltip" data-placement="auto" title="Eliminar" class="btn btn-outline-warning mr-sm-2 mx-auto borrar px-3 py-3" type="submit" name="{{$disco->codigo}}"><i class="fas fa-trash-alt"></i></button>
+
+					<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto px-3 py-3" type="submit"><i class="fas fa-sync-alt"></i></button>
+				</td>
+			</tr>
+			@endforeach
+		</tbody>
+	</table>
+</div>
 @endsection
 
-</div>

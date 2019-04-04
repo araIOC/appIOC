@@ -40,6 +40,7 @@ $("#btnFiltros").click(function () {
 $(document).ready(function(){
   $('[data-toggle="tooltip"]').tooltip();
 });
+
   $('.borrar').click(function() {
     e.preventDefault();
     Swal.fire({
@@ -63,3 +64,4 @@ $(document).ready(function(){
         )
     })
   });
+

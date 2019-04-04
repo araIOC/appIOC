@@ -85,9 +85,14 @@
 				</label>
 			</div>
 		</div>
-		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit">Buscar... <i class="fas fa-search"></i></button>
-		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto mostrarMas" type="button" data-toggle="collapse" data-target="#navbar3" aria-controls="navbar3" aria-expanded="false" aria-label="Toggle navigation" id="btnFiltros">
-		</button>
+		<div class="pt-2">
+			<form action="{{route('buscadorPaciente')}}" method="POST" style="display: inline-block;">
+				{{ csrf_field()}}
+				<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit">Buscar... <i class="fas fa-search"></i></button>
+			</form>
+			<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto mostrarMas" type="button" data-toggle="collapse" data-target="#navbar3" aria-controls="navbar3" aria-expanded="false" aria-label="Toggle navigation" id="btnFiltros">
+			</button>
+		</div>
 	</div>
 </nav>
 

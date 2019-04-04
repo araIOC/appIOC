@@ -11,9 +11,10 @@ class DiscosController extends Controller{
 		$colores = DB::table('colores')->select()->get();
 		$materiales = DB::table('material')->select()->get();
 		$marcas = DB::table('marca')->select()->get();
+		$discos = DB::table('discos')->select()->get();
 
 
-		return view('consultarDiscos',['colores'=>$colores,'materiales'=>$materiales,'marcas'=>$marcas]);
+		return view('consultarDiscos',['colores'=>$colores,'materiales'=>$materiales,'marcas'=>$marcas,'discos'=>$discos]);
 	}
 
 	public function registroDisco(){
@@ -24,8 +25,8 @@ class DiscosController extends Controller{
 
 		return view('agregarDisco',['materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'marcas'=>$marcas]);
 	}
-	public function nuevoDisco(){
-		/*$discos = DB::table('discos')->select()->get()
+	public function agregarDisco(){
+		$discos = DB::table('discos')->select()->get()
 		->where('codigo',request()->codigo);
 
 		if (count($discos)>0) {
@@ -36,7 +37,6 @@ class DiscosController extends Controller{
 			);
 
 			return redirect()->route('consultarDiscos');
-		}*/
-		return view('bienvenido');
+		}
 	}
 }

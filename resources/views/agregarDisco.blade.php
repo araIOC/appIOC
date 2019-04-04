@@ -6,6 +6,7 @@
 		<div class="col-md-8 mx-auto">
 			<div class="card border-0 px-4 py-4 text-white bg-dark font-weight-bold">
 				<form action="{{ route('agregarDisco') }}" method="POST">
+					{{ csrf_field()}}
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="inputEmail4">Código del disco</label>
