@@ -53,7 +53,7 @@
 			</ul>
 		</div>
 	</nav>
-	<main>
+	<main id="app">
 		<section class="content">
 			@yield('content')
 

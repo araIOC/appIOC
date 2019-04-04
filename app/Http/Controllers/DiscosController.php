@@ -39,4 +39,27 @@ class DiscosController extends Controller{
 			return redirect()->route('consultarDiscos');
 		}
 	}
+	public function buscadorDisco(){
+		$material = request()->material;
+		$marca = request()->marca;
+		$color = request()->color;
+
+		$query ='SELECT * FROM discos where 1 =1';
+		$colores = DB::table('colores')->select()->get();
+		$materiales = DB::table('material')->select()->get();
+		$marcas = DB::table('marca')->select()->get();
+
+		if($material != "Material..."){
+			$query = $query." AND material = '".request()->material."'";
+		}
+		if($marca != "Marca..."){
+			$query = $query." AND marca = '".request()->marca."'";
+		}
+		if($color != "Color..."){
+			$query = $query." AND color = '".request()->color."'";
+		}
+
+		$discos = DB::select($query);
+		return view('consultarDiscos',['colores'=>$colores,'materiales'=>$materiales,'marcas'=>$marcas,'discos'=>$discos]);
+	}
 }

@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-8 mx-auto">
 			<div class="card border-0 px-4 py-4 text-white bg-dark font-weight-bold">
-				<form action="{{ route('agregarDisco') }}" method="POST">
+				<form action="{{ route('agregarDisco') }}" method="GET">
 					{{ csrf_field()}}
 					<div class="form-row">
 						<div class="form-group col-md-6">
@@ -19,7 +19,7 @@
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-object-ungroup"></i></label>
 									</div>
-									<select class="custom-select mr-sm-2" name="material">
+									<select class="custom-select mr-sm-2" name="material" id="material">
 										<option selected>Elija un material...</option>
 										@foreach($materiales as $material)
 										<option value="{{$material->nombreM}}" class="highlight">{{$material->nombreM}}</option>

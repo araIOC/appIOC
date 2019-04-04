@@ -86,7 +86,7 @@
 			</div>
 		</div>
 		<div class="pt-2">
-			<form action="{{route('buscadorPaciente')}}" method="POST" style="display: inline-block;">
+			<form action="{{route('buscadorPaciente')}}" method="POST">
 				{{ csrf_field()}}
 				<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit">Buscar... <i class="fas fa-search"></i></button>
 			</form>
@@ -241,9 +241,9 @@
 				<th scope="row" data-toggle="modal" data-target=".modal-ficha-cliente" data-codigoP="{{$paciente->codigoP}}">{{$paciente->codigoP}}</th>
 				<td data-toggle="modal" data-target=".modal-ficha-cliente">{{$paciente->apellidosP}}, {{$paciente->nombreP}}</td>
 				<td>
-					<button data-toggle="tooltip" data-placement="auto" title="Eliminar" class="btn btn-outline-warning mr-sm-2 mx-auto borrar px-3 py-3" type="submit" name="{{$paciente->codigoP}}"><i class="fas fa-trash-alt"></i></button>
+					<button data-toggle="tooltip" data-placement="auto" title="Eliminar" class="btn btn-outline-warning mr-sm-2 mx-auto borrar px-2 py-2" type="submit" name="{{$paciente->codigoP}}"><i class="fas fa-trash-alt"></i></button>
 
-					<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto px-3 py-3" type="submit"><i class="fas fa-sync-alt"></i></button>
+					<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto px-2 py-2" type="submit"><i class="fas fa-sync-alt"></i></button>
 				</td>
 			</tr>
 			@endforeach

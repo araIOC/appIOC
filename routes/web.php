@@ -33,6 +33,7 @@ Route::get('trabajos', 'TrabajosController@consultarTrabajos')->name('consultarT
 Route::any('registroDisco', 'DiscosController@registroDisco')->name('registroDisco');
 Route::any('agregarDisco', 'DiscosController@agregarDisco')->name('agregarDisco');
 Route::get('disco', 'DiscosController@consultarDiscos')->name('consultarDiscos');
+Route::any('buscadorDisco', 'DiscosController@buscadorDisco')->name('buscadorDisco');
 
 //Auth::routes();
 

@@ -6,8 +6,8 @@
 		<div class="col-md-8 mx-auto">
 			<div class="card border-0 px-4 py-4 text-white bg-dark font-weight-bold">
 				<form action="{{ route('agregarTrabajo') }}" method="POST">
+					{{csrf_field()}}
 					<div class="form-row">
-
 						<div class="form-group col-md-6">
 							<label for="inputDoctor">Código del paciente</label>
 							<div class=" my-2 my-lg-0">
@@ -145,8 +145,8 @@
 					</div>
 					<div class="form-row pb-3 mx-1">
 						<div class="custom-file form-group col-md-12">
-							<input type="file" class="custom-file-input" id="customFileLang" lang="es">
-							<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-upload"></i> STL</label>
+							<input type="file" class="custom-file-input" id="stl" lang="es">
+							<label class="btn btn-lg custom-file-label" for="stl" data-browse="Buscar..."><i class="fas fa-upload"></i> STL</label>
 						</div>
 					</div>
 
