@@ -50,7 +50,6 @@ class AppController extends Controller{
 				DB::table('pacientes')->insert(
 					['nombreP' => request()->nombre,'apellidosP' => request()->apellidos,'codigoP' => request()->codigo]
 				);
-
 				return redirect()->route('consultar');
 			}
 		}
@@ -65,32 +64,31 @@ class AppController extends Controller{
 		return view('agregarTratamiento',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
 	}
 
+	public function buscadorPaciente(){
+		$implantes = DB::table('implantes')->select()->get();
+		$tratamientos = DB::table('tratamientos')->select()->get();
+		$doctores = DB::table('doctores')->select()->get();
+		$asesores = DB::table('asesores')->select()->get();
+		$pacientes = DB::table('pacientes')->select()->get();
+		$pacientes_tratamientos = DB::table('pacientes')
+		->join('pacientes_tratamientos', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
+		->select()
+		->get();
+		$query ='SELECT * FROM pacientes
+		inner join pacientes_tratamientos pt on pt.id_tratamiento = t.id
+		inner join pacientes p on pt.id_paciente = p.id where 1 =1';
+
+		if($material != "Material..."){
+			$query = $query." AND material = '".request()->material."'";
+		}
+
+		return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes,'pacientes_tratamientos'=>$pacientes_tratamientos]);
+	}
 	/*public function eliminarPaciente($codigoP){
 		if(request()->ajax()){
 			$pacientes = DB::table('pacientes')->select()->get()
 			->where('codigoP',request()->codigo);
 			$pacientes->delete();
 		}*/
-
-		public function buscadorPaciente(){
-			$implantes = DB::table('implantes')->select()->get();
-			$tratamientos = DB::table('tratamientos')->select()->get();
-			$doctores = DB::table('doctores')->select()->get();
-			$asesores = DB::table('asesores')->select()->get();
-			$pacientes = DB::table('pacientes')->select()->get();
-			$pacientes_tratamientos = DB::table('pacientes')
-			->join('pacientes_tratamientos', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
-			->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
-			->select()
-			->get();
-			$query ='SELECT * FROM pacientes
-			inner join pacientes_tratamientos pt on pt.id_tratamiento = t.id
-			inner join pacientes p on pt.id_paciente = p.id where 1 =1';
-
-			if($material != "Material..."){
-				$query = $query." AND material = '".request()->material."'";
-			}
-
-			return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes,'pacientes_tratamientos'=>$pacientes_tratamientos]);	}
-
-		}
+}

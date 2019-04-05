@@ -45,8 +45,6 @@ class TrabajosController extends Controller{
 		$codigoP = request()->codigoP;
 		$nombreP = request()->nombreP;
 
-
-
 		$tipos_trabajo = DB::table('tipo_trabajo')->select()->get();
 		$materiales = DB::table('material')->select()->get();
 
@@ -57,15 +55,19 @@ class TrabajosController extends Controller{
 		if($material != "Material..."){
 			$query = $query." AND material = '".request()->material."'";
 		}
+
 		if($tipo_trabajo != "Tipo de trabajo..."){
 			$query = $query." AND tipo_trabajo = '".request()->tipo_trabajo."'";
 		}
+
 		if($nombreP){
 			$query = $query." AND nombreP LIKE  '%".request()->nombreP."%'";
 		}
+
 		if($codigoP){
 			$query = $query." AND codigoP = '".request()->codigoP."'";
 		}
+
 		$trabajos = DB::select($query);
 		return view('consultarTrabajos',['trabajos'=>$trabajos,'tipos_trabajo' => $tipos_trabajo,'materiales'=>$materiales]);
 	}
