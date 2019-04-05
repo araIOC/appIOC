@@ -12,7 +12,7 @@
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-Prescription-bottle-alt"></i></label>
+										<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-prescription-bottle-alt"></i></label>
 									</div>
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Elija un tratamiento...</option>
@@ -52,7 +52,7 @@
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Elija un doctor...</option>
 										@foreach($doctores as $doctor)
-										<option value="{{$doctor->nombre}}" class="highlight">{{$doctor->nombre}}</option>
+										<option value="{{$doctor->nombreD}}" class="highlight">{{$doctor->nombreD}} {{$doctor->apellidosD}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -68,7 +68,7 @@
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Elija un asesor...</option>
 										@foreach($asesores as $asesor)
-										<option value="{{$asesor->nombre}}" class="highlight">{{$asesor->nombre}}</option>
+										<option value="{{$asesor->nombreA}}" class="highlight">{{$asesor->nombreA}} {{$asesor->apellidosA}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -232,11 +232,11 @@
 						</div>
 					</div>
 					<div class="form-row pb-3">
-						<div class="col-md-4 mx-auto">
+						<div class="col-md-5 mx-auto">
 							<input type="file" class="custom-file-input" id="customFileLang" lang="es">
-							<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> POWER POINT</label>
+							<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PPTX</label>
 						</div>
-						<div class="col-md-4 mx-auto">
+						<div class="col-md-5 mx-auto">
 							<input type="file" class="custom-file-input" id="customFileLang" lang="es">
 							<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>
 						</div>

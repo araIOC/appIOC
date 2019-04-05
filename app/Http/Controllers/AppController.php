@@ -19,14 +19,16 @@ class AppController extends Controller{
 		$tratamientos = DB::table('tratamientos')->select()->get();
 		$doctores = DB::table('doctores')->select()->get();
 		$asesores = DB::table('asesores')->select()->get();
-		$pacientes = DB::table('pacientes')->select()->get();
-		$pacientes_tratamientos = DB::table('pacientes')
-		->join('pacientes_tratamientos', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		//$pacientes = DB::table('pacientes')->select()->get();
+		$pacientes = DB::table('pacientes_tratamientos')
+		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
 		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
+		->join('doctores', 'pacientes_tratamientos.id_doctor', '=', 'doctores.id')
+		->join('asesores', 'pacientes_tratamientos.id_asesor', '=', 'asesores.id')
 		->select()
 		->get();
 
-		return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes,'pacientes_tratamientos'=>$pacientes_tratamientos]);
+		return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes]);
 	}
 
 	public function registroPacientes(){

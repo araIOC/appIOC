@@ -81,6 +81,68 @@
 			@endforeach
 		</tbody>
 	</table>
+	<div class="modal fade modal-ficha-disco" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-MD">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="nombrep"></h5>
+
+					<h5 class="modal-title ml-auto" id="nombret"></h5>
+				</div>
+				<div class="modal-body">
+					<div class="tab-content" id="tabTratamiento">
+						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
+							<div class="row pb-2">
+								<div class="col-md-8"></div>
+								<div class="col-md-4">
+									<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table ">
+										<tbody>
+											<tr>
+												<th scope="row">MATERIAL:</th>
+												<td id="material_fichatrabajo"></td>
+											</tr>
+											<tr>
+												<th scope="row">TIPO DE TRABAJO:</th>
+												<td id="tipotrabajo_fichatrabajo"></td>
+											</tr>
+											<tr>
+												<th scope="row">NÚMERO DE PIEZAS:</th>
+												<td id="npiezas_fichatrabajo"></td>
+											</tr>
+											<tr>
+												<th scope="row">COLOR:</th>
+												<td id="color_fichatrabajo"></td>
+											</tr>
+											<tr>
+												<th scope="row">MÁQUINA:</th>
+												<td id="maquina_fichatrabajo"></td>
+											</tr>
+											<tr>
+												<th scope="row">NOTAS:</th>
+												<td id="notas_fichatrabajo"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row py-2 px-2">
+								<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Ver disco" type="submit"><i class="fas fa-download"></i> STL</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver disco" type="submit"><i class="far fa-eye"></i> DISCO</button>
+					<a href="{{route('registroDisco')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo disco"><i class="fas fa-plus"></i></button></a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 

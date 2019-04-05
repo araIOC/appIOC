@@ -11,6 +11,7 @@ class TrabajosController extends Controller{
 		$trabajos = DB::table('pacientes_tratamientos')
 		->join('trabajos', 'pacientes_tratamientos.id', '=', 'trabajos.id_tratamiento')
 		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
 		->select()
 		->get();
 		$tipos_trabajo = DB::table('tipo_trabajo')->select()->get();
@@ -61,7 +62,7 @@ class TrabajosController extends Controller{
 		}
 
 		if($nombreP){
-			$query = $query." AND nombreP LIKE  '%".request()->nombreP."%'";
+			$query = $query." AND nombreP LIKE  '%".request()->nombreP."%' OR apellidosP LIKE  '%".request()->nombreP."%'";
 		}
 
 		if($codigoP){

@@ -1,4 +1,0 @@
-
-@push ('tabla')
-
-	@endpush

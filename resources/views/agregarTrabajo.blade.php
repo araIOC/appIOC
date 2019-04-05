@@ -73,7 +73,7 @@
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-4">
 							<label for="inputDoctor">Nº de piezas</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
@@ -84,7 +84,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-4">
 							<label for="inputAsesor">Color</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
@@ -100,7 +100,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-4">
 							<label for="inputAsesor">Código de disco</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
@@ -116,7 +116,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-md-3">
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-8">
 							<label for="inputAsesor">Máquina</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
@@ -129,6 +131,21 @@
 										<option value="{{$maquina->nombreMaq}}" class="highlight">{{$maquina->nombreMaq}}</option>
 										@endforeach
 									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="inputAsesor">Fecha</label>
+							<div class=" my-2 my-lg-0">
+								<div class="input-group">
+									<div class="mr-sm-2 my-2 my-lg-0">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
+											</div>
+											<input class="form-control" type="date" value="2011-08-19" id="example-date-input" data-toggle="tooltip" data-placement="auto" title="Fecha inicial">
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

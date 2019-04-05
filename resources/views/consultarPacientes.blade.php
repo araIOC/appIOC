@@ -59,7 +59,7 @@
 						<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 							<option selected>Elija un doctor...</option>
 							@foreach($doctores as $doctor)
-							<option value="{{$doctor->nombre}}" class="highlight">{{$doctor->nombre}}</option>
+							<option value="{{$doctor->nombreD}},{{$doctor->apellidosD}}" class="highlight">{{$doctor->nombreD}}, {{$doctor->apellidosD}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -95,7 +95,6 @@
 			</div>
 		</form>
 	</div>
-</div>
 </nav>
 
 <div class="collapse navbar-collapse" id="navbar3">
@@ -117,7 +116,7 @@
 				<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 					<option selected>Elija un asesor...</option>
 					@foreach($asesores as $asesor)
-					<option value="{{$asesor->nombre}}" class="highlight">{{$asesor->nombre}}</option>
+					<option value="{{$asesor->nombreA}},{{$asesor->apellidosA}}" class="highlight">{{$asesor->nombreA}}, {{$asesor->apellidosA}}</option>
 					@endforeach
 				</select>
 			</div>
@@ -236,12 +235,10 @@
 		<tbody>
 			@foreach($pacientes as $paciente)
 			<tr>
-				<td data-toggle="modal" data-target=".modal-ficha-cliente"></td>
-				<th scope="row" data-toggle="modal" data-target=".modal-ficha-cliente" data-codigoP="{{$paciente->codigoP}}">{{$paciente->codigoP}}</th>
-				<td data-toggle="modal" data-target=".modal-ficha-cliente">{{$paciente->apellidosP}}, {{$paciente->nombreP}}</td>
+				<td data-toggle="modal" data-target=".modal-ficha-cliente" data-codigop="{{$paciente->codigoP}}" data-nombret="{{$paciente->nombreT}}" data-nombrep="{{$paciente->nombreP}}" data-apellidosp="{{$paciente->apellidosP}}" data-nombred="{{$paciente->nombreD}}" data-apellidosd="{{$paciente->apellidosD}}" data-nombrea="{{$paciente->nombreA}}" data-apellidosa="{{$paciente->apellidosA}}"  data-tipo_implante="{{$paciente->tipo_implante}}" data-c_guiada="{{$paciente->c_guiada}}" data-fecha_inicio="{{$paciente->fecha_inicio}}" data-fecha_definitiva="{{$paciente->fecha_definitiva}}"  data-pic_provisional="{{$paciente->pic_provisional}}"data-fotos_pre="{{$paciente->fotos_pre}}" data-orto_pre="{{$paciente->orto_pre}}" data-tac_pre="{{$paciente->tac_pre}}" data-ioscan_pre="{{$paciente->ioscan_pre}}" data-foto_protesis_boca_provisional="{{$paciente->foto_protesis_boca_provisional}}" data-foto_protesis="{{$paciente->foto_protesis}}" data-video_pre="{{$paciente->video_pre}}" data-pic_final="{{$paciente->pic_final}}" data-foto_post="{{$paciente->foto_post}}" data-orto_post="{{$paciente->orto_post}}" data-tac_post="{{$paciente->tac_post}}" data-ioscan_post="{{$paciente->ioscan_post}}" data-video_final="{{$paciente->video_final}}" data-foto_protesis_final="{{$paciente->foto_protesis_final}}" data-foto_protesis_boca_final="{{$paciente->foto_protesis_boca_final}}" data-link="{{$paciente->link}}"></td>
+				<th scope="row" data-toggle="modal" data-target=".modal-ficha-cliente" data-codigop="{{$paciente->codigoP}}" data-nombret="{{$paciente->nombreT}}" data-nombrep="{{$paciente->nombreP}}" data-apellidosp="{{$paciente->apellidosP}}" data-nombred="{{$paciente->nombreD}}" data-apellidosd="{{$paciente->apellidosD}}" data-nombrea="{{$paciente->nombreA}}" data-apellidosa="{{$paciente->apellidosA}}"  data-tipo_implante="{{$paciente->tipo_implante}}" data-c_guiada="{{$paciente->c_guiada}}" data-fecha_inicio="{{$paciente->fecha_inicio}}" data-fecha_definitiva="{{$paciente->fecha_definitiva}}"  data-pic_provisional="{{$paciente->pic_provisional}}"data-fotos_pre="{{$paciente->fotos_pre}}" data-orto_pre="{{$paciente->orto_pre}}" data-tac_pre="{{$paciente->tac_pre}}" data-ioscan_pre="{{$paciente->ioscan_pre}}" data-foto_protesis_boca_provisional="{{$paciente->foto_protesis_boca_provisional}}" data-foto_protesis="{{$paciente->foto_protesis}}" data-video_pre="{{$paciente->video_pre}}" data-pic_final="{{$paciente->pic_final}}" data-foto_post="{{$paciente->foto_post}}" data-orto_post="{{$paciente->orto_post}}" data-tac_post="{{$paciente->tac_post}}" data-ioscan_post="{{$paciente->ioscan_post}}" data-video_final="{{$paciente->video_final}}" data-foto_protesis_final="{{$paciente->foto_protesis_final}}" data-foto_protesis_boca_final="{{$paciente->foto_protesis_boca_final}}" data-link="{{$paciente->link}}">{{$paciente->codigoP}}</th>
+				<td data-toggle="modal" data-target=".modal-ficha-cliente" data-codigop="{{$paciente->codigoP}}" data-nombret="{{$paciente->nombreT}}" data-nombrep="{{$paciente->nombreP}}" data-apellidosp="{{$paciente->apellidosP}}" data-nombred="{{$paciente->nombreD}}" data-apellidosd="{{$paciente->apellidosD}}" data-nombrea="{{$paciente->nombreA}}" data-apellidosa="{{$paciente->apellidosA}}"  data-tipo_implante="{{$paciente->tipo_implante}}" data-c_guiada="{{$paciente->c_guiada}}" data-fecha_inicio="{{$paciente->fecha_inicio}}" data-fecha_definitiva="{{$paciente->fecha_definitiva}}"  data-pic_provisional="{{$paciente->pic_provisional}}"data-fotos_pre="{{$paciente->fotos_pre}}" data-orto_pre="{{$paciente->orto_pre}}" data-tac_pre="{{$paciente->tac_pre}}" data-ioscan_pre="{{$paciente->ioscan_pre}}" data-foto_protesis_boca_provisional="{{$paciente->foto_protesis_boca_provisional}}" data-foto_protesis="{{$paciente->foto_protesis}}" data-video_pre="{{$paciente->video_pre}}" data-pic_final="{{$paciente->pic_final}}" data-foto_post="{{$paciente->foto_post}}" data-orto_post="{{$paciente->orto_post}}" data-tac_post="{{$paciente->tac_post}}" data-ioscan_post="{{$paciente->ioscan_post}}" data-video_final="{{$paciente->video_final}}" data-foto_protesis_final="{{$paciente->foto_protesis_final}}" data-foto_protesis_boca_final="{{$paciente->foto_protesis_boca_final}}" data-link="{{$paciente->link}}">{{$paciente->apellidosP}}, {{$paciente->nombreP}}</td>
 				<td>
-					<button data-toggle="tooltip" data-placement="auto" title="Eliminar" class="btn btn-outline-warning mr-sm-2 mx-auto borrar px-2 py-2" type="submit" name="{{$paciente->codigoP}}"><i class="fas fa-trash-alt"></i></button>
-
 					<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto px-2 py-2" type="submit"><i class="fas fa-sync-alt"></i></button>
 				</td>
 			</tr>
@@ -252,78 +249,93 @@
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">{{$paciente->apellidosP}}, {{$paciente->nombreP}}</h5>
+					<h5 class="modal-title" id="nombrep"></h5>
 
-					<h5 class="modal-title ml-auto" id="exampleModalCenterTitle">Código: {{$paciente->codigoP}}</h5>
+					<h5 class="modal-title ml-auto" id="codigop"></h5>
 				</div>
 				<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
-					@foreach($pacientes_tratamientos as $paciente_tratamientos)
+					@foreach($pacientes as $paciente)
 					<li class="nav-item active">
-						<a class="nav-link " id="test" href="#">TRATAMIENTO</a>
+						<a class="nav-link " id="test" href="#">{{$paciente->nombreT}}</a>
 					</li>
 					@endforeach
 					<li class="ml-auto mr-sm-2">
-						<button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button>
+						<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
 					</li>
 				</ul>
 				<div class="modal-body">
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
+							<div class="row pb-2">
+								<div class="col-md-10"></div>
+								<div class="col-md-2">
+									<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button>
+								</div>
+
+							</div>
 							<div class="row">
 								<div class="col-md-6">
 									<table class="table ">
 										<tbody>
 											<tr>
 												<th scope="row">DOCTOR:</th>
-												<td>Aránzazu Martín</td>
+												<td id="doctor_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">ASESOR:</th>
-												<td>Cristina Sosa</td>
+												<td id="asesor_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">TIPO DE IMPLANTE</th>
-												<td>Standar</td>
+												<td id="tipo_implante_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">CIRUGIA:</th>
-												<td>Estática</td>
+												<td id="cirugia_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">FECHA DE INICIO:</th>
-												<td>12/04/2019</td>
+												<td id="fecha_inicio_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">FECHA DEFINITIVA</th>
-												<td>12/04/2019</td>
+												<td id="fecha_definitiva_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row"><i class="fab fa-dropbox"></i></th>
-												<td><a href="https://www.dropbox.com/es_ES/">https://www.dropbox.com/es_ES/</a></td>
+												<td><a href="" target="_blank" id="link_dropbox"></a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item"><i class="fas fa-check"></i> Cras justo odio</li>
-										<li class="list-group-item"><i class="fas fa-check"></i> Dapibus ac facilisis in</li>
-										<li class="list-group-item"><i class="fas fa-check"></i> Porta ac consectetur ac</li>
-										<li class="list-group-item"><i class="fas fa-check"></i> Vestibulum at eros</li>
+										<li class="list-group-item"><i id="icono_picpre"></i> PIC provisional</li>
+										<li class="list-group-item"><i id="icono_tacpre"></i> TAC pre</li>
+										<li class="list-group-item"><i id="icono_ortopre"></i> Orto pre</li>
+										<li class="list-group-item"><i id="icono_ioscanpre"></i> IOScan pre</li>
+										<li class="list-group-item"><i id="icono_fotopre"></i> Fotos pre</li>
+										<li class="list-group-item"><i id="icono_fotoprotesispre"></i> Fotos protesis pre</li>
+										<li class="list-group-item"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre</li>
+										<li class="list-group-item"><i id="icono_videopre"></i> Video pre</li>
 									</ul>
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item"><i class="fas fa-times"></i> Cras justo odio</li>
-										<li class="list-group-item"><i class="fas fa-times"></i> Dapibus ac facilisis in</li>
-										<li class="list-group-item"><i class="fas fa-times"></i> Porta ac consectetur ac</li>
-										<li class="list-group-item"><i class="fas fa-times"></i> Vestibulum at eros</li>
+										<li class="list-group-item"><i id="icono_picpost"></i> PIC definitivo</li>
+										<li class="list-group-item"><i id="icono_tacpost"></i> TAC post</li>
+										<li class="list-group-item"><i id="icono_ortopost"></i> Orto post</li>
+										<li class="list-group-item"><i id="icono_ioscanpost"></i> IOScan post</li>
+										<li class="list-group-item"><i id="icono_fotopost"></i> Fotos post</li>
+										<li class="list-group-item"><i id="icono_fotoprotesispost"></i> Fotos protesis post</li>
+										<li class="list-group-item"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post</li>
+										<li class="list-group-item"><i id="icono_videopost"></i> Video post</li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<!--PRUEBA-LOS BOTONES SON PARA DESCARGAR-->
-						<div class="form-row ">
+						<!--PRUEBA-LOS BOTONES SON PARA DESCARGAR
+			<div class="form-row ">
 							<div class="col-md-4 mx-auto">
 								<input type="file" class="custom-file-input" id="customFileLang" lang="es">
 								<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> POWER POINT</label>
@@ -333,16 +345,25 @@
 								<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>
 							</div>
 						</div>
+					-->
+					<div class="form-row py-2">
+						<div class="col-md-4 mx-auto">
+							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button>
+						</div>
+						<div class="col-md-4 mx-auto">
+							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-download"></i> PDF</button>
+						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
-					<button class="btn btn-lg btn-warning "  data-toggle="tooltip" data-placement="auto" title="Eliminar trabajo" type="submit"><i class="fas fa-trash-alt"></i></button>
-					<button class="btn btn-lg btn-warning "  data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button>
-				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver trabajo" type="submit"><i class="far fa-eye"></i> NOMBRE DEL TRABAJO</button>
+				<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
+
 			</div>
 		</div>
 	</div>
-	<!-- modal modificar -->
-	@endsection
+</div>
+<!-- modal modificar -->
+@endsection
 </div>
