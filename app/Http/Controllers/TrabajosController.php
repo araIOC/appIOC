@@ -36,40 +36,58 @@ class TrabajosController extends Controller{
 		->get();
 		return view('agregarTrabajo',['trabajos'=>$trabajos,'materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'maquinas'=>$maquinas,'tratamientos'=>$tratamientos, 'tipos_trabajo' => $tipos_trabajo,'pacientes'=>$pacientes]);
 	}
-	public function agregarTrabajo(){
+	public function filtroTratamientos(){
+		$codigoP = request()->codigop;
+		$query = DB::table('pacientes_tratamientos')
+		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		->where('codigoP', 'like', '%'.$codigoP.'%')
+		->get();
+		$tratamientos = DB::table('tratamientos')
+		->where($query->id_tratamiento, '=', 'id')
+		->get();
 
+		$select = '<option value="">Elija un tratamiento...</option>';
+		foreach($tratamientos as $tratamiento){
+			$select .= '<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
+		}
+		echo $select;
 	}
 
-	public function buscadorTrabajo(){
-		$tipo_trabajo = request()->tipo_trabajo;
-		$material = request()->material;
-		$codigoP = request()->codigoP;
-		$nombreP = request()->nombreP;
 
-		$tipos_trabajo = DB::table('tipo_trabajo')->select()->get();
-		$materiales = DB::table('material')->select()->get();
+/*public function agregarTrabajo(){
 
-		$query ='SELECT * FROM trabajos t
-		inner join pacientes_tratamientos pt on pt.id = t.id_tratamiento
-		inner join pacientes p on pt.id_paciente = p.id where 1 =1';
+}*/
 
-		if($material != "Material..."){
-			$query = $query." AND material = '".request()->material."'";
-		}
+public function buscadorTrabajo(){
+	$tipo_trabajo = request()->tipo_trabajo;
+	$material = request()->material;
+	$codigoP = request()->codigoP;
+	$nombreP = request()->nombreP;
 
-		if($tipo_trabajo != "Tipo de trabajo..."){
-			$query = $query." AND tipo_trabajo = '".request()->tipo_trabajo."'";
-		}
+	$tipos_trabajo = DB::table('tipo_trabajo')->select()->get();
+	$materiales = DB::table('material')->select()->get();
 
-		if($nombreP){
-			$query = $query." AND nombreP LIKE  '%".request()->nombreP."%' OR apellidosP LIKE  '%".request()->nombreP."%'";
-		}
+	$query ='SELECT * FROM trabajos t
+	inner join pacientes_tratamientos pt on pt.id = t.id_tratamiento
+	inner join pacientes p on pt.id_paciente = p.id where 1 =1';
 
-		if($codigoP){
-			$query = $query." AND codigoP = '".request()->codigoP."'";
-		}
-
-		$trabajos = DB::select($query);
-		return view('consultarTrabajos',['trabajos'=>$trabajos,'tipos_trabajo' => $tipos_trabajo,'materiales'=>$materiales]);
+	if($material != "Material..."){
+		$query = $query." AND material = '".$material."'";
 	}
+
+	if($tipo_trabajo != "Tipo de trabajo..."){
+		$query = $query." AND tipo_trabajo = '".$tipo_trabajo."'";
+	}
+
+	if($nombreP){
+		$query = $query." AND nombreP LIKE  '%".$nombreP."%' OR apellidosP LIKE  '%".$nombreP."%'";
+	}
+
+	if($codigoP){
+		$query = $query." AND codigoP = '".$codigoP."'";
+	}
+
+	$trabajos = DB::select($query);
+	return view('consultarTrabajos',['trabajos'=>$trabajos,'tipos_trabajo' => $tipos_trabajo,'materiales'=>$materiales]);
+}
 }

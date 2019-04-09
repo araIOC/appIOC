@@ -50,13 +50,13 @@ class DiscosController extends Controller{
 
 		$query ='SELECT * FROM discos where 1 =1';
 		if($material != "Material..."){
-			$query = $query." AND material = '".request()->material."'";
+			$query = $query." AND material = '".$material."'";
 		}
 		if($marca != "Marca..."){
-			$query = $query." AND marca = '".request()->marca."'";
+			$query = $query." AND marca = '".$marca."'";
 		}
 		if($color != "Color..."){
-			$query = $query." AND color = '".request()->color."'";
+			$query = $query." AND color = '".$color."'";
 		}
 
 		$discos = DB::select($query);

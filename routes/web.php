@@ -30,6 +30,7 @@ Route::any('agregarTrabajo', 'TrabajosController@agregarTrabajo')->name('agregar
 Route::any('registroTrabajo', 'TrabajosController@registroTrabajo')->name('registroTrabajo');
 Route::get('trabajos', 'TrabajosController@consultarTrabajos')->name('consultarTrabajos');
 Route::any('buscadorTrabajo', 'TrabajosController@buscadorTrabajo')->name('buscadorTrabajo');
+Route::post('filtroTratamientos', 'TrabajosController@filtroTratamientos')->name('filtroTratamientos');
 
 Route::any('registroDisco', 'DiscosController@registroDisco')->name('registroDisco');
 Route::any('agregarDisco', 'DiscosController@agregarDisco')->name('agregarDisco');

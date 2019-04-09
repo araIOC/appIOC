@@ -15,7 +15,7 @@
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-tags"></i></label>
 									</div>
-									<input type="text" class="form-control" placeholder="Código...">
+									<input type="text" class="form-control" id="codigopaciente" placeholder="Código..." name="codigopaciente">
 								</div>
 							</div>
 						</div>
@@ -26,12 +26,9 @@
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-object-ungroup"></i></label>
 									</div>
-									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+									<select class="custom-select mr-sm-2" id="tratamientop">
 										<!--tratamiento del paciente que escriba -->
 										<option selected>Elija un tratamiento...</option>
-										@foreach($tratamientos as $tratamiento)
-										<option value="{{$tratamiento->nombreT}}" class="highlight">{{$tratamiento->nombreT}}</option>
-										@endforeach
 									</select>
 								</div>
 							</div>

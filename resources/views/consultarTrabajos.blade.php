@@ -91,8 +91,8 @@
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
 							<div class="row pb-2">
-								<div class="col-md-8"></div>
-								<div class="col-md-4">
+								<div class="col-md-10"></div>
+								<div class="col-md-2">
 									<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button>
 								</div>
 							</div>
@@ -129,7 +129,7 @@
 								</div>
 							</div>
 							<div class="row py-2 px-2">
-								<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Ver disco" type="submit"><i class="fas fa-download"></i> STL</button>
+								<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Descargar STL" type="submit"><i class="fas fa-download"></i> STL</button>
 							</div>
 						</div>
 					</div>
