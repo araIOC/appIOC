@@ -7,21 +7,15 @@
 			<div class="card border-0 px-4 py-4 text-white bg-dark font-weight-bold">
 				<form action="{{ route('agregarPaciente') }}" method="POST">
 					{{ csrf_field()}}
-					<div class="form-group row">
-						<label for="nomprePaciente" class="col-sm-3 col-form-label ">Nombre:</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" name="nombre" placeholder="Nombre..." required>
+					<div class="form-group row" data-toggle="tooltip" data-placement="auto" title="Separados por coma ','">
+						<label for="nomprePaciente" class="col-sm-4 col-form-label ">Nombre y apellidos:</label>
+						<div class="col-sm-8">
+							<input type="text" class="form-control" name="nombre" placeholder="Martel Alemán, Juan" required>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label for="apellidosPaciente" class="col-sm-3 col-form-label ">Apellidos:</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control"name="apellidos" placeholder="Apellidos..." required>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label for="codigoPaciente" class="col-sm-3 col-form-label">Código:</label>
-						<div class="col-sm-9">
+						<label for="codigoPaciente" class="col-sm-4 col-form-label">Código:</label>
+						<div class="col-sm-8">
 							<input type="text" class="form-control" name="codigo" placeholder="Código..." required>
 						</div>
 					</div>

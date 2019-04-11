@@ -5,8 +5,9 @@
 	<div class="row">
 		<div class="col-md-8 mx-auto">
 			<div class="card border-0 px-4 py-4 text-white bg-dark font-weight-bold">
-				<form action="{{ route('agregarTrabajo') }}" method="POST">
-					{{csrf_field()}}
+				<form action="{{route('agregarTrabajo')}}" method="POST">
+					{!! csrf_field() !!}
+
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="inputDoctor">Código del paciente</label>
@@ -26,8 +27,7 @@
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-object-ungroup"></i></label>
 									</div>
-									<select class="custom-select mr-sm-2" id="tratamientop">
-										<!--tratamiento del paciente que escriba -->
+									<select class="custom-select mr-sm-2" id="tratamientop" name="tratamientop">
 										<option selected>Elija un tratamiento...</option>
 									</select>
 								</div>

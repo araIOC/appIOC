@@ -63,6 +63,8 @@
 	<script defer src="https://use.fontawesome.com/releases/v5.8.0/js/all.js" integrity="sha384-ukiibbYjFS/1dhODSWD+PrZ6+CGCgf8VbyUH7bQQNUulL+2r59uGYToovytTf4Xm" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="{{mix('js/app.js')}}"></script>
 	<script type="text/javascript" src="js/appioc.js"></script>
+	<script type="text/javascript" src="js/ajax.js"></script>
+
 
 </body>
 </html>

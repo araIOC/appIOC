@@ -1,38 +1,19 @@
 ///////////MOSTRAR MAS/MOSTRAR MENOS//////////////
 $(document).ready(function(){
- $(".mostrarMas").html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
+	$(".mostrarMas").html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
 
-    $( "#codigopaciente" ).keypress(function() {
-      var codigopaciente;
-      var _token = document.getElementsByName("_token")[0].value;
-      $.ajax({
-         url: "{{route ('filtroTratamientos')}}",
-         method: 'post',
-         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-         data: {
-            codigopaciente: document.getElementsByName("codigopaciente")[0].value,
-            _token:_token,
-
-         },
-         success: function(result){
-
-           $('#tratamientop').html(result);
-
-        }});
-   });
 });
 
 $("#btnFiltros").click(function () {
- if ($(this).hasClass("mostrarMas")){
-  $(this).addClass('mostrarMenos');
-  $(this).removeClass('mostrarMas');
-  $(".mostrarMenos").html('Ocultar... <i class="fas fa-angle-double-up"></i>');
-
-} else {
-  $(this).addClass('mostrarMas');
-  $(this).removeClass('mostrarMenos');
-  $(this).html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
-}
+	if ($(this).hasClass("mostrarMas")){
+		$(this).addClass('mostrarMenos');
+		$(this).removeClass('mostrarMas');
+		$(".mostrarMenos").html('Ocultar... <i class="fas fa-angle-double-up"></i>');
+	} else {
+		$(this).addClass('mostrarMas');
+		$(this).removeClass('mostrarMenos');
+		$(this).html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
+	}
 });
 
 $('[data-target=".modal-ficha-cliente"]').click(function () {
@@ -79,177 +60,178 @@ $('[data-target=".modal-ficha-cliente"]').click(function () {
    $('#link_dropbox').attr('href', link);
 
    if(pic_provisional == 1){
-      $('#icono_picpre').addClass('fas');
-      $('#icono_picpre').addClass('fa-check');
+   	$('#icono_picpre').addClass('fas');
+   	$('#icono_picpre').addClass('fa-check');
    }else{
-      $('#icono_picpre').addClass('fas');
-      $('#icono_picpre').addClass('fa-times');
+   	$('#icono_picpre').addClass('fas');
+   	$('#icono_picpre').addClass('fa-times');
    }
    if(pic_final == 1){
-      $('#icono_picpost').addClass('fas');
-      $('#icono_picpost').addClass('fa-check');
+   	$('#icono_picpost').addClass('fas');
+   	$('#icono_picpost').addClass('fa-check');
    }else{
-      $('#icono_picpost').addClass('fas');
-      $('#icono_picpost').addClass('fa-times');
+   	$('#icono_picpost').addClass('fas');
+   	$('#icono_picpost').addClass('fa-times');
    }
    if(tac_pre == 1){
-      $('#icono_tacpre').addClass('fas');
-      $('#icono_tacpre').addClass('fa-check');
+   	$('#icono_tacpre').addClass('fas');
+   	$('#icono_tacpre').addClass('fa-check');
    }else{
-      $('#icono_tacpre').addClass('fas');
-      $('#icono_tacpre').addClass('fa-times');
+   	$('#icono_tacpre').addClass('fas');
+   	$('#icono_tacpre').addClass('fa-times');
    }
    if(tac_post == 1){
-      $('#icono_tacpost').addClass('fas');
-      $('#icono_tacpost').addClass('fa-check');
+   	$('#icono_tacpost').addClass('fas');
+   	$('#icono_tacpost').addClass('fa-check');
    }else{
-      $('#icono_tacpost').addClass('fas');
-      $('#icono_tacpost').addClass('fa-times');
+   	$('#icono_tacpost').addClass('fas');
+   	$('#icono_tacpost').addClass('fa-times');
    }
    if(orto_pre == 1){
-      $('#icono_ortopre').addClass('fas');
-      $('#icono_ortopre').addClass('fa-check');
+   	$('#icono_ortopre').addClass('fas');
+   	$('#icono_ortopre').addClass('fa-check');
    }else{
-      $('#icono_ortopre').addClass('fas');
-      $('#icono_ortopre').addClass('fa-times');
+   	$('#icono_ortopre').addClass('fas');
+   	$('#icono_ortopre').addClass('fa-times');
    }
    if(orto_post == 1){
-      $('#icono_ortopost').addClass('fas');
-      $('#icono_ortopost').addClass('fa-check');
+   	$('#icono_ortopost').addClass('fas');
+   	$('#icono_ortopost').addClass('fa-check');
    }else{
-      $('#icono_ortopost').addClass('fas');
-      $('#icono_ortopost').addClass('fa-times');
+   	$('#icono_ortopost').addClass('fas');
+   	$('#icono_ortopost').addClass('fa-times');
    }
    if(ioscan_pre == 1){
-      $('#icono_ioscanpre').addClass('fas');
-      $('#icono_ioscanpre').addClass('fa-check');
+   	$('#icono_ioscanpre').addClass('fas');
+   	$('#icono_ioscanpre').addClass('fa-check');
    }else{
-      $('#icono_ioscanpre').addClass('fas');
-      $('#icono_ioscanpre').addClass('fa-times');
+   	$('#icono_ioscanpre').addClass('fas');
+   	$('#icono_ioscanpre').addClass('fa-times');
    }
    if(ioscan_post == 1){
-      $('#icono_ioscanpost').addClass('fas');
-      $('#icono_ioscanpost').addClass('fa-check');
+   	$('#icono_ioscanpost').addClass('fas');
+   	$('#icono_ioscanpost').addClass('fa-check');
    }else{
-      $('#icono_ioscanpost').addClass('fas');
-      $('#icono_ioscanpost').addClass('fa-times');
+   	$('#icono_ioscanpost').addClass('fas');
+   	$('#icono_ioscanpost').addClass('fa-times');
    }
    if(fotos_pre == 1){
-      $('#icono_fotopre').addClass('fas');
-      $('#icono_fotopre').addClass('fa-check');
+   	$('#icono_fotopre').addClass('fas');
+   	$('#icono_fotopre').addClass('fa-check');
    }else{
-      $('#icono_fotopre').addClass('fas');
-      $('#icono_fotopre').addClass('fa-times');
+   	$('#icono_fotopre').addClass('fas');
+   	$('#icono_fotopre').addClass('fa-times');
    }
    if(foto_post == 1){
-      $('#icono_fotopost').addClass('fas');
-      $('#icono_fotopost').addClass('fa-check');
+   	$('#icono_fotopost').addClass('fas');
+   	$('#icono_fotopost').addClass('fa-check');
    }else{
-      $('#icono_fotopost').addClass('fas');
-      $('#icono_fotopost').addClass('fa-times');
+   	$('#icono_fotopost').addClass('fas');
+   	$('#icono_fotopost').addClass('fa-times');
    }
    if(foto_protesis == 1){
-      $('#icono_fotoprotesispre').addClass('fas');
-      $('#icono_fotoprotesispre').addClass('fa-check');
+   	$('#icono_fotoprotesispre').addClass('fas');
+   	$('#icono_fotoprotesispre').addClass('fa-check');
    }else{
-      $('#icono_fotoprotesispre').addClass('fas');
-      $('#icono_fotoprotesispre').addClass('fa-times');
+   	$('#icono_fotoprotesispre').addClass('fas');
+   	$('#icono_fotoprotesispre').addClass('fa-times');
    }
    if(foto_protesis_final == 1){
-      $('#icono_fotoprotesispost').addClass('fas');
-      $('#icono_fotoprotesispost').addClass('fa-check');
+   	$('#icono_fotoprotesispost').addClass('fas');
+   	$('#icono_fotoprotesispost').addClass('fa-check');
    }else{
-      $('#icono_fotoprotesispost').addClass('fas');
-      $('#icono_fotoprotesispost').addClass('fa-times');
+   	$('#icono_fotoprotesispost').addClass('fas');
+   	$('#icono_fotoprotesispost').addClass('fa-times');
    }
    if(foto_protesis_boca_provisional == 1){
-      $('#icono_fotoprotesisbocapre').addClass('fas');
-      $('#icono_fotoprotesisbocapre').addClass('fa-check');
+   	$('#icono_fotoprotesisbocapre').addClass('fas');
+   	$('#icono_fotoprotesisbocapre').addClass('fa-check');
    }else{
-      $('#icono_fotoprotesisbocapre').addClass('fas');
-      $('#icono_fotoprotesisbocapre').addClass('fa-times');
+   	$('#icono_fotoprotesisbocapre').addClass('fas');
+   	$('#icono_fotoprotesisbocapre').addClass('fa-times');
    }
    if(foto_protesis_boca_final == 1){
-      $('#icono_fotoprotesisbocapost').addClass('fas');
-      $('#icono_fotoprotesisbocapost').addClass('fa-check');
+   	$('#icono_fotoprotesisbocapost').addClass('fas');
+   	$('#icono_fotoprotesisbocapost').addClass('fa-check');
    }else{
-      $('#icono_fotoprotesisbocapost').addClass('fas');
-      $('#icono_fotoprotesisbocapost').addClass('fa-times');
+   	$('#icono_fotoprotesisbocapost').addClass('fas');
+   	$('#icono_fotoprotesisbocapost').addClass('fa-times');
    }
    if(video_pre == 1){
-      $('#icono_videopre').addClass('fas');
-      $('#icono_videopre').addClass('fa-check');
+   	$('#icono_videopre').addClass('fas');
+   	$('#icono_videopre').addClass('fa-check');
    }else{
-      $('#icono_videopre').addClass('fas');
-      $('#icono_videopre').addClass('fa-times');
+   	$('#icono_videopre').addClass('fas');
+   	$('#icono_videopre').addClass('fa-times');
    }
    if(video_final == 1){
-      $('#icono_videopost').addClass('fas');
-      $('#icono_videopost').addClass('fa-check');
+   	$('#icono_videopost').addClass('fas');
+   	$('#icono_videopost').addClass('fa-check');
    }else{
-      $('#icono_videopost').addClass('fas');
-      $('#icono_videopost').addClass('fa-times');
+   	$('#icono_videopost').addClass('fas');
+   	$('#icono_videopost').addClass('fa-times');
    }
 });
-$('[data-target=".modal-ficha-trabajo"]').click(function () {
- var nombrep = $(this).data('nombrep');
- var apellidos = $(this).data('apellidos');
- var nombret = $(this).data('nombret');
- var material = $(this).data('material');
- var tipotrabajo = $(this).data('tipotrabajo');
- var npiezas = $(this).data('npiezas');
- var color = $(this).data('color');
- var maquina = $(this).data('maquina');
- var notas = $(this).data('notas');
-
- $('#nombrep').text(apellidos + ", " + nombrep);
- $('#nombret').text("Tratamiento: " + nombret);
- $('#material_fichatrabajo').text(material);
- $('#tipotrabajo_fichatrabajo').text(tipotrabajo);
- $('#npiezas_fichatrabajo').text(npiezas);
- $('#color_fichatrabajo').text(color);
- $('#maquina_fichatrabajo').text(maquina);
- $('#notas_fichatrabajo').text(notas);
+$('.test1').click(function () {
+	var nombrep = $(this).data('nombrep');
+	var apellidos = $(this).data('apellidos');
+	var nombret = $(this).data('nombret');
+	var material = $(this).data('material');
+	var tipotrabajo = $(this).data('tipotrabajo');
+	var npiezas = $(this).data('npiezas');
+	var color = $(this).data('color');
+	var maquina = $(this).data('maquina');
+	var notas = $(this).data('notas');
+	console.log('dasdw');
+	$('#nombrep').text(apellidos + ", " + nombrep);
+	$('#nombret').text("Tratamiento: " + nombret);
+	$('#material_fichatrabajo').text(material);
+	$('#tipotrabajo_fichatrabajo').text(tipotrabajo);
+	$('#npiezas_fichatrabajo').text(npiezas);
+	$('#color_fichatrabajo').text(color);
+	$('#maquina_fichatrabajo').text(maquina);
+	$('#notas_fichatrabajo').text(notas);
 });
 $('[data-target=".modal-ficha-disco"]').click(function () {
- var codigo = $(this).data('codigod');
- var materiald = $(this).data('materiald');
- var escala = $(this).data('escala');
- var color = $(this).data('color');
- var fecha_alta = $(this).data('fecha_alta');
- var altura = $(this).data('altura');
- $('#cod_disco').text("Código: " + codigo);
- $('#material_fichadisco').text(materiald);
- $('#escala_fichadisco').text(escala);
- $('#color_fichadisco').text(color);
- $('#altura_fichadisco').text(altura);
- $('#fecha_alta_fichadisco').text(fecha_alta);
+	var codigo = $(this).data('codigod');
+	var materiald = $(this).data('materiald');
+	var escala = $(this).data('escala');
+	var color = $(this).data('color');
+	var fecha_alta = $(this).data('fecha_alta');
+	var altura = $(this).data('altura');
+
+	$('#cod_disco').text("Código: " + codigo);
+	$('#material_fichadisco').text(materiald);
+	$('#escala_fichadisco').text(escala);
+	$('#color_fichadisco').text(color);
+	$('#altura_fichadisco').text(altura);
+	$('#fecha_alta_fichadisco').text(fecha_alta);
 });
 $(".borrar").click(function () {
- Swal.fire({
-  title: '¿Estás seguro?',
-  text: "¿Desea dar de baja este registro?",
-  type: 'warning',
-  confirmButtonText: 'Sí, ¡Dar de baja!',
-  showCancelButton: true,
-  cancelButtonText:  'Cancelar',
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  reverseButtons: true
+	Swal.fire({
+		title: '¿Estás seguro?',
+		text: "¿Desea dar de baja este registro?",
+		type: 'warning',
+		confirmButtonText: 'Sí, ¡Dar de baja!',
+		showCancelButton: true,
+		cancelButtonText:  'Cancelar',
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		reverseButtons: true
 
-}).then((result) => {
- if (result.value) {
-   Swal.fire(
-    '¡Hecho!',
-    'El registro se ha dado de baja con éxito.',
-    'success'
-    )
-}
-})
+	}).then((result) => {
+		if (result.value) {
+			Swal.fire(
+				'¡Hecho!',
+				'El registro se ha dado de baja con éxito.',
+				'success'
+				)
+		}
+	})
 });
 //////////////////////ACTIVAR TOOLTIP/////////////////////////
 $(document).ready(function(){
- $('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
 });
 
 

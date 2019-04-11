@@ -8,6 +8,7 @@ use Alert;
 class TrabajosController extends Controller{
 
 	public function consultarTrabajos(){
+
 		$trabajos = DB::table('pacientes_tratamientos')
 		->join('trabajos', 'pacientes_tratamientos.id', '=', 'trabajos.id_tratamiento')
 		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
@@ -21,6 +22,7 @@ class TrabajosController extends Controller{
 	}
 
 	public function registroTrabajo(){
+
 		$trabajos = DB::table('trabajos')->select()->get();
 		$materiales = DB::table('material')->select()->get();
 		$colores = DB::table('colores')->select()->get();
@@ -36,58 +38,83 @@ class TrabajosController extends Controller{
 		->get();
 		return view('agregarTrabajo',['trabajos'=>$trabajos,'materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'maquinas'=>$maquinas,'tratamientos'=>$tratamientos, 'tipos_trabajo' => $tipos_trabajo,'pacientes'=>$pacientes]);
 	}
+
 	public function filtroTratamientos(){
-		$codigoP = request()->codigop;
-		$query = DB::table('pacientes_tratamientos')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
-		->where('codigoP', 'like', '%'.$codigoP.'%')
-		->get();
-		$tratamientos = DB::table('tratamientos')
-		->where($query->id_tratamiento, '=', 'id')
-		->get();
+
+		$codigoP = request()->codigopaciente;
+		$query = DB::select('SELECT DISTINCT nombreT FROM TRATAMIENTOS T INNER JOIN PACIENTES_TRATAMIENTOS PT ON T.ID = PT.ID_TRATAMIENTO INNER JOIN PACIENTES P ON PT.ID_PACIENTE = P.ID WHERE P.CODIGOP LIKE "%'.$codigoP .'%"');
 
 		$select = '<option value="">Elija un tratamiento...</option>';
-		foreach($tratamientos as $tratamiento){
-			$select .= '<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
+		foreach ($query as $tratamiento) {
+			if($codigoP)
+				$select .= '<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
 		}
 		echo $select;
 	}
 
 
-/*public function agregarTrabajo(){
+	public function agregarTrabajo(){
+		$tratamiento = DB::table('trabajos')
+		->join('pacientes_tratamientos', 'pacientes_tratamientos.id', '=', 'trabajo.id_tratamiento')
+		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamiento.id')
+		->whereColumn([
+			['codigoP', '=', request()->codigopaciente],
+			['nombreT', '=', request()->tratamientop]
+		])->get();
+		/*
 
-}*/
+		DB::table('trabajos')->insert(
+			['codigo' => request()->codigo,'material' => request()->material,'marca' => request()->marca,'escala' => request()->escala,'color' => request()->color,'altura' => request()->altura]
+		);
 
-public function buscadorTrabajo(){
-	$tipo_trabajo = request()->tipo_trabajo;
-	$material = request()->material;
-	$codigoP = request()->codigoP;
-	$nombreP = request()->nombreP;
-
-	$tipos_trabajo = DB::table('tipo_trabajo')->select()->get();
-	$materiales = DB::table('material')->select()->get();
-
-	$query ='SELECT * FROM trabajos t
-	inner join pacientes_tratamientos pt on pt.id = t.id_tratamiento
-	inner join pacientes p on pt.id_paciente = p.id where 1 =1';
-
-	if($material != "Material..."){
-		$query = $query." AND material = '".$material."'";
+		return redirect()->route('consultarDiscos');*/
+		var_dump($tratamiento);
 	}
 
-	if($tipo_trabajo != "Tipo de trabajo..."){
-		$query = $query." AND tipo_trabajo = '".$tipo_trabajo."'";
-	}
+	public function buscadorTrabajo(){
+		$tipo_trabajo = request()->tipo_trabajo;
+		$material = request()->materialTrabajo;
+		$codigoP = request()->codigoPTrabajo;
+		$nombreP = request()->nombrePTrabajo;
 
-	if($nombreP){
-		$query = $query." AND nombreP LIKE  '%".$nombreP."%' OR apellidosP LIKE  '%".$nombreP."%'";
-	}
+		$query ='SELECT T.*, P.codigoP, P.nombreP, TR.nombreT
+		FROM TRABAJOS T
+		INNER JOIN PACIENTES_TRATAMIENTOS PT
+		ON PT.ID = T.ID_TRATAMIENTO
+		INNER JOIN PACIENTES P
+		ON PT.ID_PACIENTE = P.ID
+		INNER JOIN TRATAMIENTOS TR
+		ON PT.ID_TRATAMIENTO = TR.ID
+		WHERE 1 = 1';
 
-	if($codigoP){
-		$query = $query." AND codigoP = '".$codigoP."'";
-	}
+		if($material != "Material..."){
+			$query = $query." AND material = '".$material."'";
+		}
 
-	$trabajos = DB::select($query);
-	return view('consultarTrabajos',['trabajos'=>$trabajos,'tipos_trabajo' => $tipos_trabajo,'materiales'=>$materiales]);
-}
+		if($tipo_trabajo != "Tipo de trabajo..."){
+			$query = $query." AND tipo_trabajo = '".$tipo_trabajo."'";
+		}
+
+		if($nombreP){
+			$query = $query." AND nombreP LIKE  '%".$nombreP."%'";
+		}
+
+		if($codigoP){
+			$query = $query." AND codigoP LIKE '%".$codigoP."%'";
+		}
+		$trabajos = DB::select($query);
+		$tabla = "";
+		foreach ($trabajos as $trabajo) {
+			$tabla.='<tr>
+			<th class="test1"scope="row" data-toggle="modal" data-target=".modal-ficha-trabajo" data-nombrep="'.$trabajo->nombreP.'" data-nombret="'.$trabajo->nombreT.'" data-material="'.$trabajo->material.'" data-tipotrabajo="'.$trabajo->tipo_trabajo.'" data-npiezas="'.$trabajo->n_piezas.'" data-color="'.$trabajo->color.'" data-maquina="'.$trabajo->maquina.'" data-notas="'.$trabajo->notas.'">'.$trabajo->codigoP.'</th>
+			<th scope="row" data-toggle="modal" data-target=".modal-ficha-trabajo" data-nombrep="'.$trabajo->nombreP.'" data-nombret="'.$trabajo->nombreT.'" data-material="'.$trabajo->material.'" data-tipotrabajo="'.$trabajo->tipo_trabajo.'" data-npiezas="'.$trabajo->n_piezas.'" data-color="'.$trabajo->color.'" data-maquina="'.$trabajo->maquina.'" data-notas="'.$trabajo->notas.'">'.$trabajo->nombreP.'</th>
+			<td data-toggle="modal" data-target=".modal-ficha-trabajo" data-nombrep="'.$trabajo->nombreP.'" data-nombret="'.$trabajo->nombreT.'" data-material="'.$trabajo->material.'" data-tipotrabajo="'.$trabajo->tipo_trabajo.'" data-npiezas="'.$trabajo->n_piezas.'" data-color="'.$trabajo->color.'" data-maquina="'.$trabajo->maquina.'" data-notas="'.$trabajo->notas.'">'.$trabajo->tipo_trabajo.'</td>
+			<td>
+			<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto" type="submit"><i class="fas fa-sync-alt"></i></button>
+			</td>
+			</tr>';
+
+		}echo $tabla;
+	}
 }
