@@ -3,16 +3,87 @@ $(document).ready(function(){
 	filtroTratamientoPaciente();
 	buscarDisco();
 	buscarTrabajo();
-
+	buscarPaciente();
 	$( "#materialDisco,#marcaDisco,#colorDisco" ).on('change', function() {
 		buscarDisco();
 	});
 	$( "#nombrePTrabajo,#codigoPTrabajo,#materialTrabajo,#tipo_trabajo" ).on('change keyup', function() {
 		buscarTrabajo();
 	});
+	$( "#nombrePaciente,#codigoPaciente,#nombreT,#tipo_implante,#doctorPaciente,#asesorPaciente,"+
+		"#cbTac_pre,#CBpic_definitivo,#CBpic_provisional,#cbTac_post,#cbIOScan_pre,#cbIOScan_post,#cbOrto_pre,#cbOrto_post,"+
+		"#cbFotos_pre,#cbFotos_post,#cbFotos_protesis_pre,#cbFotos_protesis_post,#cbFotos_protesis_boca_pre,"+
+		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#Dfecha_inicial,#Dfecha_final,#customSwitch1" ).on('change keyup click', function() {
+		buscarPaciente();
+	});
 });
 
+$("#limpiarFiltroPacientes").click(function () {
 
+});
+//limpiar radio $('input:radio[name=edad]').attr('checked',false);
+$("#limpiarFiltroDiscos").click(function () {
+	$("#materialDisco").val($('#materialDisco > option:first').val());
+	$("#marcaDisco").val($('#marcaDisco > option:first').val());
+	$("#colorDisco").val($('#colorDisco > option:first').val());
+	buscarDisco();
+
+});
+$("#limpiarFiltrosTrabajo").click(function () {
+	$("#materialTrabajo").val($('#materialTrabajo > option:first').val());
+	$("#tipo_trabajo").val($('#tipo_trabajo > option:first').val());
+	$("#nombrePTrabajo").val("");
+	$("#codigoPTrabajo").val("");
+	buscarTrabajo();
+
+});
+function buscarPaciente(){
+	var _token = document.getElementsByName("_token")[0].value;
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'buscadorPaciente',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			nombrePaciente: $('#nombrePaciente').val(),
+			codigoPaciente: $('#codigoPaciente').val(),
+			nombreT: $( "#nombreT" ).val(),
+			tipo_implante: $( "#tipo_implante" ).val(),
+			doctorPaciente: $('#doctorPaciente').val(),
+			asesorPaciente: $('#asesorPaciente').val(),
+			rbCirugia: $("input[name='rbCirugia']:checked").val(),
+			cbTac_pre : $('#cbTac_pre').prop('checked'),
+			CBpic_definitivo : $('#CBpic_definitivo').prop('checked'),
+			CBpic_provisional : $('#CBpic_provisional').prop('checked'),
+			cbTac_post : $('#cbTac_post').prop('checked'),
+			cbIOScan_pre : $('#cbIOScan_pre').prop('checked'),
+			cbIOScan_post : $('#cbIOScan_post').prop('checked'),
+			cbOrto_pre : $('#cbOrto_pre').prop('checked'),
+			cbOrto_post : $('#cbOrto_post').prop('checked'),
+			cbFotos_pre : $('#cbFotos_pre').prop('checked'),
+			cbFotos_post : $('#cbFotos_post').prop('checked'),
+			cbFotos_protesis_pre : $('#cbFotos_protesis_pre').prop('checked'),
+			cbFotos_protesis_post : $('#cbFotos_protesis_post').prop('checked'),
+			cbFotos_protesis_boca_pre : $('#cbFotos_protesis_boca_pre').prop('checked'),
+			cbFotos_protesis_boca_post : $('#cbFotos_protesis_boca_post').prop('checked'),
+			cbVideo_pre : $('#cbVideo_pre').prop('checked'),
+			cbVideo_post : $('#cbVideo_post').prop('checked'),
+			Dfecha_inicial : $('#Dfecha_inicial').val(),
+			Dfecha_final : $('#Dfecha_final').val(),
+			invertir : $('#customSwitch1').prop('checked'),
+			_token: _token
+		},
+		success: function(result){
+
+			$('#tablaPacientesConsulta').html(result);
+
+		}});
+}
 function buscarTrabajo(){
 	var _token = document.getElementsByName("_token")[0].value;
 

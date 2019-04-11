@@ -49,7 +49,7 @@
 				</select>
 			</div>
 		</div>
-		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit">Buscar... <i class="fas fa-search"></i></button>
+		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" type="submit" id="limpiarFiltrosTrabajo" data-toggle="tooltip" data-placement="auto" title="Limpiar filtros">Limpiar... <i class="fas fa-brush"></i></button>
 	</div>
 </nav>
 <div class="table-responsive-sm text-center" id="app">

@@ -42,7 +42,7 @@ class TrabajosController extends Controller{
 	public function filtroTratamientos(){
 
 		$codigoP = request()->codigopaciente;
-		$query = DB::select('SELECT DISTINCT nombreT FROM TRATAMIENTOS T INNER JOIN PACIENTES_TRATAMIENTOS PT ON T.ID = PT.ID_TRATAMIENTO INNER JOIN PACIENTES P ON PT.ID_PACIENTE = P.ID WHERE P.CODIGOP LIKE "%'.$codigoP .'%"');
+		$query = DB::select('SELECT  nombreT FROM TRATAMIENTOS T INNER JOIN PACIENTES_TRATAMIENTOS PT ON T.ID = PT.ID_TRATAMIENTO INNER JOIN PACIENTES P ON PT.ID_PACIENTE = P.ID WHERE P.CODIGOP LIKE "%'.$codigoP .'%"');
 
 		$select = '<option value="">Elija un tratamiento...</option>';
 		foreach ($query as $tratamiento) {

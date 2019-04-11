@@ -18,9 +18,7 @@ Route::get('app', 'AppController@index')->name('app');
 Route::get('pacientes', 'AppController@consultarPacientes')->name('consultar');
 Route::get('registroPaciente', 'AppController@registroPacientes')->name('registroPaciente');
 Route::any('agregarPaciente', 'AppController@agregarPacientes')->name('agregarPaciente');
-Route::any('buscador', 'AppController@buscadorPaciente')->name('buscadorPaciente');
-
-//Route::DELETE('eliminarPaciente', 'AppController@eliminarPaciente')->name('eliminarPaciente');
+Route::any('buscadorPaciente', 'AppController@buscadorPaciente')->name('buscadorPaciente');
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
 
