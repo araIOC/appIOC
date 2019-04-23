@@ -2,6 +2,9 @@
 $(document).ready(function(){
 	$(".mostrarMas").html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
 
+   //////////////////////ACTIVAR TOOLTIP/////////////////////////
+
+   $('[data-toggle="tooltip"]').tooltip();
 });
 
 $("#btnFiltros").click(function () {
@@ -14,18 +17,15 @@ $("#btnFiltros").click(function () {
 		$(this).removeClass('mostrarMenos');
 		$(this).html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
 	}
+
 });
 
-$('[data-target=".modal-ficha-cliente"]').click(function () {
-   //data-nombred="{{$paciente->nombreD}}" data-apellidosd="{{$paciente->apellidosD}}" data-nombrea="{{$paciente->nombreA}}" data-apellidosa="{{$paciente->apellidosA}}" data-nombret="{{$paciente->nombreT}}"
+$("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
    var codigoP = $(this).data('codigop');
-   //var nombret = $(this).data('nombret');
    var nombrep = $(this).data('nombrep');
    var apellidosp = $(this).data('apellidosp');
-  // var nombred = $(this).data('nombred');
-   //var apellidosd = $(this).data('apellidosd');
-   //var nombrea = $(this).data('nombrea');
-   //var apellidosa = $(this).data('apellidosa');
+   var nombred = $(this).data('nombred');
+   var nombrea = $(this).data('nombrea');
    var tipo_implante = $(this).data('tipo_implante');
    var c_guiada = $(this).data('c_guiada');
    var fecha_inicio = $(this).data('fecha_inicio');
@@ -47,17 +47,21 @@ $('[data-target=".modal-ficha-cliente"]').click(function () {
    var foto_protesis_final = $(this).data('foto_protesis_final');
    var foto_protesis_boca_final = $(this).data('foto_protesis_boca_final');
    var link = $(this).data('link');
+   var tratamiento = $(this).data('nombret');
+   var powerpoint = $(this).data('powerpoint');
+   var pdf = $(this).data('pdf');
 
    $('#codigop').text("Código: " + codigoP);
-   $('#nombrep').text(apellidosp + ", " + nombrep);
-   //$('#doctor_fichapaciente').text(nombred + " " + apellidosd);
-   //$('#asesor_fichapaciente').text(nombrea + " " + apellidosa);
+   $('#nombrep').text(nombrep);
+   $('#doctor_fichapaciente').text(nombred);
+   $('#asesor_fichapaciente').text(nombrea);
    $('#tipo_implante_fichapaciente').text(tipo_implante);
    $('#cirugia_fichapaciente').text(c_guiada);
-   $('#fecha_inicio_fichapaciente').text(fecha_inicio);
-   $('#fecha_definitiva_fichapaciente').text(fecha_definitiva);
+   $('#fecha_inicio_fichapaciente').text(fecha_inicio.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
+   $('#fecha_definitiva_fichapaciente').text(fecha_definitiva.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
    $('#link_dropbox').text(link);
    $('#link_dropbox').attr('href', link);
+   $('#tratamiento_actual').text(tratamiento);
 
    if(pic_provisional == 1){
    	$('#icono_picpre').addClass('fas');
@@ -171,8 +175,18 @@ $('[data-target=".modal-ficha-cliente"]').click(function () {
    	$('#icono_videopost').addClass('fas');
    	$('#icono_videopost').addClass('fa-times');
    }
+
+   if(!powerpoint){
+      $('#powerpoint-modal').hide();
+   }
+
+   if(!pdf){
+      $('#pdf-modal').hide();
+   }
+   console.log(pdf);
+   console.log(powerpoint);
 });
-$('.test1').click(function () {
+('.test1').click(function () {$
 	var nombrep = $(this).data('nombrep');
 	var apellidos = $(this).data('apellidos');
 	var nombret = $(this).data('nombret');
@@ -182,8 +196,8 @@ $('.test1').click(function () {
 	var color = $(this).data('color');
 	var maquina = $(this).data('maquina');
 	var notas = $(this).data('notas');
-	console.log('dasdw');
-	$('#nombrep').text(apellidos + ", " + nombrep);
+
+	$('#nombrep').text(nombrep);
 	$('#nombret').text("Tratamiento: " + nombret);
 	$('#material_fichatrabajo').text(material);
 	$('#tipotrabajo_fichatrabajo').text(tipotrabajo);
@@ -205,7 +219,7 @@ $('[data-target=".modal-ficha-disco"]').click(function () {
 	$('#escala_fichadisco').text(escala);
 	$('#color_fichadisco').text(color);
 	$('#altura_fichadisco').text(altura);
-	$('#fecha_alta_fichadisco').text(fecha_alta);
+	$('#fecha_alta_fichadisco').text(fecha_alta.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 });
 $(".borrar").click(function () {
 	Swal.fire({
@@ -229,11 +243,6 @@ $(".borrar").click(function () {
 		}
 	})
 });
-//////////////////////ACTIVAR TOOLTIP/////////////////////////
-$(document).ready(function(){
-	$('[data-toggle="tooltip"]').tooltip();
-});
-
 
 
 

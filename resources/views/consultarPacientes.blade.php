@@ -249,25 +249,19 @@
 						<h5 class="modal-title ml-auto" id="codigop"></h5>
 					</div>
 					<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
-						@foreach($pacientes as $paciente)
+
 						<li class="nav-item active">
-							<a class="nav-link " id="test" href="#"></a>
+							<a class="nav-link" id="tratamiento_actual"></a>
 						</li>
-						@endforeach
+
 						<li class="ml-auto mr-sm-2">
 							<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
+							<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button>
 						</li>
 					</ul>
 					<div class="modal-body">
 						<div class="tab-content" id="tabTratamiento">
 							<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
-								<div class="row pb-2">
-									<div class="col-md-10"></div>
-									<div class="col-md-2">
-										<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button>
-									</div>
-
-								</div>
 								<div class="row">
 									<div class="col-md-6">
 										<table class="table ">
@@ -342,10 +336,10 @@
 						</div>
 					-->
 					<div class="form-row py-2">
-						<div class="col-md-4 mx-auto">
+						<div class="col-md-4 mx-auto" id="powerpoint-modal">
 							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button>
 						</div>
-						<div class="col-md-4 mx-auto">
+						<div class="col-md-4 mx-auto" id="pdf-modal">
 							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-download"></i> PDF</button>
 						</div>
 					</div>
