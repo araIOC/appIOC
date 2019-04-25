@@ -224,105 +224,105 @@
 			</div>
 		</nav>
 	</div>
+</nav>
+<div class="table-responsive-sm text-center" id="app">
+	<table class="table table-hover table-dark consulta">
+		<thead>
+			<tr>
+				<th scope="col"></th>
+				<th scope="col">Cod</th>
+				<th scope="col">Nombre</th>
+				<th scope="col">Tratamiento</th>
+				<th scope="col"></th>
+			</tr>
+		</thead>
+		<tbody id="tablaPacientesConsulta">
 
-	<div class="table-responsive-sm text-center" id="app">
-		<table class="table table-hover table-dark consulta">
-			<thead>
-				<tr>
-					<th scope="col"></th>
-					<th scope="col">Cod</th>
-					<th scope="col">Nombre</th>
-					<th scope="col">Tratamiento</th>
-					<th scope="col"></th>
-				</tr>
-			</thead>
-			<tbody id="tablaPacientesConsulta">
+		</tbody>
+	</table>
+	<div class="modal fade modal-ficha-cliente" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="nombrep"></h5>
 
-			</tbody>
-		</table>
-		<div class="modal fade modal-ficha-cliente" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-xl">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="nombrep"></h5>
+					<h5 class="modal-title ml-auto" id="codigop"></h5>
+				</div>
+				<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
 
-						<h5 class="modal-title ml-auto" id="codigop"></h5>
-					</div>
-					<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
+					<li class="nav-item active">
+						<a class="nav-link" id="tratamiento_actual"></a>
+					</li>
 
-						<li class="nav-item active">
-							<a class="nav-link" id="tratamiento_actual"></a>
-						</li>
-
-						<li class="ml-auto mr-sm-2">
-							<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
-							<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button>
-						</li>
-					</ul>
-					<div class="modal-body">
-						<div class="tab-content" id="tabTratamiento">
-							<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
-								<div class="row">
-									<div class="col-md-6">
-										<table class="table ">
-											<tbody>
-												<tr>
-													<th scope="row">DOCTOR:</th>
-													<td id="doctor_fichapaciente"></td>
-												</tr>
-												<tr>
-													<th scope="row">ASESOR:</th>
-													<td id="asesor_fichapaciente"></td>
-												</tr>
-												<tr>
-													<th scope="row">TIPO DE IMPLANTE</th>
-													<td id="tipo_implante_fichapaciente"></td>
-												</tr>
-												<tr>
-													<th scope="row">CIRUGIA:</th>
-													<td id="cirugia_fichapaciente"></td>
-												</tr>
-												<tr>
-													<th scope="row">FECHA DE INICIO:</th>
-													<td id="fecha_inicio_fichapaciente"></td>
-												</tr>
-												<tr>
-													<th scope="row">FECHA DEFINITIVA</th>
-													<td id="fecha_definitiva_fichapaciente"></td>
-												</tr>
-												<tr>
-													<th scope="row"><i class="fab fa-dropbox"></i></th>
-													<td><a href="" target="_blank" id="link_dropbox"></a></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="col-md-3">
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><i id="icono_picpre"></i> PIC provisional</li>
-											<li class="list-group-item"><i id="icono_tacpre"></i> TAC pre</li>
-											<li class="list-group-item"><i id="icono_ortopre"></i> Orto pre</li>
-											<li class="list-group-item"><i id="icono_ioscanpre"></i> IOScan pre</li>
-											<li class="list-group-item"><i id="icono_fotopre"></i> Fotos pre</li>
-											<li class="list-group-item"><i id="icono_fotoprotesispre"></i> Fotos protesis pre</li>
-											<li class="list-group-item"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre</li>
-											<li class="list-group-item"><i id="icono_videopre"></i> Video pre</li>
-										</ul>
-									</div>
-									<div class="col-md-3">
-										<ul class="list-group list-group-flush">
-											<li class="list-group-item"><i id="icono_picpost"></i> PIC definitivo</li>
-											<li class="list-group-item"><i id="icono_tacpost"></i> TAC post</li>
-											<li class="list-group-item"><i id="icono_ortopost"></i> Orto post</li>
-											<li class="list-group-item"><i id="icono_ioscanpost"></i> IOScan post</li>
-											<li class="list-group-item"><i id="icono_fotopost"></i> Fotos post</li>
-											<li class="list-group-item"><i id="icono_fotoprotesispost"></i> Fotos protesis post</li>
-											<li class="list-group-item"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post</li>
-											<li class="list-group-item"><i id="icono_videopost"></i> Video post</li>
-										</ul>
-									</div>
+					<li class="ml-auto mr-sm-2">
+						<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
+						<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button>
+					</li>
+				</ul>
+				<div class="modal-body">
+					<div class="tab-content" id="tabTratamiento">
+						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
+							<div class="row">
+								<div class="col-md-6">
+									<table class="table ">
+										<tbody>
+											<tr>
+												<th scope="row">DOCTOR:</th>
+												<td id="doctor_fichapaciente"></td>
+											</tr>
+											<tr>
+												<th scope="row">ASESOR:</th>
+												<td id="asesor_fichapaciente"></td>
+											</tr>
+											<tr>
+												<th scope="row">TIPO DE IMPLANTE</th>
+												<td id="tipo_implante_fichapaciente"></td>
+											</tr>
+											<tr>
+												<th scope="row">CIRUGIA:</th>
+												<td id="cirugia_fichapaciente"></td>
+											</tr>
+											<tr>
+												<th scope="row">FECHA DE INICIO:</th>
+												<td id="fecha_inicio_fichapaciente"></td>
+											</tr>
+											<tr>
+												<th scope="row">FECHA DEFINITIVA</th>
+												<td id="fecha_definitiva_fichapaciente"></td>
+											</tr>
+											<tr>
+												<th scope="row"><i class="fab fa-dropbox"></i></th>
+												<td><a href="" target="_blank" id="link_dropbox"></a></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-3">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><i id="icono_picpre"></i> PIC provisional</li>
+										<li class="list-group-item"><i id="icono_tacpre"></i> TAC pre</li>
+										<li class="list-group-item"><i id="icono_ortopre"></i> Orto pre</li>
+										<li class="list-group-item"><i id="icono_ioscanpre"></i> IOScan pre</li>
+										<li class="list-group-item"><i id="icono_fotopre"></i> Fotos pre</li>
+										<li class="list-group-item"><i id="icono_fotoprotesispre"></i> Fotos protesis pre</li>
+										<li class="list-group-item"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre</li>
+										<li class="list-group-item"><i id="icono_videopre"></i> Video pre</li>
+									</ul>
+								</div>
+								<div class="col-md-3">
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item"><i id="icono_picpost"></i> PIC definitivo</li>
+										<li class="list-group-item"><i id="icono_tacpost"></i> TAC post</li>
+										<li class="list-group-item"><i id="icono_ortopost"></i> Orto post</li>
+										<li class="list-group-item"><i id="icono_ioscanpost"></i> IOScan post</li>
+										<li class="list-group-item"><i id="icono_fotopost"></i> Fotos post</li>
+										<li class="list-group-item"><i id="icono_fotoprotesispost"></i> Fotos protesis post</li>
+										<li class="list-group-item"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post</li>
+										<li class="list-group-item"><i id="icono_videopost"></i> Video post</li>
+									</ul>
 								</div>
 							</div>
+						</div>
 						<!--PRUEBA-LOS BOTONES SON PARA DESCARGAR
 			<div class="form-row ">
 							<div class="col-md-4 mx-auto">
@@ -337,7 +337,7 @@
 					-->
 					<div class="form-row py-2">
 						<div class="col-md-4 mx-auto" id="powerpoint-modal">
-							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button>
+							<a href="{{route('downloadFilepptx')}}" id="descargarPPTX"><button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button></a>
 						</div>
 						<div class="col-md-4 mx-auto" id="pdf-modal">
 							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-download"></i> PDF</button>
@@ -355,4 +355,3 @@
 </div>
 <!-- modal modificar -->
 @endsection
-</div>

@@ -109,10 +109,15 @@ class AppController extends Controller{
 			$query1.=" AND a.nombreA = '".request()->asesorPaciente."'";
 			$query2.=" AND a.nombreA = '".request()->asesorPaciente."'";
 		}
-		/*if(request()->rbCirugia == "rbcdinamica"){
-			var_dump(request()->rbCirugia);
-		}*/
-		///revisar invertir
+		if(request()->rbCirugia == "rbcdinamica"){
+			$query1.=" AND pt.c_guiada = 'Dinámica'";
+			$query2.=" AND pt.c_guiada = 'Dinámica'";
+		}
+		if(request()->rbCirugia == "rbcestatica"){
+			$query1.=" AND pt.c_guiada = 'Estática'";
+			$query2.=" AND pt.c_guiada = 'Estática'";
+		}
+
 		$estado = "";
 		if (request()->invertir == 'false') {
 			$estado = '1';
@@ -122,69 +127,69 @@ class AppController extends Controller{
 			$estado = '0';
 		}
 		if(request()->CBpic_definitivo == 'true'){
-				$query1.=" AND pt.pic_final = '".$estado."'";
-				$query2.=" AND pt.pic_final = '".$estado."'";
-			}
-			if(request()->CBpic_provisional == 'true'){
-				$query1.=" AND pt.pic_provisional = '".$estado."'";
-				$query2.=" AND pt.pic_provisional = '".$estado."'";
-			}
-			if(request()->cbTac_pre == 'true'){
-				$query1.=" AND pt.tac_pre = '".$estado."'";
-				$query2.=" AND pt.tac_pre = '".$estado."'";
-			}
-			if(request()->cbTac_post == 'true'){
-				$query1.=" AND pt.tac_post = '".$estado."'";
-				$query2.=" AND pt.tac_post = '".$estado."'";
-			}
-			if(request()->cbIOScan_pre == 'true'){
-				$query1.=" AND pt.ioscan_pre = '".$estado."'";
-				$query2.=" AND pt.ioscan_pre = '".$estado."'";
-			}
-			if(request()->cbIOScan_post == 'true'){
-				$query1.=" AND pt.ioscan_post = '".$estado."'";
-				$query2.=" AND pt.ioscan_post = '".$estado."'";
-			}
-			if(request()->cbOrto_pre == 'true'){
-				$query1.=" AND pt.orto_pre = '".$estado."'";
-				$query2.=" AND pt.orto_pre = '".$estado."'";
-			}
-			if(request()->cbOrto_post == 'true'){
-				$query1.=" AND pt.orto_post = '".$estado."'";
-				$query2.=" AND pt.orto_post = '".$estado."'";
-			}
-			if(request()->cbFotos_pre == 'true'){
-				$query1.=" AND pt.fotos_pre = '".$estado."'";
-				$query2.=" AND pt.fotos_pre = '".$estado."'";
-			}
-			if(request()->cbFotos_post == 'true'){
-				$query1.=" AND pt.foto_post = '".$estado."'";
-				$query2.=" AND pt.foto_post = '".$estado."'";
-			}
-			if(request()->cbFotos_protesis_pre == 'true'){
-				$query1.=" AND pt.foto_protesis = '".$estado."'";
-				$query2.=" AND pt.foto_protesis = '".$estado."'";
-			}
-			if(request()->cbFotos_protesis_post == 'true'){
-				$query1.=" AND pt.foto_protesis_final = '".$estado."'";
-				$query2.=" AND pt.foto_protesis_final = '".$estado."'";
-			}
-			if(request()->cbFotos_protesis_boca_pre == 'true'){
-				$query1.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
-				$query2.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
-			}
-			if(request()->cbFotos_protesis_boca_post == 'true'){
-				$query1.=" AND pt.foto_protesis_boca_final = '".$estado."'";
-				$query2.=" AND pt.foto_protesis_boca_final = '".$estado."'";
-			}
-			if(request()->cbVideo_pre == 'true'){
-				$query1.=" AND pt.video_pre = '".$estado."'";
-				$query2.=" AND pt.video_pre = '".$estado."'";
-			}
-			if(request()->cbVideo_post == 'true'){
-				$query1.=" AND pt.video_final = '".$estado."'";
-				$query2.=" AND pt.video_final = '".$estado."'";
-			}
+			$query1.=" AND pt.pic_final = '".$estado."'";
+			$query2.=" AND pt.pic_final = '".$estado."'";
+		}
+		if(request()->CBpic_provisional == 'true'){
+			$query1.=" AND pt.pic_provisional = '".$estado."'";
+			$query2.=" AND pt.pic_provisional = '".$estado."'";
+		}
+		if(request()->cbTac_pre == 'true'){
+			$query1.=" AND pt.tac_pre = '".$estado."'";
+			$query2.=" AND pt.tac_pre = '".$estado."'";
+		}
+		if(request()->cbTac_post == 'true'){
+			$query1.=" AND pt.tac_post = '".$estado."'";
+			$query2.=" AND pt.tac_post = '".$estado."'";
+		}
+		if(request()->cbIOScan_pre == 'true'){
+			$query1.=" AND pt.ioscan_pre = '".$estado."'";
+			$query2.=" AND pt.ioscan_pre = '".$estado."'";
+		}
+		if(request()->cbIOScan_post == 'true'){
+			$query1.=" AND pt.ioscan_post = '".$estado."'";
+			$query2.=" AND pt.ioscan_post = '".$estado."'";
+		}
+		if(request()->cbOrto_pre == 'true'){
+			$query1.=" AND pt.orto_pre = '".$estado."'";
+			$query2.=" AND pt.orto_pre = '".$estado."'";
+		}
+		if(request()->cbOrto_post == 'true'){
+			$query1.=" AND pt.orto_post = '".$estado."'";
+			$query2.=" AND pt.orto_post = '".$estado."'";
+		}
+		if(request()->cbFotos_pre == 'true'){
+			$query1.=" AND pt.fotos_pre = '".$estado."'";
+			$query2.=" AND pt.fotos_pre = '".$estado."'";
+		}
+		if(request()->cbFotos_post == 'true'){
+			$query1.=" AND pt.foto_post = '".$estado."'";
+			$query2.=" AND pt.foto_post = '".$estado."'";
+		}
+		if(request()->cbFotos_protesis_pre == 'true'){
+			$query1.=" AND pt.foto_protesis = '".$estado."'";
+			$query2.=" AND pt.foto_protesis = '".$estado."'";
+		}
+		if(request()->cbFotos_protesis_post == 'true'){
+			$query1.=" AND pt.foto_protesis_final = '".$estado."'";
+			$query2.=" AND pt.foto_protesis_final = '".$estado."'";
+		}
+		if(request()->cbFotos_protesis_boca_pre == 'true'){
+			$query1.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
+			$query2.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
+		}
+		if(request()->cbFotos_protesis_boca_post == 'true'){
+			$query1.=" AND pt.foto_protesis_boca_final = '".$estado."'";
+			$query2.=" AND pt.foto_protesis_boca_final = '".$estado."'";
+		}
+		if(request()->cbVideo_pre == 'true'){
+			$query1.=" AND pt.video_pre = '".$estado."'";
+			$query2.=" AND pt.video_pre = '".$estado."'";
+		}
+		if(request()->cbVideo_post == 'true'){
+			$query1.=" AND pt.video_final = '".$estado."'";
+			$query2.=" AND pt.video_final = '".$estado."'";
+		}
 		if(request()->Dfecha_inicial == 'true'){
 			$query1.=" AND pt.fecha_inicio = '".request()->Dfecha_inicial."'";
 			$query2.=" AND pt.fecha_inicio = '".request()->Dfecha_inicial."'";
@@ -193,10 +198,20 @@ class AppController extends Controller{
 			$query1.=" AND pt.fecha_definitiva= '".request()->Dfecha_final."'";
 			$query2.=" AND pt.fecha_definitiva= '".request()->Dfecha_final."'";
 		}
+
 		$pacientes = DB::select($query1.$query2);
 
 		return view('datosPaciente',['pacientes'=>$pacientes]);
 
 	}
+	public function downloadFilepptx(){
+		var_dump(request()->codigopaciente);
+		$pacientes = DB::table('pacientes')
+		->where('codigoP', '=', request()->codigopaciente)
+		->get();
+			//var_dump( $pacientes);
 
+		/*$pathtoFile = public_path().'images/'.$file;
+		return response()->download($pathtoFile);*/
+	}
 }

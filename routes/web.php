@@ -19,6 +19,7 @@ Route::get('pacientes', 'AppController@consultarPacientes')->name('consultar');
 Route::get('registroPaciente', 'AppController@registroPacientes')->name('registroPaciente');
 Route::any('agregarPaciente', 'AppController@agregarPacientes')->name('agregarPaciente');
 Route::any('buscadorPaciente', 'AppController@buscadorPaciente')->name('buscadorPaciente');
+Route::any('downloadFilepptx', 'AppController@downloadFilepptx')->name('downloadFilepptx');
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
 

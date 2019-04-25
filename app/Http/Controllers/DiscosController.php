@@ -56,20 +56,7 @@ class DiscosController extends Controller{
 		}
 
 		$discos = DB::select($query);
-		$tabla = "";
-		foreach ($discos as $disco) {
-			$tabla.='<tr>
-			<td data-toggle="modal" data-target=".modal-ficha-disco" data-codigod="'.$disco->codigo.'" data-materiald="'.$disco->material.'" data-escala="'.$disco->escala.'" data-color="'.$disco->color.'" data-fecha_alta="'.$disco->fecha_alta.'" data-altura="'.$disco->altura.'"></td>
-			<th scope="row" data-toggle="modal" data-target=".modal-ficha-disco" data-codigod="'.$disco->codigo.'" data-materiald="'.$disco->material.'" data-escala="'.$disco->escala.'" data-color="'.$disco->color.'" data-fecha_alta="'.$disco->fecha_alta.'" data-altura="'.$disco->altura.'">'.$disco->codigo.'</th>
-			<td data-toggle="modal" data-target=".modal-ficha-disco" data-codigod="'.$disco->codigo.'" data-materiald="'.$disco->material.'" data-escala="'.$disco->escala.'" data-color="'.$disco->color.'" data-fecha_alta="'.$disco->fecha_alta.'" data-altura="'.$disco->altura.'">'.$disco->material.'</td>
-			<td data-toggle="modal" data-target=".modal-ficha-disco" data-codigod="'.$disco->codigo.'" data-materiald="'.$disco->material.'" data-escala="'.$disco->escala.'" data-color="'.$disco->color.'" data-fecha_alta="'.$disco->fecha_alta.'" data-altura="'.$disco->altura.'">'.$disco->marca.'</td>
-			<td>
-			<button data-toggle="tooltip" data-placement="auto" title="Dar de baja" class="btn btn-outline-warning mr-sm-2 mx-auto borrar" type="submit" name="'.$disco->codigo.'"><i class="fas fa-arrow-alt-circle-down"></i></button>
+		return view('datosDiscos',['discos'=>$discos]);
 
-			<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto" type="submit"><i class="fas fa-sync-alt"></i></button>
-			</td>
-			</tr>';
-		}
-		echo $tabla;
 	}
 }

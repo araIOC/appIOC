@@ -8,6 +8,7 @@ $(document).ready(function(){
 });
 
 $("#btnFiltros").click(function () {
+
 	if ($(this).hasClass("mostrarMas")){
 		$(this).addClass('mostrarMenos');
 		$(this).removeClass('mostrarMas');
@@ -17,10 +18,10 @@ $("#btnFiltros").click(function () {
 		$(this).removeClass('mostrarMenos');
 		$(this).html('Mostrar más... <i class="fas fa-angle-double-down"></i>');
 	}
-
 });
 
 $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
+
    var codigoP = $(this).data('codigop');
    var nombrep = $(this).data('nombrep');
    var apellidosp = $(this).data('apellidosp');
@@ -62,6 +63,7 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
    $('#link_dropbox').text(link);
    $('#link_dropbox').attr('href', link);
    $('#tratamiento_actual').text(tratamiento);
+   $('#descargarPPTX').data('codigopaciente',codigoP);
 
    if(pic_provisional == 1){
    	$('#icono_picpre').addClass('fas');
@@ -176,17 +178,19 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
    	$('#icono_videopost').addClass('fa-times');
    }
 
-   if(!powerpoint){
+   if(powerpoint  === 'No'){
       $('#powerpoint-modal').hide();
+   }else{
+      $('#powerpoint-modal').show();
    }
 
-   if(!pdf){
+   if(pdf === 'No'){
       $('#pdf-modal').hide();
+   }else{
+      $('#pdf-modal').show();
    }
-   console.log(pdf);
-   console.log(powerpoint);
 });
-('.test1').click(function () {$
+$("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	var nombrep = $(this).data('nombrep');
 	var apellidos = $(this).data('apellidos');
 	var nombret = $(this).data('nombret');
@@ -206,7 +210,8 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 	$('#maquina_fichatrabajo').text(maquina);
 	$('#notas_fichatrabajo').text(notas);
 });
-$('[data-target=".modal-ficha-disco"]').click(function () {
+
+$("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
 	var codigo = $(this).data('codigod');
 	var materiald = $(this).data('materiald');
 	var escala = $(this).data('escala');

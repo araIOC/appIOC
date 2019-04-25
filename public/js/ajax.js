@@ -4,23 +4,25 @@ $(document).ready(function(){
 	buscarDisco();
 	buscarTrabajo();
 	buscarPaciente();
+
 	$( "#materialDisco,#marcaDisco,#colorDisco" ).on('change', function() {
 		buscarDisco();
 	});
+
 	$( "#nombrePTrabajo,#codigoPTrabajo,#materialTrabajo,#tipo_trabajo" ).on('change keyup', function() {
 		buscarTrabajo();
 	});
+
 	$( "#nombrePaciente,#codigoPaciente,#nombreT,#tipo_implante,#doctorPaciente,#asesorPaciente,"+
 		"#cbTac_pre,#CBpic_definitivo,#CBpic_provisional,#cbTac_post,#cbIOScan_pre,#cbIOScan_post,#cbOrto_pre,#cbOrto_post,"+
 		"#cbFotos_pre,#cbFotos_post,#cbFotos_protesis_pre,#cbFotos_protesis_post,#cbFotos_protesis_boca_pre,"+
-		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#Dfecha_inicial,#Dfecha_final,#customSwitch1" ).on('change keyup click', function() {
+		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#Dfecha_inicial,#Dfecha_final,#customSwitch1,[name='rbCirugia']" ).on('change keyup click', function() {
 			buscarPaciente();
 		});
-
-	});
-
+//
+});
 $("#limpiarFiltroPacientes").click(function () {
-	//limpiar radio $('#CBpic_provisional').attr('checked',false);
+	$("[name='rbCirugia']:checked").prop( "checked", false );
 	$("#nombrePaciente").val("");
 	$("#codigoPaciente").val("");
 	$("#nombreT").val($('#nombreT > option:first').val());
@@ -47,12 +49,14 @@ $("#limpiarFiltroPacientes").click(function () {
 	$('#customSwitch1').prop('checked', false);
 	buscarPaciente();
 });
+
 $("#limpiarFiltroDiscos").click(function () {
 	$("#materialDisco").val($('#materialDisco > option:first').val());
 	$("#marcaDisco").val($('#marcaDisco > option:first').val());
 	$("#colorDisco").val($('#colorDisco > option:first').val());
 	buscarDisco();
 });
+
 $("#limpiarFiltrosTrabajo").click(function () {
 	$("#materialTrabajo").val($('#materialTrabajo > option:first').val());
 	$("#tipo_trabajo").val($('#tipo_trabajo > option:first').val());
@@ -60,9 +64,39 @@ $("#limpiarFiltrosTrabajo").click(function () {
 	$("#codigoPTrabajo").val("");
 	buscarTrabajo();
 });
+
+$("#descargarPPTX").click(function () {
+	var codigop = $(this).data('codigopaciente');
+	alert(codigop);
+	console.log(codigop);
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'downloadFilepptx',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			codigopaciente:codigop,
+			_token: _token
+		},
+		success: function(result){
+			//alert("aqui va un sweet alert");
+			alert(codigop);
+			console.log($(codigop));
+			alert();
+		},
+		error: function () {
+
+		}
+	});
+});
+
 function buscarPaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
-
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -99,6 +133,7 @@ function buscarPaciente(){
 			Dfecha_inicial : $('#Dfecha_inicial').val(),
 			Dfecha_final : $('#Dfecha_final').val(),
 			invertir : $('#customSwitch1').prop('checked'),
+			rbCirugia: $("[name='rbCirugia']:checked").val(),
 			_token: _token
 		},
 		success: function(result){
@@ -110,6 +145,7 @@ function buscarPaciente(){
 		}
 	});
 }
+
 function buscarTrabajo(){
 	var _token = document.getElementsByName("_token")[0].value;
 
