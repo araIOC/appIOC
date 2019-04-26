@@ -16,13 +16,19 @@ $(document).ready(function(){
 	$( "#nombrePaciente,#codigoPaciente,#nombreT,#tipo_implante,#doctorPaciente,#asesorPaciente,"+
 		"#cbTac_pre,#CBpic_definitivo,#CBpic_provisional,#cbTac_post,#cbIOScan_pre,#cbIOScan_post,#cbOrto_pre,#cbOrto_post,"+
 		"#cbFotos_pre,#cbFotos_post,#cbFotos_protesis_pre,#cbFotos_protesis_post,#cbFotos_protesis_boca_pre,"+
-		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#Dfecha_inicial,#Dfecha_final,#customSwitch1,[name='rbCirugia']" ).on('change keyup click', function() {
+		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#customSwitch1,[name='rbCirugia'],[name='rangoFecha']" ).on('change keyup click', function() {
 			buscarPaciente();
 		});
+	$("#Dfecha_inicial,#Dfecha_final" ).on('change', function() {
+
+		buscarPaciente();
+		});
+
 //
 });
 $("#limpiarFiltroPacientes").click(function () {
 	$("[name='rbCirugia']:checked").prop( "checked", false );
+	$("[name='rangoFecha']:checked").prop( "checked", false );
 	$("#nombrePaciente").val("");
 	$("#codigoPaciente").val("");
 	$("#nombreT").val($('#nombreT > option:first').val());
@@ -134,6 +140,7 @@ function buscarPaciente(){
 			Dfecha_final : $('#Dfecha_final').val(),
 			invertir : $('#customSwitch1').prop('checked'),
 			rbCirugia: $("[name='rbCirugia']:checked").val(),
+			rangoFecha: $("[name='rangoFecha']:checked").val(),
 			_token: _token
 		},
 		success: function(result){

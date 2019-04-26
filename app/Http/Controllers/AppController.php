@@ -10,9 +10,6 @@ class AppController extends Controller{
 		$this->middleware('auth');
 	}
 
-	public function index(){
-		return view('bienvenido');
-	}
 
 	public function consultarPacientes(){
 
@@ -190,17 +187,20 @@ class AppController extends Controller{
 			$query1.=" AND pt.video_final = '".$estado."'";
 			$query2.=" AND pt.video_final = '".$estado."'";
 		}
-		if(request()->Dfecha_inicial == 'true'){
-			$query1.=" AND pt.fecha_inicio = '".request()->Dfecha_inicial."'";
-			$query2.=" AND pt.fecha_inicio = '".request()->Dfecha_inicial."'";
+		if(request()->rangoFecha == "f_inicio"){
+			$tipoFecha = "fecha_inicio";
 		}
-		if(request()->Dfecha_final == 'true'){
-			$query1.=" AND pt.fecha_definitiva= '".request()->Dfecha_final."'";
-			$query2.=" AND pt.fecha_definitiva= '".request()->Dfecha_final."'";
+		if(request()->rangoFecha == "f_definitiva"){
+			$tipoFecha = "fecha_definitiva";
+		}
+
+		if(request()->Dfecha_inicial && request()->fecha_definitiva){
+			$query1.=" AND pt.'".$tipoFecha."'BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+			$query2.=" AND pt.'".$tipoFecha."' BETWEEN  '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
 		}
 
 		$pacientes = DB::select($query1.$query2);
-
+		var_dump($query1.$query2);
 		return view('datosPaciente',['pacientes'=>$pacientes]);
 
 	}

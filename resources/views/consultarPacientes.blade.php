@@ -64,11 +64,11 @@
 				</div>
 			</div>
 			<div>
-				<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="auto" title="Cirugía estática">
+				<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="left" title="Cirugía estática">
 					<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input" value="rbcestatica">
 					<label class="custom-control-label" for="rbcestatica">Estática</label>
 				</div>
-				<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="auto" title="Cirugía dinámica">
+				<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">
 					<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input" value="rbcdinamica">
 					<label class="custom-control-label" for="rbcdinamica">Dinámica</label>
 				</div>
@@ -96,17 +96,27 @@
 
 	<div class="collapse navbar-collapse" id="navbar3">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-			<div class="mr-sm-2 my-2 my-lg-0">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
+			<div class="mr-sm-2 my-2 my-lg-0 col-md-3">
+				<div class="row">
+					<div class="input-group ">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
+						</div>
+						<input class="form-control" type="date" id="Dfecha_inicial" name="Dfecha_inicial" data-toggle="tooltip" data-placement="auto" title="Fecha inicial">
+						<input class="form-control" type="date" id="Dfecha_final" name="Dfecha_final" data-toggle="tooltip" data-placement="auto" title="Fecha definitiva">
 					</div>
-					<input class="form-control" type="date" id="Dfecha_inicial" name="Dfecha_inicial" data-toggle="tooltip" data-placement="auto" title="Fecha inicial">
-					<input class="form-control" type="date" id="Dfecha_final" name="Dfecha_final" data-toggle="tooltip" data-placement="auto" title="Fecha definitiva">
+					<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="bottom" title="Fecha de inicio">
+						<input type="radio" id="f_inicio" name="rangoFecha" class="custom-control-input" value="f_inicio">
+						<label class="custom-control-label" for="f_inicio">F.Inicio</label>
+					</div>
+					<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="bottom" title="Fecha definitiva">
+						<input type="radio" id="f_definitiva" name="rangoFecha" class="custom-control-input" value="f_definitiva">
+						<label class="custom-control-label" for="f_definitiva">F.Definitiva</label>
+					</div>
 				</div>
 			</div>
 			<div class=" form-inline my-2 my-lg-0">
-				<div class="input-group">
+				<div class="input-group mb-4">
 					<div class="input-group-prepend">
 						<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-user-nurse"></i></label>
 					</div>
@@ -118,7 +128,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbTac_pre">
 					<label class="form-check-label" >
@@ -132,7 +142,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbIOScan_pre">
 					<label class="form-check-label" >
@@ -146,7 +156,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbOrto_pre">
 					<label class="form-check-label" >
@@ -160,7 +170,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbFotos_pre">
 					<label class="form-check-label" >
@@ -174,7 +184,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbFotos_protesis_pre">
 					<label class="form-check-label" >
@@ -188,7 +198,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbFotos_protesis_boca_pre">
 					<label class="form-check-label" >
@@ -202,7 +212,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="text-white">
+			<div class="text-white mb-4">
 				<div class="form-check mr-sm-2">
 					<input class="form-check-input" type="checkbox" value="" id="cbVideo_pre">
 					<label class="form-check-label" >
@@ -216,7 +226,7 @@
 					</label>
 				</div>
 			</div>
-			<div class="border border-warning py-2 px-2 rounded-lg">
+			<div class="border border-warning py-2 px-2 rounded-lg mb-4">
 				<div class="custom-control custom-switch text-white ">
 					<input type="checkbox" class="custom-control-input" id="customSwitch1">
 					<label class="custom-control-label" for="customSwitch1">Invertir</label>

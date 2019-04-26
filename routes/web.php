@@ -13,7 +13,7 @@
 
 Route::get('/','Auth\LoginController@showLoginForm');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('app', 'AppController@index')->name('app');
+Route::get('app', 'AppController@consultarPacientes')->name('app');
 
 Route::get('pacientes', 'AppController@consultarPacientes')->name('consultar');
 Route::get('registroPaciente', 'AppController@registroPacientes')->name('registroPaciente');
