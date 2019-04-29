@@ -102,8 +102,8 @@
 						<div class="input-group-prepend">
 							<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
 						</div>
-						<input class="form-control" type="date" id="Dfecha_inicial" name="Dfecha_inicial" data-toggle="tooltip" data-placement="auto" title="Fecha inicial">
-						<input class="form-control" type="date" id="Dfecha_final" name="Dfecha_final" data-toggle="tooltip" data-placement="auto" title="Fecha definitiva">
+						<input class="form-control" type="date" id="Dfecha_inicial" name="Dfecha_inicial">
+						<input class="form-control" type="date" id="Dfecha_final" name="Dfecha_final">
 					</div>
 					<div class="custom-control custom-radio text-white mr-sm-2 cir" data-toggle="tooltip" data-placement="bottom" title="Fecha de inicio">
 						<input type="radio" id="f_inicio" name="rangoFecha" class="custom-control-input" value="f_inicio">
@@ -265,8 +265,8 @@
 					</li>
 
 					<li class="ml-auto mr-sm-2">
-						<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
-						<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button>
+						<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2 btn-fichacliente" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
+						<a id="modificar-tratamiento"><button class="btn btn-lg btn-warning ml-auto btn-fichacliente"   data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button></a>
 					</li>
 				</ul>
 				<div class="modal-body">
@@ -309,7 +309,7 @@
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item"><i id="icono_picpre"></i> PIC provisional</li>
+										<li class="list-group-item" id="picprivisional-modal"><i id="icono_picpre"></i> PIC provisional</li>
 										<li class="list-group-item"><i id="icono_tacpre"></i> TAC pre</li>
 										<li class="list-group-item"><i id="icono_ortopre"></i> Orto pre</li>
 										<li class="list-group-item"><i id="icono_ioscanpre"></i> IOScan pre</li>
@@ -355,7 +355,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal-footer">
+			<div class="modal-footer" id="footer-fichapaciente">
 				<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver trabajo" type="submit"><i class="far fa-eye"></i> NOMBRE DEL TRABAJO</button>
 				<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
 
@@ -363,5 +363,4 @@
 		</div>
 	</div>
 </div>
-<!-- modal modificar -->
 @endsection

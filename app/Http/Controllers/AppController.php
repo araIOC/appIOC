@@ -187,20 +187,32 @@ class AppController extends Controller{
 			$query1.=" AND pt.video_final = '".$estado."'";
 			$query2.=" AND pt.video_final = '".$estado."'";
 		}
+		$tipo_fecha = "";
 		if(request()->rangoFecha == "f_inicio"){
-			$tipoFecha = "fecha_inicio";
+			$tipo_fecha = "fecha_inicio";
 		}
 		if(request()->rangoFecha == "f_definitiva"){
-			$tipoFecha = "fecha_definitiva";
+			$tipo_fecha = "fecha_definitiva";
 		}
+		if(request()->rangoFecha && request()->fecha_definitiva && request()->Dfecha_inicial){
+			$query1.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+			$query2.=" AND pt.".$tipo_fecha." BETWEEN  '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
 
-		if(request()->Dfecha_inicial && request()->fecha_definitiva){
-			$query1.=" AND pt.'".$tipoFecha."'BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
-			$query2.=" AND pt.'".$tipoFecha."' BETWEEN  '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+		}
+		if(request()->rangoFecha && request()->fecha_definitiva && request()->Dfecha_inicial){
+			$query1.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+			$query2.=" AND pt.".$tipo_fecha." BETWEEN  '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+		}
+		if(request()->rangoFecha && request()->fecha_definitiva){
+			$query1.=" AND pt.".$tipo_fecha." <= '".request()->fecha_definitiva."'";
+			$query2.=" AND pt.".$tipo_fecha." <=  '".request()->fecha_definitiva."'";
+		}
+		if(request()->rangoFecha && request()->Dfecha_inicial){
+			$query1.=" AND pt.".$tipo_fecha." >= '".request()->Dfecha_inicial."'";
+			$query2.=" AND pt.".$tipo_fecha." >=  '".request()->Dfecha_inicial."'";
 		}
 
 		$pacientes = DB::select($query1.$query2);
-		var_dump($query1.$query2);
 		return view('datosPaciente',['pacientes'=>$pacientes]);
 
 	}
@@ -214,4 +226,42 @@ class AppController extends Controller{
 		/*$pathtoFile = public_path().'images/'.$file;
 		return response()->download($pathtoFile);*/
 	}
+	public function modificarDoctorPacientes(){
+		$doctores = DB::table('doctores')->select()->get();
+		$select = '<select class="custom-select mr-sm-2" id="doctorPaciente" name="doctorPaciente">';
+		foreach ($doctores as $doctor) {
+			$select .='<option value="'.$doctor->nombreD.'" ('.$doctor->nombreD.' == '.request()->nombreDoctor.') ? "selected" : "">'.$doctor->nombreD.'</option>';
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+	public function modificarAsesorPacientes(){
+		$asesores = DB::table('asesores')->select()->get();
+		$nombreAsesorPaciente = request()->nombreAsesor;
+		$select = '<select class="custom-select mr-sm-2" id="asesorPaciente" name="asesorPaciente">';
+		foreach ($asesores as $asesor) {
+			if($asesor->nombreA == $nombreAsesorPaciente){
+				$select .='<option value="'.$asesor->nombreA.'" selected>'.$asesor->nombreA.'</option>';
+			}else{
+				$select .='<option value="'.$asesor->nombreA.'">'.$asesor->nombreA.'</option>';
+			}
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+	public function modificarImplantePaciente(){
+		$implantes = DB::table('implantes')->select()->get();
+		$implantePaciente = request()->implante;
+		$select = '<select class="custom-select mr-sm-2" id="asesorPaciente" name="asesorPaciente">';
+		foreach ($implantes as $implante) {
+			if($implante->tipo == $implantePaciente){
+				$select .='<option value="'.$implante->tipo.'" selected>'.$implante->tipo.'</option>';
+			}else{
+				$select .='<option value="'.$implante->tipo.'">'.$implante->tipo.'</option>';
+			}
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+
 }

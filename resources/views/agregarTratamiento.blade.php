@@ -8,6 +8,28 @@
 				<form>
 					<div class="form-row">
 						<div class="form-group col-md-6">
+							<label for="inputDoctor">Código del paciente</label>
+							<div class=" my-2 my-lg-0">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-tags"></i></label>
+									</div>
+									<input type="text" class="form-control" id="codigopaciente" placeholder="Código..." name="codigopaciente">
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="inputDoctor">Nombre del paciente</label>
+							<div class=" my-2 my-lg-0">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text" id="basic-addon1"><i class="fas fa-address-card"></i></span>
+									</div>
+									<input class="form-control mr-sm-2" type="search" placeholder="Nombre..." aria-label="Search" name="nombrePaciente" id="nombrePaciente">
+								</div>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
 							<label for="inputTratamiento">Tratamiento</label>
 							<div class=" my-2 my-lg-0">
 								<div class="input-group">
@@ -52,7 +74,7 @@
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Elija un doctor...</option>
 										@foreach($doctores as $doctor)
-										<option value="{{$doctor->nombreD}}" class="highlight">{{$doctor->nombreD}} {{$doctor->apellidosD}}</option>
+										<option value="{{$doctor->nombreD}}" class="highlight">{{$doctor->nombreD}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -68,7 +90,7 @@
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Elija un asesor...</option>
 										@foreach($asesores as $asesor)
-										<option value="{{$asesor->nombreA}}" class="highlight">{{$asesor->nombreA}} {{$asesor->apellidosA}}</option>
+										<option value="{{$asesor->nombreA}}" class="highlight">{{$asesor->nombreA}}</option>
 										@endforeach
 									</select>
 								</div>
@@ -76,7 +98,7 @@
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-2">
 							<label for="inputTratamiento">Cirugía guiada </label>
 							<div class="input-group">
 								<div class="form-check form-check-inline">
@@ -89,7 +111,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-2">
 							<label for="inputTratamiento">PIC</label>
 							<div class="mr-sm-2">
 								<div class="form-check ">
@@ -107,7 +129,7 @@
 							</div>
 
 						</div>
-						<div class="form-group col-md-2">
+						<div class="form-group col-md-1">
 							<label for="inputTratamiento">TAC</label>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -122,7 +144,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="form-group col-md-2">
+						<div class="form-group col-md-1">
 							<label for="inputTratamiento">ORTO</label>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -137,9 +159,8 @@
 								</label>
 							</div>
 						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-2">
+
+						<div class="form-group col-md-1">
 							<label for="inputTratamiento">FOTOS</label>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -154,7 +175,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="form-group col-md-4">
+						<div class="form-group col-md-2">
 							<label for="inputTratamiento" class="text-dark">FOTOS</label>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -169,7 +190,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="form-group col-md-5">
+						<div class="form-group col-md-3">
 							<label for="inputTratamiento" class="text-dark">PROTESIS BOCA</label>
 							<div class="form-check mr-sm-2">
 								<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
@@ -186,7 +207,7 @@
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-3">
+						<div class="form-group col-md-2">
 							<div class="mr-sm-2">
 								<label for="inputTratamiento">IOScan</label>
 								<div class="form-check mr-sm-2">
@@ -219,7 +240,7 @@
 								</label>
 							</div>
 						</div>
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-8">
 							<div class=" my-2 my-lg-0">
 								<label for="inputTratamiento">Link Dropbox</label>
 								<div class="input-group">

@@ -5,6 +5,8 @@ $(document).ready(function(){
 	buscarTrabajo();
 	buscarPaciente();
 
+
+
 	$( "#materialDisco,#marcaDisco,#colorDisco" ).on('change', function() {
 		buscarDisco();
 	});
@@ -19,12 +21,16 @@ $(document).ready(function(){
 		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#customSwitch1,[name='rbCirugia'],[name='rangoFecha']" ).on('change keyup click', function() {
 			buscarPaciente();
 		});
-	$("#Dfecha_inicial,#Dfecha_final" ).on('change', function() {
-
-		buscarPaciente();
+		$("#Dfecha_inicial,#Dfecha_final" ).on('change', function() {
+			buscarPaciente();
 		});
 
 //
+});
+$( "#modificar-tratamiento" ).on('click', function() {
+	modificarDoctorPaciente();
+	modificarAsesorPaciente();
+	modificarImplantePaciente();
 });
 $("#limpiarFiltroPacientes").click(function () {
 	$("[name='rbCirugia']:checked").prop( "checked", false );
@@ -100,7 +106,75 @@ $("#descargarPPTX").click(function () {
 		}
 	});
 });
+function modificarImplantePaciente(){
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'modificarImplantePaciente',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			implante: implante,
+			_token: _token
+		},
+		success: function(result){
+			$('#tipo_implante_fichapaciente').html(result);
+		},
+		error: function () {
 
+		}
+	});
+}
+function modificarDoctorPaciente(){
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'modificarDoctorPacientes',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			nombreDoctor: doctor,
+			_token: _token
+		},
+		success: function(result){
+			$('#doctor_fichapaciente').html(result);
+		},
+		error: function () {
+
+		}
+	});
+}
+function modificarAsesorPaciente(){
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'modificarAsesorPacientes',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			nombreAsesor: asesor,
+			_token: _token
+		},
+		success: function(result){
+			$('#asesor_fichapaciente').html(result);
+		},
+		error: function () {
+
+		}
+	});
+}
 function buscarPaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
@@ -137,7 +211,7 @@ function buscarPaciente(){
 			cbVideo_pre : $('#cbVideo_pre').prop('checked'),
 			cbVideo_post : $('#cbVideo_post').prop('checked'),
 			Dfecha_inicial : $('#Dfecha_inicial').val(),
-			Dfecha_final : $('#Dfecha_final').val(),
+			fecha_definitiva : $('#Dfecha_final').val(),
 			invertir : $('#customSwitch1').prop('checked'),
 			rbCirugia: $("[name='rbCirugia']:checked").val(),
 			rangoFecha: $("[name='rangoFecha']:checked").val(),

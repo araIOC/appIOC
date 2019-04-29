@@ -20,6 +20,9 @@ Route::get('registroPaciente', 'AppController@registroPacientes')->name('registr
 Route::any('agregarPaciente', 'AppController@agregarPacientes')->name('agregarPaciente');
 Route::any('buscadorPaciente', 'AppController@buscadorPaciente')->name('buscadorPaciente');
 Route::any('downloadFilepptx', 'AppController@downloadFilepptx')->name('downloadFilepptx');
+Route::any('modificarDoctorPacientes', 'AppController@modificarDoctorPacientes')->name('modificarDoctorPacientes');
+Route::any('modificarAsesorPacientes', 'AppController@modificarAsesorPacientes')->name('modificarAsesorPacientes');
+Route::any('modificarImplantePaciente', 'AppController@modificarImplantePaciente')->name('modificarImplantePaciente');
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
 

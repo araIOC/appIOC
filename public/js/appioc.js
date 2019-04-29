@@ -190,6 +190,7 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
       $('#pdf-modal').show();
    }
 });
+
 $("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	var nombrep = $(this).data('nombrep');
 	var apellidos = $(this).data('apellidos');
@@ -226,28 +227,72 @@ $("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
 	$('#altura_fichadisco').text(altura);
 	$('#fecha_alta_fichadisco').text(fecha_alta.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 });
-$(".borrar").click(function () {
-	Swal.fire({
-		title: '¿Estás seguro?',
-		text: "¿Desea dar de baja este registro?",
-		type: 'warning',
-		confirmButtonText: 'Sí, ¡Dar de baja!',
-		showCancelButton: true,
-		cancelButtonText:  'Cancelar',
-		confirmButtonColor: '#3085d6',
-		cancelButtonColor: '#d33',
-		reverseButtons: true
 
-	}).then((result) => {
-		if (result.value) {
-			Swal.fire(
-				'¡Hecho!',
-				'El registro se ha dado de baja con éxito.',
-				'success'
-				)
-		}
-	})
-});
+$("#modificar-tratamiento").click(function (){
+   $('.btn-fichacliente').hide();
+   $('#footer-fichapaciente').hide();
+
+   doctor = $('#doctor_fichapaciente').text();
+   $('#doctor_fichapaciente').empty();
+
+   asesor = $('#asesor_fichapaciente').text();
+   $('#asesor_fichapaciente').empty();
+
+   implante = $('#tipo_implante_fichapaciente').text();
+   $('#tipo_implante_fichapaciente').empty();
+
+   cirugia = $('#cirugia_fichapaciente').text();
+   $('#cirugia_fichapaciente').empty();
+   rb = "";
+   if(cirugia == "Estática"){
+      rb = '<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
+      '<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input" value="rbcestatica" checked>'+
+      '<label class="custom-control-label" for="rbcestatica">Estática</label>'+
+      '</div>'+
+      '<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
+      '<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input" value="rbcdinamica">'+
+      '<label class="custom-control-label" for="rbcdinamica">Dinámica</label>'+
+      '</div></div>';
+   }
+   if(cirugia == "Dinámica"){
+      rb ='<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
+      '<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input" value="rbcestatica">'+
+      '<label class="custom-control-label" for="rbcestatica">Estática</label>'+
+      '</div>'+
+      '<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
+      '<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input" value="rbcdinamica" checked>'+
+      '<label class="custom-control-label" for="rbcdinamica">Dinámica</label>'+
+      '</div></div>'
+   }
+   $('#cirugia_fichapaciente').append(rb);
+$('#picprivisional-modal').empty();
+  if($(this).data('pic_provisional') == 0){
+      $('#picprivisional-modal').append('<input class="form-check-input" type="checkbox" value="" id="CBpic_provisional"><input class="form-check-input" type="checkbox" value="" id="CBpic_provisional"><label class="form-check-label" >PIC provisional</label>');
+  }
+   });
+
+      $(".borrar").click(function () {
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "¿Desea dar de baja este registro?",
+          type: 'warning',
+          confirmButtonText: 'Sí, ¡Dar de baja!',
+          showCancelButton: true,
+          cancelButtonText:  'Cancelar',
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          reverseButtons: true
+
+       }).then((result) => {
+          if (result.value) {
+            Swal.fire(
+              '¡Hecho!',
+              'El registro se ha dado de baja con éxito.',
+              'success'
+              )
+         }
+      })
+    });
 
 
 
