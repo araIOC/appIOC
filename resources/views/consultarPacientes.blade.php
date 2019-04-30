@@ -250,9 +250,9 @@
 
 		</tbody>
 	</table>
-	<div class="modal fade modal-ficha-cliente" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
+	<div class="modal fade modal-ficha-cliente" id="modal-pacientes" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl" >
+			<div class="modal-content" id="ficha-paciente-tratamiento">
 				<div class="modal-header">
 					<h5 class="modal-title" id="nombrep"></h5>
 
@@ -302,50 +302,38 @@
 											</tr>
 											<tr>
 												<th scope="row"><i class="fab fa-dropbox"></i></th>
-												<td><a href="" target="_blank" id="link_dropbox"></a></td>
+												<td id="dropbox"><a href="" target="_blank" id="link_dropbox"></a></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item" id="picprivisional-modal"><i id="icono_picpre"></i> PIC provisional</li>
-										<li class="list-group-item"><i id="icono_tacpre"></i> TAC pre</li>
-										<li class="list-group-item"><i id="icono_ortopre"></i> Orto pre</li>
-										<li class="list-group-item"><i id="icono_ioscanpre"></i> IOScan pre</li>
-										<li class="list-group-item"><i id="icono_fotopre"></i> Fotos pre</li>
-										<li class="list-group-item"><i id="icono_fotoprotesispre"></i> Fotos protesis pre</li>
-										<li class="list-group-item"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre</li>
-										<li class="list-group-item"><i id="icono_videopre"></i> Video pre</li>
+										<li class="list-group-item" id="picprovisional-modal"><i id="icono_picpre"></i> PIC provisional</li>
+										<li class="list-group-item" id="tacpre-modal"><i id="icono_tacpre"></i> TAC pre</li>
+										<li class="list-group-item" id="ortopre-modal"><i id="icono_ortopre"></i> Orto pre</li>
+										<li class="list-group-item" id="ioscanpre-modal"><i id="icono_ioscanpre"></i> IOScan pre</li>
+										<li class="list-group-item" id="fotopre-modal"><i id="icono_fotopre"></i> Fotos pre</li>
+										<li class="list-group-item" id="fotoprotesispre-modal"><i id="icono_fotoprotesispre"></i> Fotos protesis pre</li>
+										<li class="list-group-item" id="fotoprotesisbocapre-modal"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre</li>
+										<li class="list-group-item" id="videopre-modal"><i id="icono_videopre"></i> Video pre</li>
 									</ul>
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item"><i id="icono_picpost"></i> PIC definitivo</li>
-										<li class="list-group-item"><i id="icono_tacpost"></i> TAC post</li>
-										<li class="list-group-item"><i id="icono_ortopost"></i> Orto post</li>
-										<li class="list-group-item"><i id="icono_ioscanpost"></i> IOScan post</li>
-										<li class="list-group-item"><i id="icono_fotopost"></i> Fotos post</li>
-										<li class="list-group-item"><i id="icono_fotoprotesispost"></i> Fotos protesis post</li>
-										<li class="list-group-item"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post</li>
-										<li class="list-group-item"><i id="icono_videopost"></i> Video post</li>
+										<li class="list-group-item" id="picpost-modal"><i id="icono_picpost"></i> PIC definitivo</li>
+										<li class="list-group-item" id="tacpost-modal"><i id="icono_tacpost"></i> TAC post</li>
+										<li class="list-group-item" id="ortopost-modal"><i id="icono_ortopost"></i> Orto post</li>
+										<li class="list-group-item" id="ioscanpost-modal"><i id="icono_ioscanpost"></i> IOScan post</li>
+										<li class="list-group-item" id="fotopost-modal"><i id="icono_fotopost"></i> Fotos post</li>
+										<li class="list-group-item" id="fotoprotesispost-modal"><i id="icono_fotoprotesispost"></i> Fotos protesis post</li>
+										<li class="list-group-item" id="fotoprotesisbocapost-modal"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post</li>
+										<li class="list-group-item" id="videopost-modal"><i id="icono_videopost"></i> Video post</li>
 									</ul>
 								</div>
 							</div>
 						</div>
-						<!--PRUEBA-LOS BOTONES SON PARA DESCARGAR
-			<div class="form-row ">
-							<div class="col-md-4 mx-auto">
-								<input type="file" class="custom-file-input" id="customFileLang" lang="es">
-								<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> POWER POINT</label>
-							</div>
-							<div class="col-md-4 mx-auto">
-								<input type="file" class="custom-file-input" id="customFileLang" lang="es">
-								<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>
-							</div>
-						</div>
-					-->
-					<div class="form-row py-2">
+					<div class="form-row py-2" id="row-btn-files">
 						<div class="col-md-4 mx-auto" id="powerpoint-modal">
 							<a href="{{route('downloadFilepptx')}}" id="descargarPPTX"><button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button></a>
 						</div>

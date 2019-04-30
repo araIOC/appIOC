@@ -5,7 +5,7 @@
 	<td class="td-datosdisco" data-toggle="modal" data-target=".modal-ficha-disco" data-codigod="{{$disco->codigo}}" data-materiald="{{$disco->material}}" data-escala="{{$disco->escala}}" data-color="{{$disco->color}}" data-fecha_alta="{{$disco->fecha_alta}}" data-altura="{{$disco->altura}}">{{$disco->material}}</td>
 	<td class="td-datosdisco" data-toggle="modal" data-target=".modal-ficha-disco" data-codigod="{{$disco->codigo}}" data-materiald="{{$disco->material}}" data-escala="{{$disco->escala}}" data-color="{{$disco->color}}" data-fecha_alta="{{$disco->fecha_alta}}" data-altura="{{$disco->altura}}">{{$disco->marca}}</td>
 	<td>
-		<button data-toggle="tooltip" data-placement="auto" title="Dar de baja" class="btn btn-outline-warning mr-sm-2 mx-auto borrar" type="submit" name="{{$disco->codigo}}"><i class="fas fa-arrow-alt-circle-down"></i></button>
+		<a data-codigod="{{$disco->codigo}}" class="darBajaDisco"><button  data-toggle="tooltip" data-placement="auto" title="Dar de baja" class="btn btn-outline-warning mr-sm-2 mx-auto " type="submit" name="{{$disco->codigo}}"><i class="fas fa-arrow-alt-circle-down"></i></button></a>
 
 		<button data-toggle="tooltip" data-placement="auto" title="Modificar" class="btn btn-outline-warning mx-auto" type="submit"><i class="fas fa-sync-alt"></i></button>
 	</td>

@@ -44,7 +44,7 @@ class DiscosController extends Controller{
 		$marca = request()->marcaDisco;
 		$color = request()->colorDisco;
 
-		$query ='SELECT * FROM discos where 1 =1';
+		$query ='SELECT * FROM discos where fecha_baja IS NULL ';
 		if($material != "Material..."){
 			$query = $query." AND material = '".$material."'";
 		}
@@ -58,5 +58,11 @@ class DiscosController extends Controller{
 		$discos = DB::select($query);
 		return view('datosDiscos',['discos'=>$discos]);
 
+	}
+
+	public function darBajaDisco(){
+		DB::table('discos')->where('codigo', request()->codigod)
+		->update(['fecha_baja' => date("Y") . "-" . date("m") . "-" . date("d")]);
+echo request()->codigod;
 	}
 }

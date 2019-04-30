@@ -65,118 +65,22 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
    $('#tratamiento_actual').text(tratamiento);
    $('#descargarPPTX').data('codigopaciente',codigoP);
 
-   if(pic_provisional == 1){
-   	$('#icono_picpre').addClass('fas');
-   	$('#icono_picpre').addClass('fa-check');
-   }else{
-   	$('#icono_picpre').addClass('fas');
-   	$('#icono_picpre').addClass('fa-times');
-   }
-   if(pic_final == 1){
-   	$('#icono_picpost').addClass('fas');
-   	$('#icono_picpost').addClass('fa-check');
-   }else{
-   	$('#icono_picpost').addClass('fas');
-   	$('#icono_picpost').addClass('fa-times');
-   }
-   if(tac_pre == 1){
-   	$('#icono_tacpre').addClass('fas');
-   	$('#icono_tacpre').addClass('fa-check');
-   }else{
-   	$('#icono_tacpre').addClass('fas');
-   	$('#icono_tacpre').addClass('fa-times');
-   }
-   if(tac_post == 1){
-   	$('#icono_tacpost').addClass('fas');
-   	$('#icono_tacpost').addClass('fa-check');
-   }else{
-   	$('#icono_tacpost').addClass('fas');
-   	$('#icono_tacpost').addClass('fa-times');
-   }
-   if(orto_pre == 1){
-   	$('#icono_ortopre').addClass('fas');
-   	$('#icono_ortopre').addClass('fa-check');
-   }else{
-   	$('#icono_ortopre').addClass('fas');
-   	$('#icono_ortopre').addClass('fa-times');
-   }
-   if(orto_post == 1){
-   	$('#icono_ortopost').addClass('fas');
-   	$('#icono_ortopost').addClass('fa-check');
-   }else{
-   	$('#icono_ortopost').addClass('fas');
-   	$('#icono_ortopost').addClass('fa-times');
-   }
-   if(ioscan_pre == 1){
-   	$('#icono_ioscanpre').addClass('fas');
-   	$('#icono_ioscanpre').addClass('fa-check');
-   }else{
-   	$('#icono_ioscanpre').addClass('fas');
-   	$('#icono_ioscanpre').addClass('fa-times');
-   }
-   if(ioscan_post == 1){
-   	$('#icono_ioscanpost').addClass('fas');
-   	$('#icono_ioscanpost').addClass('fa-check');
-   }else{
-   	$('#icono_ioscanpost').addClass('fas');
-   	$('#icono_ioscanpost').addClass('fa-times');
-   }
-   if(fotos_pre == 1){
-   	$('#icono_fotopre').addClass('fas');
-   	$('#icono_fotopre').addClass('fa-check');
-   }else{
-   	$('#icono_fotopre').addClass('fas');
-   	$('#icono_fotopre').addClass('fa-times');
-   }
-   if(foto_post == 1){
-   	$('#icono_fotopost').addClass('fas');
-   	$('#icono_fotopost').addClass('fa-check');
-   }else{
-   	$('#icono_fotopost').addClass('fas');
-   	$('#icono_fotopost').addClass('fa-times');
-   }
-   if(foto_protesis == 1){
-   	$('#icono_fotoprotesispre').addClass('fas');
-   	$('#icono_fotoprotesispre').addClass('fa-check');
-   }else{
-   	$('#icono_fotoprotesispre').addClass('fas');
-   	$('#icono_fotoprotesispre').addClass('fa-times');
-   }
-   if(foto_protesis_final == 1){
-   	$('#icono_fotoprotesispost').addClass('fas');
-   	$('#icono_fotoprotesispost').addClass('fa-check');
-   }else{
-   	$('#icono_fotoprotesispost').addClass('fas');
-   	$('#icono_fotoprotesispost').addClass('fa-times');
-   }
-   if(foto_protesis_boca_provisional == 1){
-   	$('#icono_fotoprotesisbocapre').addClass('fas');
-   	$('#icono_fotoprotesisbocapre').addClass('fa-check');
-   }else{
-   	$('#icono_fotoprotesisbocapre').addClass('fas');
-   	$('#icono_fotoprotesisbocapre').addClass('fa-times');
-   }
-   if(foto_protesis_boca_final == 1){
-   	$('#icono_fotoprotesisbocapost').addClass('fas');
-   	$('#icono_fotoprotesisbocapost').addClass('fa-check');
-   }else{
-   	$('#icono_fotoprotesisbocapost').addClass('fas');
-   	$('#icono_fotoprotesisbocapost').addClass('fa-times');
-   }
-   if(video_pre == 1){
-   	$('#icono_videopre').addClass('fas');
-   	$('#icono_videopre').addClass('fa-check');
-   }else{
-   	$('#icono_videopre').addClass('fas');
-   	$('#icono_videopre').addClass('fa-times');
-   }
-   if(video_final == 1){
-   	$('#icono_videopost').addClass('fas');
-   	$('#icono_videopost').addClass('fa-check');
-   }else{
-   	$('#icono_videopost').addClass('fas');
-   	$('#icono_videopost').addClass('fa-times');
-   }
+   rellenarListaCB(pic_provisional,'#icono_picpre','#picprovisional-modal');
+   rellenarListaCB(pic_final,'#icono_picpost','#picpost-modal');
+   rellenarListaCB(tac_pre,'#icono_tacpre','#tacpre-modal');
+   rellenarListaCB(tac_post,'#icono_tacpost','#tacpost-modal');
+   rellenarListaCB(orto_pre,'#icono_ortopre','#ortopre-modal');
+   rellenarListaCB(orto_post,'#icono_ortopost','#ortopost-modal');
+   rellenarListaCB(ioscan_pre,'#icono_ioscanpre','#ioscanpre-modal');
+   rellenarListaCB(ioscan_post,'#icono_ioscanpost','#ioscanpost-modal');
+   rellenarListaCB(fotos_pre,'#icono_fotopre','#fotopre-modal');
+   rellenarListaCB(foto_post,'#icono_fotopost','#fotopost-modal');
+   rellenarListaCB(foto_protesis,'#icono_fotoprotesispre','#fotoprotesispre-modal');
+   rellenarListaCB(foto_protesis_final,'#icono_fotoprotesispost','#fotoprotesispost-modal');
+   rellenarListaCB(foto_protesis_boca_provisional,'#icono_fotoprotesisbocapre','#fotoprotesisbocapre-modal');
+   rellenarListaCB(foto_protesis_boca_final,'#icono_fotoprotesisbocapost','#fotoprotesisbocapost-modal');
+   rellenarListaCB(video_pre,'#icono_videopre','#videopre-modal');
+   rellenarListaCB(video_final,'#icono_videopost','#videopost-modal');
 
    if(powerpoint  === 'No'){
       $('#powerpoint-modal').hide();
@@ -229,6 +133,7 @@ $("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
 });
 
 $("#modificar-tratamiento").click(function (){
+   $('#modal-pacientes').data('backdrop', 'static');
    $('.btn-fichacliente').hide();
    $('#footer-fichapaciente').hide();
 
@@ -243,56 +148,135 @@ $("#modificar-tratamiento").click(function (){
 
    cirugia = $('#cirugia_fichapaciente').text();
    $('#cirugia_fichapaciente').empty();
-   rb = "";
+
+   var checkEstatica = "";
+   var checkDinamica = "";
    if(cirugia == "Estática"){
-      rb = '<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
-      '<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input" value="rbcestatica" checked>'+
-      '<label class="custom-control-label" for="rbcestatica">Estática</label>'+
-      '</div>'+
-      '<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
-      '<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input" value="rbcdinamica">'+
-      '<label class="custom-control-label" for="rbcdinamica">Dinámica</label>'+
-      '</div></div>';
+      checkEstatica = 'checked';
    }
    if(cirugia == "Dinámica"){
-      rb ='<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
-      '<input type="radio" id="rbcestatica" name="rbCirugia" class="custom-control-input" value="rbcestatica">'+
-      '<label class="custom-control-label" for="rbcestatica">Estática</label>'+
-      '</div>'+
-      '<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
-      '<input type="radio" id="rbcdinamica" name="rbCirugia" class="custom-control-input" value="rbcdinamica" checked>'+
-      '<label class="custom-control-label" for="rbcdinamica">Dinámica</label>'+
-      '</div></div>'
+      checkDinamica = 'checked';
    }
+   rb ='<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
+   '<input type="radio" id="rbcestatica-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcestatica-modificar" '+checkEstatica+'>'+
+   '<label class="custom-control-label" for="rbcestatica-modificar">Estática</label>'+
+   '</div>'+
+   '<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
+   '<input type="radio" id="rbcdinamica-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcdinamica-modificar" '+checkDinamica+'>'+
+   '<label class="custom-control-label" for="rbcdinamica-modificar">Dinámica</label>'+
+   '</div></div>';
+
    $('#cirugia_fichapaciente').append(rb);
-$('#picprivisional-modal').empty();
-  if($(this).data('pic_provisional') == 0){
-      $('#picprivisional-modal').append('<input class="form-check-input" type="checkbox" value="" id="CBpic_provisional"><input class="form-check-input" type="checkbox" value="" id="CBpic_provisional"><label class="form-check-label" >PIC provisional</label>');
-  }
-   });
 
-      $(".borrar").click(function () {
-        Swal.fire({
-          title: '¿Estás seguro?',
-          text: "¿Desea dar de baja este registro?",
-          type: 'warning',
-          confirmButtonText: 'Sí, ¡Dar de baja!',
-          showCancelButton: true,
-          cancelButtonText:  'Cancelar',
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          reverseButtons: true
+   ponerModificarFecha('#fecha_inicio_fichapaciente','f_inicio-modificar');
+   ponerModificarFecha('#fecha_definitiva_fichapaciente','f_final-modificar');
 
-       }).then((result) => {
-          if (result.value) {
-            Swal.fire(
-              '¡Hecho!',
-              'El registro se ha dado de baja con éxito.',
-              'success'
-              )
-         }
-      })
-    });
+   linkDropbox = $('#link_dropbox').text();
+   $('#dropbox').empty();
+   $('#dropbox').append('<input type="text" class="form-control" name="linkDropbox-moificar" id="linkDropbox-moificar">');
+   $("#linkDropbox-moificar").val(linkDropbox);
+
+
+   $('#picprovisional-modal').empty();
+   $('#picpost-modal').empty();
+   $('#tacpre-modal').empty();
+   $('#tacpost-modal').empty();
+   $('#ortopre-modal').empty();
+   $('#ortopost-modal').empty();
+   $('#ioscanpre-modal').empty();
+   $('#ioscanpost-modal').empty();
+   $('#fotopre-modal').empty();
+   $('#fotopost-modal').empty();
+   $('#fotoprotesispre-modal').empty();
+   $('#fotoprotesispost-modal').empty();
+   $('#fotoprotesisbocapre-modal').empty();
+   $('#fotoprotesisbocapost-modal').empty();
+   $('#videopre-modal').empty();
+   $('#videopost-modal').empty();
+
+   ponerCB('#picprovisional-modal','picprovisional-modificar', "Pic Provisional");
+   ponerCB('#picpost-modal','picpost-modificar', "Pic Definitivo");
+   ponerCB('#tacpre-modal','tacpre-modificar', "TAC pre");
+   ponerCB('#tacpost-modal','tacpost-modificar', "TAC post");
+   ponerCB('#ortopre-modal','ortopre-modificar', "Orto pre");
+   ponerCB('#ortopost-modal','ortopost-modificar', "Orto post");
+   ponerCB('#ioscanpre-modal','ioscanpre-modificar', "IOScan pre");
+   ponerCB('#ioscanpost-modal','ioscanpost-modificar', "IOScan post");
+   ponerCB('#fotopre-modal','fotopre-modificar', "Fotos pre");
+   ponerCB('#fotopost-modal','fotopost-modificar', "Fotos post");
+   ponerCB('#fotoprotesispre-modal','fotoprotesispre-modificar', "Fotos protesis pre");
+   ponerCB('#fotoprotesispost-modal','fotoprotesispost-modificar', "Fotos protesis post");
+   ponerCB('#fotoprotesisbocapre-modal','fotoprotesisbocapre-modificar', "Fotos protesis en boca pre");
+   ponerCB('#fotoprotesisbocapost-modal','fotoprotesisbocapost-modificar', "Fotos protesis en boca post");
+   ponerCB('#videopre-modal','videopre-modificar', "Video pre");
+   ponerCB('#videopost-modal','videopost-modificar', "Video post");
+
+   $('#row-btn-files').empty();
+   $('#row-btn-files').append('<div class="col-md-4 mx-auto">'+
+      '<input type="file" class="custom-file-input" id="customFileLang" lang="es">'+
+      '<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> POWER POINT</label>'+
+      '</div>'+
+      '<div class="col-md-4 mx-auto">'+
+      '<input type="file" class="custom-file-input" id="customFileLang" lang="es">'+
+      '<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>'+
+      '</div>');
+
+   $('#ficha-paciente-tratamiento').append('<div class="modal-footer" id="footer-fichapaciente">'+
+      '<button class="btn btn-lg btn-warning ml-auto" type="submit"><i class="fas fa-save"></i> MODIFICAR</button>'+
+      '</div>');
+
+});
+
+function ponerModificarFecha(id_fecha, nombreFecha) {
+   fecha = $(id_fecha).text();
+   $(id_fecha).empty();
+   var nuevaFecha = fecha.split('/');
+   nuevaFecha = nuevaFecha[2]+ '-' + nuevaFecha[1] + '-' + nuevaFecha[0];
+   $(id_fecha).append('<input class="form-control" type="date" id="'+nombreFecha+'" name="'+nombreFecha+'" value="'+nuevaFecha+'">');
+
+}
+
+function rellenarListaCB(cb,id_icono, id_td){
+   if(cb == 1){
+      $(id_icono).addClass('fas');
+      $(id_icono).addClass('fa-check');
+      $(id_td).addClass('check');
+   }else{
+      $(id_icono).addClass('fas');
+      $(id_icono).addClass('fa-times');
+      $(id_td).addClass('uncheck');
+   }
+}
+
+function ponerCB(id_td, id_input,nombreInput) {
+   if($(id_td).hasClass('check')){
+      $(id_td).append('<input class="form-check-input" type="checkbox" value="" id="'+ id_input +'" checked="checked"><label class="form-check-label" >'+nombreInput+'</label>');
+   }else if($(id_td).hasClass('uncheck')){
+      $(id_td).append('<input class="form-check-input" type="checkbox" value="" id="'+ id_input +'"><label class="form-check-label" >'+nombreInput+'</label>');
+   }
+}
+$(".borrar").click(function () {
+  Swal.fire({
+    title: '¿Estás seguro?',
+    text: "¿Desea dar de baja este registro?",
+    type: 'warning',
+    confirmButtonText: 'Sí, ¡Dar de baja!',
+    showCancelButton: true,
+    cancelButtonText:  'Cancelar',
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    reverseButtons: true
+
+ }).then((result) => {
+    if (result.value) {
+      Swal.fire(
+        '¡Hecho!',
+        'El registro se ha dado de baja con éxito.',
+        'success'
+        )
+   }
+})
+});
 
 
 

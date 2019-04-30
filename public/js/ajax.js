@@ -106,6 +106,34 @@ $("#descargarPPTX").click(function () {
 		}
 	});
 });
+$("#tablaPacientesConsulta").on("click", ".darBajaDisco", function(){
+	var _token = document.getElementsByName("_token")[0].value;
+	alert($('.darBajaDisco').data('codigod'));
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'darBajaDisco',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			codigod: $(this).data('codigod'),
+			_token: _token
+		},
+		success: function(result){
+			Swal.fire(
+				'Good job!',
+				'You clicked the button!',
+				'success'
+				)
+		},
+		error: function () {
+
+		}
+	});
+});
 function modificarImplantePaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({

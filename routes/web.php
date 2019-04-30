@@ -38,6 +38,7 @@ Route::any('registroDisco', 'DiscosController@registroDisco')->name('registroDis
 Route::any('agregarDisco', 'DiscosController@agregarDisco')->name('agregarDisco');
 Route::get('disco', 'DiscosController@consultarDiscos')->name('consultarDiscos');
 Route::any('buscadorDisco', 'DiscosController@buscadorDisco')->name('buscadorDisco');
+Route::any('darBajaDisco', 'DiscosController@darBajaDisco')->name('darBajaDisco');
 
 //Auth::routes();
 
