@@ -5,8 +5,6 @@ $(document).ready(function(){
 	buscarTrabajo();
 	buscarPaciente();
 
-
-
 	$( "#materialDisco,#marcaDisco,#colorDisco" ).on('change', function() {
 		buscarDisco();
 	});
@@ -27,6 +25,7 @@ $(document).ready(function(){
 
 //
 });
+
 $( "#modificar-tratamiento" ).on('click', function() {
 	modificarDoctorPaciente();
 	modificarAsesorPaciente();
@@ -106,33 +105,59 @@ $("#descargarPPTX").click(function () {
 		}
 	});
 });
-$("#tablaPacientesConsulta").on("click", ".darBajaDisco", function(){
-	var _token = document.getElementsByName("_token")[0].value;
-	alert($('.darBajaDisco').data('codigod'));
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-	$.ajax({
-		url: 'darBajaDisco',
-		method: 'post',
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		data: {
-			codigod: $(this).data('codigod'),
-			_token: _token
-		},
-		success: function(result){
-			Swal.fire(
-				'Good job!',
-				'You clicked the button!',
-				'success'
-				)
-		},
-		error: function () {
+$("#tablaDiscosConsulta").on("click", ".darBajaDisco", function(){
+	Swal.fire({
+		title: '¿Estás seguro?',
+		text: "¿Desea dar de baja este registro?",
+		type: 'warning',
+		confirmButtonText: 'Sí, ¡Dar de baja!',
+		showCancelButton: true,
+		cancelButtonText:  'Cancelar',
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		reverseButtons: true
 
+	}).then((result) => {
+		if (result.value) {
+			var _token = document.getElementsByName("_token")[0].value;
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: 'darBajaDisco',
+				method: 'post',
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				data: {
+					codigod: $(this).data('codigod'),
+					_token: _token
+				},
+				success: function(result){
+					Swal.fire(
+						'¡Éxito!',
+						'El disco se ha dado de baja.',
+						'success'
+						)
+					buscarDisco();
+				},
+				error: function () {
+					Swal.fire(
+						'¡Error!',
+						'No se ha podido dar de baja.',
+						'error'
+						)
+				}
+			});
+
+		}else{
+			Swal.fire(
+				'',
+				'No se modificará el disco.',
+				'info'
+				)
 		}
-	});
+	})
 });
 function modificarImplantePaciente(){
 	var _token = document.getElementsByName("_token")[0].value;

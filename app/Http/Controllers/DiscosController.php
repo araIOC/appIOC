@@ -63,6 +63,5 @@ class DiscosController extends Controller{
 	public function darBajaDisco(){
 		DB::table('discos')->where('codigo', request()->codigod)
 		->update(['fecha_baja' => date("Y") . "-" . date("m") . "-" . date("d")]);
-echo request()->codigod;
 	}
 }

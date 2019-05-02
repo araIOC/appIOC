@@ -228,12 +228,16 @@ class AppController extends Controller{
 	}
 	public function modificarDoctorPacientes(){
 		$doctores = DB::table('doctores')->select()->get();
+		$nombreDoctor =request()->nombreDoctor;
+		$doctores = DB::table('doctores')->select()->get();
 		$select = '<select class="custom-select mr-sm-2" id="doctorPaciente" name="doctorPaciente">';
 		foreach ($doctores as $doctor) {
 			$select .='<option value="'.$doctor->nombreD.'" ('.$doctor->nombreD.' == '.request()->nombreDoctor.') ? "selected" : "">'.$doctor->nombreD.'</option>';
 		}
 		$select .= '</select>';
 		echo $select;
+		//return view('modal-modificarPaciente',['doctores'=>$doctores,'nombreDoctor' => $nombreDoctor]);
+
 	}
 	public function modificarAsesorPacientes(){
 		$asesores = DB::table('asesores')->select()->get();

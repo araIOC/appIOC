@@ -133,7 +133,8 @@ $("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
 });
 
 $("#modificar-tratamiento").click(function (){
-   $('#modal-pacientes').data('backdrop', 'static');
+   $('#modal-pacientes').data('bs.modal')._config.backdrop = 'static';
+   $('#modal-pacientes').data('bs.modal')._config.keyboard = false;
    $('.btn-fichacliente').hide();
    $('#footer-fichapaciente').hide();
 
@@ -175,7 +176,6 @@ $("#modificar-tratamiento").click(function (){
    $('#dropbox').empty();
    $('#dropbox').append('<input type="text" class="form-control" name="linkDropbox-moificar" id="linkDropbox-moificar">');
    $("#linkDropbox-moificar").val(linkDropbox);
-
 
    $('#picprovisional-modal').empty();
    $('#picpost-modal').empty();
@@ -220,12 +220,14 @@ $("#modificar-tratamiento").click(function (){
       '<input type="file" class="custom-file-input" id="customFileLang" lang="es">'+
       '<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>'+
       '</div>');
-
    $('#ficha-paciente-tratamiento').append('<div class="modal-footer" id="footer-fichapaciente">'+
+      '<a id="cerrar_modal-modificar" data-dismiss="modal"><button class="btn btn-lg btn-warning ml-auto" type="submit"><i class="fas fa-save"></i> CANCELAR</button></a>'+
       '<button class="btn btn-lg btn-warning ml-auto" type="submit"><i class="fas fa-save"></i> MODIFICAR</button>'+
       '</div>');
 
+
 });
+
 
 function ponerModificarFecha(id_fecha, nombreFecha) {
    fecha = $(id_fecha).text();
@@ -255,28 +257,7 @@ function ponerCB(id_td, id_input,nombreInput) {
       $(id_td).append('<input class="form-check-input" type="checkbox" value="" id="'+ id_input +'"><label class="form-check-label" >'+nombreInput+'</label>');
    }
 }
-$(".borrar").click(function () {
-  Swal.fire({
-    title: '¿Estás seguro?',
-    text: "¿Desea dar de baja este registro?",
-    type: 'warning',
-    confirmButtonText: 'Sí, ¡Dar de baja!',
-    showCancelButton: true,
-    cancelButtonText:  'Cancelar',
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    reverseButtons: true
 
- }).then((result) => {
-    if (result.value) {
-      Swal.fire(
-        '¡Hecho!',
-        'El registro se ha dado de baja con éxito.',
-        'success'
-        )
-   }
-})
-});
 
 
 
