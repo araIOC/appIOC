@@ -25,6 +25,7 @@ Route::any('modificarAsesorPacientes', 'AppController@modificarAsesorPacientes')
 Route::any('modificarImplantePaciente', 'AppController@modificarImplantePaciente')->name('modificarImplantePaciente');
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
+Route::any('registroTratamiento', 'AppController@registroTratamiento')->name('registroTratamiento');
 
 Route::any('login', 'Auth\LoginController@login')->name('login');
 

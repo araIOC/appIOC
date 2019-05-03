@@ -22,15 +22,14 @@ $(document).ready(function(){
 		$("#Dfecha_inicial,#Dfecha_final" ).on('change', function() {
 			buscarPaciente();
 		});
-
-//
-});
+	});
 
 $( "#modificar-tratamiento" ).on('click', function() {
 	modificarDoctorPaciente();
 	modificarAsesorPaciente();
 	modificarImplantePaciente();
 });
+
 $("#limpiarFiltroPacientes").click(function () {
 	$("[name='rbCirugia']:checked").prop( "checked", false );
 	$("[name='rangoFecha']:checked").prop( "checked", false );
@@ -105,6 +104,133 @@ $("#descargarPPTX").click(function () {
 		}
 	});
 });
+
+$('#insertarp').on("click","#insertarTratamiento",function () {
+	alert("dcs");
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'agregarTratamiento',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			nombrePaciente: $('#nombrepaciente').val(),
+			codigoPaciente: $('#codigopaciente').val(),
+			nombreT: $( "#tratamiento_insert" ).val(),
+			tipo_implante: $( "#implante_insert" ).val(),
+			doctorPaciente: $('#doctor_insertTrat').val(),
+			asesorPaciente: $('#asesor_insertTrat').val(),
+			rbCirugia: $("input[name='c_insertTrat']:checked").val(),
+			cbTac_pre : $('#tac_pre_insertTrat').prop('checked'),
+			CBpic_definitivo : $('#pic_def_insertTrat').prop('checked'),
+			CBpic_provisional : $('#pic_prov_insertTrat').prop('checked'),
+			cbTac_post : $('#tac_post_insertTrat').prop('checked'),
+			cbIOScan_pre : $('#ioscan_pre_insertTrat').prop('checked'),
+			cbIOScan_post : $('#ioscan_post_insertTrat').prop('checked'),
+			cbOrto_pre : $('#orto_pre_insertTrat').prop('checked'),
+			cbOrto_post : $('#orto_post_insertTrat').prop('checked'),
+			cbFotos_pre : $('#f_pre_insertTrat').prop('checked'),
+			cbFotos_post : $('#f_post_insertTrat').prop('checked'),
+			cbFotos_protesis_pre : $('#f_protesis_pre_insertTrat').prop('checked'),
+			cbFotos_protesis_post : $('#f_protesis_post_insertTrat').prop('checked'),
+			cbFotos_protesis_boca_pre : $('#f_protesisboca_pre_insertTrat').prop('checked'),
+			cbFotos_protesis_boca_post : $('#f_protesisboca_post_insertTrat').prop('checked'),
+			cbVideo_pre : $('#video_pre_insertTrat').prop('checked'),
+			cbVideo_post : $('#video_post_insertTrat').prop('checked'),
+			linkD : $('#link_insertTrat').val(),
+			_token: _token
+		},
+		success: function(result){
+
+		},
+		error: function () {
+
+		}
+	});
+});
+
+$("#agregarPaciente").click(function(){
+	if(!$('#codPacienteAgr').val() || !$('#nombrePacienteAgr').val()){
+		Swal.fire(
+			'Campos vacíos.',
+			'Debe rellenar todos los campos.',
+			'warning'
+			)
+	}else{
+		var _token = document.getElementsByName("_token")[0].value;
+
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: 'agregarPaciente',
+			method: 'post',
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			data: {
+				codigop: $('#codPacienteAgr').val(),
+				nombrep: $('#nombrePacienteAgr').val(),
+				_token: _token
+			},
+			success: function(result){
+				Swal.fire({
+					title: 'Paciente insertado.',
+					text: "¿Desea agregarle un tratamiento?",
+					type: 'question',
+					confirmButtonText: 'Sí, ¡Agregar tratamiento!',
+					showCancelButton: true,
+					cancelButtonText:  'Cancelar',
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					reverseButtons: true
+
+				}).then((result) => {
+					if (result.value) {
+						$.ajaxSetup({
+							headers: {
+								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							}
+						});
+						$.ajax({
+							url: 'registroTratamiento',
+							method: 'post',
+							headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+							data: {
+								codigop: $('#codPacienteAgr').val(),
+								nombrep: $('#nombrePacienteAgr').val(),
+								_token: _token
+							},
+							success: function(result){
+
+								$('#insertarp').html(result);
+
+							}});
+
+					}else{
+						Swal.fire(
+							'Paciente sin tratamiento.',
+							'Puede agregarlo más tarde.',
+							'info'
+							)
+					}
+				})
+			},
+			error: function () {
+				Swal.fire(
+					'¡Error!',
+					'Error al insertar el paciente.',
+					'error'
+					)
+			}
+		});
+	}
+});
+
 $("#tablaDiscosConsulta").on("click", ".darBajaDisco", function(){
 	Swal.fire({
 		title: '¿Estás seguro?',
@@ -159,6 +285,7 @@ $("#tablaDiscosConsulta").on("click", ".darBajaDisco", function(){
 		}
 	})
 });
+
 function modificarImplantePaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
@@ -182,6 +309,7 @@ function modificarImplantePaciente(){
 		}
 	});
 }
+
 function modificarDoctorPaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
@@ -205,6 +333,7 @@ function modificarDoctorPaciente(){
 		}
 	});
 }
+
 function modificarAsesorPaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
@@ -228,6 +357,7 @@ function modificarAsesorPaciente(){
 		}
 	});
 }
+
 function buscarPaciente(){
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
@@ -266,7 +396,6 @@ function buscarPaciente(){
 			Dfecha_inicial : $('#Dfecha_inicial').val(),
 			fecha_definitiva : $('#Dfecha_final').val(),
 			invertir : $('#customSwitch1').prop('checked'),
-			rbCirugia: $("[name='rbCirugia']:checked").val(),
 			rangoFecha: $("[name='rangoFecha']:checked").val(),
 			_token: _token
 		},
@@ -332,6 +461,7 @@ function buscarDisco (){
 }
 
 function filtroTratamientoPaciente(){
+}
 	//rellenar select con los tratamientos del paciente introducido
 	//al agregar un nuevo buscadorTrabajo
 	$( "#codigopaciente" ).keyup(function() {
@@ -356,4 +486,3 @@ function filtroTratamientoPaciente(){
 
 			}});
 	});
-}

@@ -35,38 +35,47 @@ class AppController extends Controller{
 
 	public function agregarPacientes(){
 
-		$validacion = $this->validate(request(),[
-			'nombre' => 'required|string',
-			'codigo' => 'required|string'
-		]);
+		$pacientes = DB::table('pacientes')->select()->get()
+		->where('codigoP',request()->codigop);
+		if (count($pacientes)<=0) {
+			DB::table('pacientes')->insert(
+				['nombreP' => request()->nombrep,'codigoP' => request()->codigop]
+			);
+		}/*else{
+			DB::table('pacientes')->insert(
+				['nombreP' => request()->nombrePacienteAgr,'codigoP' => request()->codPacienteAgr]
+			);
+				//return redirect()->route('consultar');
+		}*/
 
-		if($validacion){
-			$pacientes = DB::table('pacientes')->select()->get()
-			->where('codigoP',request()->codigo);
-			if (count($pacientes)>0) {
-				alert()->error('Error','Paciente duplicado');
-				return view('agregarPaciente');
-			}else{
-				DB::table('pacientes')->insert(
-					['nombreP' => request()->nombre,'codigoP' => request()->codigo]
-				);
-				return redirect()->route('consultar');
-			}
-		}
 	}
-
-	public function agregarTratamiento(){
+	public function registroTratamiento(){
+		$nombre = request()->nombrep;
+		$codigo = request()->codigop;
 
 		$implantes = DB::table('implantes')->select()->get();
 		$tratamientos = DB::table('tratamientos')->select()->get();
 		$doctores = DB::table('doctores')->select()->get();
 		$asesores = DB::table('asesores')->select()->get();
-
-		return view('agregarTratamiento',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
+		return view('agregarTratamiento',['nombre'=>$nombre,'codigo'=>$codigo,'asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
 	}
 
-	public function buscadorPaciente(){
-		$query1 = 'SELECT * FROM PACIENTES_TRATAMIENTOS as PT
+	public function agregarTratamiento(){
+		$id_paciente = DB::table('paciente')
+		->select('id')
+		->where('codigoP', '=', request()->codigopaciente)
+		->get();
+
+		/*DB::table('pacientes_tratamientos')->insert(
+			[
+				'nombreP' => request()->nombrep,
+				'codigoP' => request()->codigop,
+			]);*/
+
+		}
+
+		public function buscadorPaciente(){
+		/*$query = 'SELECT * FROM PACIENTES_TRATAMIENTOS as PT
 		LEFT OUTER JOIN PACIENTES as P ON P.ID = PT.ID_PACIENTE
 		LEFT OUTER JOIN tratamientos as t on t.id = pt.id_tratamiento
 		LEFT OUTER JOIN doctores as d on d.id = pt.id_doctor
@@ -78,114 +87,100 @@ class AppController extends Controller{
 		RIGHT OUTER JOIN tratamientos as t on t.id = pt.id_tratamiento
 		RIGHT OUTER JOIN doctores as d on d.id = pt.id_doctor
 		RIGHT OUTER JOIN asesores as a on a.id = pt.id_asesor
+		where 1 = 1';*/
+		$query = 'SELECT *
+		FROM PACIENTES AS P
+		LEFT OUTER JOIN PACIENTES_TRATAMIENTOS AS PT
+		ON P.ID = PT.ID_PACIENTE
+		LEFT OUTER JOIN TRATAMIENTOS AS T
+		ON PT.ID_TRATAMIENTO = T.ID
+		LEFT OUTER JOIN DOCTORES AS D
+		ON PT.ID_DOCTOR = D.ID
+		LEFT OUTER JOIN ASESORES AS A
+		ON PT.ID_ASESOR = A.ID
 		where 1 = 1';
 
 
 		if(request()->nombrePaciente){
-			$query1.=" AND p.nombreP LIKE '%".request()->nombrePaciente."%'";
-			$query2.=" AND p.nombreP LIKE '%".request()->nombrePaciente."%'";
+			$query.=" AND p.nombreP LIKE '%".request()->nombrePaciente."%'";
 		}
 
 		if(request()->codigoPaciente){
-			$query1.=" AND p.codigoP LIKE '".request()->codigoPaciente."%'";
-			$query2.=" AND p.codigoP LIKE '".request()->codigoPaciente."%'";
+			$query.=" AND p.codigoP LIKE '".request()->codigoPaciente."%'";
 		}
 		if(request()->nombreT != "Elija un tratamiento..."){
-			$query1.=" AND t.nombreT = '".request()->nombreT."'";
-			$query2.=" AND t.nombreT = '".request()->nombreT."'";
+			$query.=" AND t.nombreT = '".request()->nombreT."'";
 		}
 		if(request()->tipo_implante != "Tipo de implante..."){
-			$query1.=" AND pt.tipo_implante = '".request()->tipo_implante."'";
-			$query2.=" AND pt.tipo_implante = '".request()->tipo_implante."'";
+			$query.=" AND pt.tipo_implante = '".request()->tipo_implante."'";
 		}
 		if(request()->doctorPaciente != "Elija un doctor..."){
-			$query1.=" AND d.nombreD = '".request()->doctorPaciente."'";
-			$query2.=" AND d.nombreD = '".request()->doctorPaciente."'";
+			$query.=" AND d.nombreD = '".request()->doctorPaciente."'";
 		}
 		if(request()->asesorPaciente != "Elija un asesor..."){
-			$query1.=" AND a.nombreA = '".request()->asesorPaciente."'";
-			$query2.=" AND a.nombreA = '".request()->asesorPaciente."'";
+			$query.=" AND a.nombreA = '".request()->asesorPaciente."'";
 		}
 		if(request()->rbCirugia == "rbcdinamica"){
-			$query1.=" AND pt.c_guiada = 'Dinámica'";
-			$query2.=" AND pt.c_guiada = 'Dinámica'";
+			$query.=" AND pt.c_guiada = 'Dinámica'";
 		}
 		if(request()->rbCirugia == "rbcestatica"){
-			$query1.=" AND pt.c_guiada = 'Estática'";
-			$query2.=" AND pt.c_guiada = 'Estática'";
+			$query.=" AND pt.c_guiada = 'Estática'";
 		}
 
 		$estado = "";
 		if (request()->invertir == 'false') {
 			$estado = '1';
-
 		}
 		if (request()->invertir == "true") {
 			$estado = '0';
 		}
 		if(request()->CBpic_definitivo == 'true'){
-			$query1.=" AND pt.pic_final = '".$estado."'";
-			$query2.=" AND pt.pic_final = '".$estado."'";
+			$query.=" AND pt.pic_final = '".$estado."'";
 		}
 		if(request()->CBpic_provisional == 'true'){
-			$query1.=" AND pt.pic_provisional = '".$estado."'";
-			$query2.=" AND pt.pic_provisional = '".$estado."'";
+			$query.=" AND pt.pic_provisional = '".$estado."'";
 		}
 		if(request()->cbTac_pre == 'true'){
-			$query1.=" AND pt.tac_pre = '".$estado."'";
-			$query2.=" AND pt.tac_pre = '".$estado."'";
+			$query.=" AND pt.tac_pre = '".$estado."'";
 		}
 		if(request()->cbTac_post == 'true'){
-			$query1.=" AND pt.tac_post = '".$estado."'";
-			$query2.=" AND pt.tac_post = '".$estado."'";
+			$query.=" AND pt.tac_post = '".$estado."'";
 		}
 		if(request()->cbIOScan_pre == 'true'){
-			$query1.=" AND pt.ioscan_pre = '".$estado."'";
-			$query2.=" AND pt.ioscan_pre = '".$estado."'";
+			$query.=" AND pt.ioscan_pre = '".$estado."'";
 		}
 		if(request()->cbIOScan_post == 'true'){
-			$query1.=" AND pt.ioscan_post = '".$estado."'";
-			$query2.=" AND pt.ioscan_post = '".$estado."'";
+			$query.=" AND pt.ioscan_post = '".$estado."'";
 		}
 		if(request()->cbOrto_pre == 'true'){
-			$query1.=" AND pt.orto_pre = '".$estado."'";
-			$query2.=" AND pt.orto_pre = '".$estado."'";
+			$query.=" AND pt.orto_pre = '".$estado."'";
 		}
 		if(request()->cbOrto_post == 'true'){
-			$query1.=" AND pt.orto_post = '".$estado."'";
-			$query2.=" AND pt.orto_post = '".$estado."'";
+			$query.=" AND pt.orto_post = '".$estado."'";
 		}
 		if(request()->cbFotos_pre == 'true'){
-			$query1.=" AND pt.fotos_pre = '".$estado."'";
-			$query2.=" AND pt.fotos_pre = '".$estado."'";
+			$query.=" AND pt.fotos_pre = '".$estado."'";
 		}
 		if(request()->cbFotos_post == 'true'){
-			$query1.=" AND pt.foto_post = '".$estado."'";
-			$query2.=" AND pt.foto_post = '".$estado."'";
+			$query.=" AND pt.foto_post = '".$estado."'";
 		}
 		if(request()->cbFotos_protesis_pre == 'true'){
-			$query1.=" AND pt.foto_protesis = '".$estado."'";
-			$query2.=" AND pt.foto_protesis = '".$estado."'";
+			$query.=" AND pt.foto_protesis = '".$estado."'";
 		}
 		if(request()->cbFotos_protesis_post == 'true'){
-			$query1.=" AND pt.foto_protesis_final = '".$estado."'";
-			$query2.=" AND pt.foto_protesis_final = '".$estado."'";
+			$query.=" AND pt.foto_protesis_final = '".$estado."'";
 		}
 		if(request()->cbFotos_protesis_boca_pre == 'true'){
-			$query1.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
-			$query2.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
+			$query.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
 		}
 		if(request()->cbFotos_protesis_boca_post == 'true'){
-			$query1.=" AND pt.foto_protesis_boca_final = '".$estado."'";
-			$query2.=" AND pt.foto_protesis_boca_final = '".$estado."'";
+			$query.=" AND pt.foto_protesis_boca_final = '".$estado."'";
 		}
 		if(request()->cbVideo_pre == 'true'){
-			$query1.=" AND pt.video_pre = '".$estado."'";
-			$query2.=" AND pt.video_pre = '".$estado."'";
+			$query.=" AND pt.video_pre = '".$estado."'";
 		}
 		if(request()->cbVideo_post == 'true'){
-			$query1.=" AND pt.video_final = '".$estado."'";
-			$query2.=" AND pt.video_final = '".$estado."'";
+			$query.=" AND pt.video_final = '".$estado."'";
 		}
 		$tipo_fecha = "";
 		if(request()->rangoFecha == "f_inicio"){
@@ -195,24 +190,21 @@ class AppController extends Controller{
 			$tipo_fecha = "fecha_definitiva";
 		}
 		if(request()->rangoFecha && request()->fecha_definitiva && request()->Dfecha_inicial){
-			$query1.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
-			$query2.=" AND pt.".$tipo_fecha." BETWEEN  '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+			$query.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
 
 		}
 		if(request()->rangoFecha && request()->fecha_definitiva && request()->Dfecha_inicial){
-			$query1.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
-			$query2.=" AND pt.".$tipo_fecha." BETWEEN  '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
+			$query.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
 		}
 		if(request()->rangoFecha && request()->fecha_definitiva){
-			$query1.=" AND pt.".$tipo_fecha." <= '".request()->fecha_definitiva."'";
-			$query2.=" AND pt.".$tipo_fecha." <=  '".request()->fecha_definitiva."'";
+			$query.=" AND pt.".$tipo_fecha." <= '".request()->fecha_definitiva."'";
 		}
 		if(request()->rangoFecha && request()->Dfecha_inicial){
-			$query1.=" AND pt.".$tipo_fecha." >= '".request()->Dfecha_inicial."'";
-			$query2.=" AND pt.".$tipo_fecha." >=  '".request()->Dfecha_inicial."'";
+			$query.=" AND pt.".$tipo_fecha." >= '".request()->Dfecha_inicial."'";
 		}
-
-		$pacientes = DB::select($query1.$query2);
+		//var_dump($query.$query2);
+		//$pacientes = DB::select($query.$query2);
+		$pacientes = DB::select($query);
 		return view('datosPaciente',['pacientes'=>$pacientes]);
 
 	}
@@ -229,10 +221,14 @@ class AppController extends Controller{
 	public function modificarDoctorPacientes(){
 		$doctores = DB::table('doctores')->select()->get();
 		$nombreDoctor =request()->nombreDoctor;
-		$doctores = DB::table('doctores')->select()->get();
-		$select = '<select class="custom-select mr-sm-2" id="doctorPaciente" name="doctorPaciente">';
+
+		$select = '<select class="custom-select mr-sm-2" id="doctorPacienteMod" name="doctorPacienteMod">';
 		foreach ($doctores as $doctor) {
-			$select .='<option value="'.$doctor->nombreD.'" ('.$doctor->nombreD.' == '.request()->nombreDoctor.') ? "selected" : "">'.$doctor->nombreD.'</option>';
+			if($doctor->nombreD == $nombreDoctor){
+				$select .='<option value="'.$doctor->nombreD.'" selected>'.$doctor->nombreD.'</option>';
+			}else{
+				$select .='<option value="'.$doctor->nombreD.'">'.$doctor->nombreD.'</option>';
+			}
 		}
 		$select .= '</select>';
 		echo $select;
@@ -242,7 +238,8 @@ class AppController extends Controller{
 	public function modificarAsesorPacientes(){
 		$asesores = DB::table('asesores')->select()->get();
 		$nombreAsesorPaciente = request()->nombreAsesor;
-		$select = '<select class="custom-select mr-sm-2" id="asesorPaciente" name="asesorPaciente">';
+
+		$select = '<select class="custom-select mr-sm-2" id="asesorPacienteMod" name="asesorPacienteMod">';
 		foreach ($asesores as $asesor) {
 			if($asesor->nombreA == $nombreAsesorPaciente){
 				$select .='<option value="'.$asesor->nombreA.'" selected>'.$asesor->nombreA.'</option>';
@@ -256,7 +253,8 @@ class AppController extends Controller{
 	public function modificarImplantePaciente(){
 		$implantes = DB::table('implantes')->select()->get();
 		$implantePaciente = request()->implante;
-		$select = '<select class="custom-select mr-sm-2" id="asesorPaciente" name="asesorPaciente">';
+
+		$select = '<select class="custom-select mr-sm-2" id="implantePacienteMod" name="implantePacienteMod">';
 		foreach ($implantes as $implante) {
 			if($implante->tipo == $implantePaciente){
 				$select .='<option value="'.$implante->tipo.'" selected>'.$implante->tipo.'</option>';
