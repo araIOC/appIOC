@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use DB;
 use RealRashid\SweetAlert\Facades\Alert;
 class AppController extends Controller{
+
 	public function __construct(){
 		$this->middleware('auth');
 	}
-
 
 	public function consultarPacientes(){
 
@@ -206,8 +206,8 @@ class AppController extends Controller{
 		//$pacientes = DB::select($query.$query2);
 		$pacientes = DB::select($query);
 		return view('datosPaciente',['pacientes'=>$pacientes]);
-
 	}
+
 	public function downloadFilepptx(){
 		var_dump(request()->codigopaciente);
 		$pacientes = DB::table('pacientes')
@@ -218,6 +218,7 @@ class AppController extends Controller{
 		/*$pathtoFile = public_path().'images/'.$file;
 		return response()->download($pathtoFile);*/
 	}
+
 	public function modificarDoctorPacientes(){
 		$doctores = DB::table('doctores')->select()->get();
 		$nombreDoctor =request()->nombreDoctor;
@@ -233,8 +234,8 @@ class AppController extends Controller{
 		$select .= '</select>';
 		echo $select;
 		//return view('modal-modificarPaciente',['doctores'=>$doctores,'nombreDoctor' => $nombreDoctor]);
-
 	}
+
 	public function modificarAsesorPacientes(){
 		$asesores = DB::table('asesores')->select()->get();
 		$nombreAsesorPaciente = request()->nombreAsesor;
@@ -250,6 +251,7 @@ class AppController extends Controller{
 		$select .= '</select>';
 		echo $select;
 	}
+
 	public function modificarImplantePaciente(){
 		$implantes = DB::table('implantes')->select()->get();
 		$implantePaciente = request()->implante;
@@ -266,4 +268,19 @@ class AppController extends Controller{
 		echo $select;
 	}
 
+	public function modificarTratamientoPaciente(){
+		$id_doctor = DB::table('doctores')->select('id')->where('nombreD', '=',request()->nombreD)->get();
+		$id_asesor = DB::table('asesores')->select('id')->where('nombreA', '=',request()->nombreA)->get();
+
+		DB::table('pacientes_tratamientos')->where('id_pt', request()->id_pt)
+		->update([
+			'materialT' => request()->materialT,
+			'tipo_trabajo' => request()->tipo_trabajoT,
+			'n_piezas' => request()->npiezasT,
+			'color' => request()->colorT,
+			'id_disco' => $id_disco[0]->id,
+			'maquina' => request()->maquinaT,
+			'notas' => request()->notasT
+		]);
+	}
 }

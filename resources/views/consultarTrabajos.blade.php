@@ -66,21 +66,26 @@
 
 		</tbody>
 	</table>
-	<div class="modal fade modal-ficha-trabajo" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+	<div class="modal fade modal-ficha-trabajo" id="modal-trabajo" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-MD">
-			<div class="modal-content">
+			<div class="modal-content" id="ficha-trabajo">
 				<div class="modal-header">
 					<h5 class="modal-title" id="nombrep"></h5>
 
 					<h5 class="modal-title ml-auto" id="nombret"></h5>
+					<input type="hidden" id="id_trabajo">
+
+					<button type="button" class="close mx-0 x-cerrar" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="modal-body">
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
 							<div class="row pb-2">
 								<div class="col-md-10"></div>
-								<div class="col-md-2">
-									<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button>
+								<div class="col-md-2 ml-auto" >
+									<a id="modificar-trabajo"><button class="btn btn-lg btn-warning ml-auto btn-fichatrabajo" id="modificar-trabajo" data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button></a>
 								</div>
 							</div>
 							<div class="row">
@@ -108,6 +113,10 @@
 												<td id="maquina_fichatrabajo"></td>
 											</tr>
 											<tr>
+												<th scope="row">CÓDIGO DE DISCO:</th>
+												<td id="codDisco_fichatrabajo"></td>
+											</tr>
+											<tr>
 												<th scope="row">NOTAS:</th>
 												<td id="notas_fichatrabajo"></td>
 											</tr>
@@ -115,13 +124,13 @@
 									</table>
 								</div>
 							</div>
-							<div class="row py-2 px-2">
+							<div class="row py-2 px-2" id="row-btn-stl">
 								<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Descargar STL" type="submit"><i class="fas fa-download"></i> STL</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer"  id="footer-trabajo">
 					<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver disco" type="submit"><i class="far fa-eye"></i> DISCO</button>
 					<a href="{{route('registroDisco')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo disco"><i class="fas fa-plus"></i></button></a>
 				</div>

@@ -255,8 +255,12 @@
 			<div class="modal-content" id="ficha-paciente-tratamiento">
 				<div class="modal-header">
 					<h5 class="modal-title" id="nombrep"></h5>
+					<input type="hidden" id="id_pt">
 
 					<h5 class="modal-title ml-auto" id="codigop"></h5>
+					<button type="button" class="close mx-0 x-cerrar" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
 
@@ -333,22 +337,22 @@
 								</div>
 							</div>
 						</div>
-					<div class="form-row py-2" id="row-btn-files">
-						<div class="col-md-4 mx-auto" id="powerpoint-modal">
-							<a href="{{route('downloadFilepptx')}}" id="descargarPPTX"><button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button></a>
-						</div>
-						<div class="col-md-4 mx-auto" id="pdf-modal">
-							<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-download"></i> PDF</button>
+						<div class="form-row py-2" id="row-btn-files">
+							<div class="col-md-4 mx-auto" id="powerpoint-modal">
+								<a href="{{route('downloadFilepptx')}}" id="descargarPPTX"><button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button></a>
+							</div>
+							<div class="col-md-4 mx-auto" id="pdf-modal">
+								<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-download"></i> PDF</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="modal-footer" id="footer-fichapaciente">
-				<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver trabajo" type="submit"><i class="far fa-eye"></i> NOMBRE DEL TRABAJO</button>
-				<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
+				<div class="modal-footer" id="footer-fichapaciente">
+					<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver trabajo" type="submit"><i class="far fa-eye"></i> NOMBRE DEL TRABAJO</button>
+					<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
 
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-@endsection
+	@endsection

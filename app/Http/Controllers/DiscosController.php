@@ -61,7 +61,67 @@ class DiscosController extends Controller{
 	}
 
 	public function darBajaDisco(){
-		DB::table('discos')->where('codigo', request()->codigod)
+		DB::table('discos')->where('codigoD', request()->codigod)
 		->update(['fecha_baja' => date("Y") . "-" . date("m") . "-" . date("d")]);
+	}
+
+	public function modificarColorDisco(){
+		$colores = DB::table('colores')->select()->get();
+		$colorD = request()->colorD;
+
+		$select = '<select class="custom-select mr-sm-2" id="colorDiscoMod" name="colorDiscoMod"><option></option>';
+		foreach ($colores as $color){
+			if($color->nombreC == $colorD){
+				$select .='<option value="'.$color->nombreC.'" selected>'.$color->nombreC.'</option>';
+			}else{
+				$select .='<option value="'.$color->nombreC.'">'.$color->nombreC.'</option>';
+			}
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+
+	public function modificarMaterialDisco(){
+		$materiales = DB::table('material')->select()->get();
+		$materialD = request()->materialD;
+
+		$select = '<select class="custom-select mr-sm-2" id="materialDiscoMod" name="materialDiscoMod"><option></option>';
+		foreach ($materiales as $material){
+			if($material->nombreM == $materialD){
+				$select .='<option value="'.$material->nombreM.'" selected>'.$material->nombreM.'</option>';
+			}else{
+				$select .='<option value="'.$material->nombreM.'">'.$material->nombreM.'</option>';
+			}
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+	public function modificarMarcaDisco(){
+		$marcas = DB::table('marca')->select()->get();
+		$marcad = request()->marcad;
+
+		$select = '<select class="custom-select mr-sm-2" id="marcaDiscoMod" name="marcaDiscoMod"><option></option>';
+		foreach ($marcas as $marca){
+			if($marca->marcaD == $marcad){
+				$select .='<option value="'.$marca->marcaD.'" selected>'.$marca->marcaD.'</option>';
+			}else{
+				$select .='<option value="'.$marca->marcaD.'">'.$marca->marcaD.'</option>';
+			}
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+	public function modificarDisco(){
+		$codigoD = explode(': ', request()->codigod);
+
+		DB::table('discos')->where('codigoD', $codigoD[1])
+		->update([
+			'material' => request()->materiald,
+			'marca' => request()->marcad,
+			'escala' => request()->escala,
+			'color' => request()->colord,
+			'fecha_alta' => request()->fecha_altad,
+			'altura' => request()->altura
+		]);
 	}
 }

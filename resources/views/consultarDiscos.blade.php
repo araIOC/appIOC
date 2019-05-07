@@ -66,12 +66,15 @@
 
 		</tbody>
 	</table>
-	<div class="modal fade modal-ficha-disco" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+	<div class="modal fade modal-ficha-disco" tabindex="-1" role="dialog" id="modal-disco" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-MD">
-			<div class="modal-content">
+			<div class="modal-content" id="ficha-disco">
 				<div class="modal-header">
 
 					<h5 class="modal-title ml-auto" id="cod_disco"></h5>
+					<button type="button" class="close mx-0 x-cerrar" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="modal-body">
 					<div class="tab-content" id="tabTratamiento">
@@ -79,7 +82,7 @@
 							<div class="row pb-2">
 								<div class="col-md-10"></div>
 								<div class="col-md-2">
-									<button class="btn btn-lg btn-warning ml-auto"  data-toggle="tooltip" data-placement="auto" title="Modificar disco" type="submit"><i class="fas fa-sync-alt"></i></button>
+									<button class="btn btn-lg btn-warning ml-auto" id="modificar-disco"  data-toggle="tooltip" data-placement="auto" title="Modificar disco" type="submit"><i class="fas fa-sync-alt"></i></button>
 								</div>
 							</div>
 							<div class="row">
@@ -89,6 +92,10 @@
 											<tr>
 												<th scope="row">MATERIAL:</th>
 												<td id="material_fichadisco"></td>
+											</tr>
+											<tr>
+												<th scope="row">MARCA:</th>
+												<td id="marca_fichadisco"></td>
 											</tr>
 											<tr>
 												<th scope="row">ESCALA:</th>
@@ -113,9 +120,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="modal-footer">
-					<button class="btn btn-lg btn-warning mr-auto btn-block"  data-toggle="tooltip" data-placement="auto" title="Dar de baja" type="submit"><i class="fas fa-arrow-alt-circle-down"></i> DAR DE BAJA</button>
-				</div>
+
 			</div>
 		</div>
 	</div>
