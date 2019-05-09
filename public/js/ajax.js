@@ -28,6 +28,7 @@ $( "#modificar-tratamiento" ).on('click', function() {
 	modificarDoctorPaciente();
 	modificarAsesorPaciente();
 	modificarImplantePaciente();
+	ponerModificarTratamientoPaciente();
 });
 
 $( "#modificar-trabajo" ).on('click', function() {
@@ -89,38 +90,7 @@ $("#limpiarFiltrosTrabajo").click(function () {
 	buscarTrabajo();
 });
 
-$("#descargarPPTX").click(function () {
-	var codigop = $(this).data('codigopaciente');
-	alert(codigop);
-	console.log(codigop);
-	var _token = document.getElementsByName("_token")[0].value;
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-	$.ajax({
-		url: 'downloadFilepptx',
-		method: 'post',
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		data: {
-			codigopaciente:codigop,
-			_token: _token
-		},
-		success: function(result){
-			//alert("aqui va un sweet alert");
-			alert(codigop);
-			console.log($(codigop));
-			alert();
-		},
-		error: function () {
-
-		}
-	});
-});
-
-$('#insertarp').on("click","#insertarTratamiento",function () {
-	alert("dcs");
+$('#app').on("click","#guardarTratamiento",function () {
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
 		headers: {
@@ -132,8 +102,7 @@ $('#insertarp').on("click","#insertarTratamiento",function () {
 		method: 'post',
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		data: {
-			nombrePaciente: $('#nombrepaciente').val(),
-			codigoPaciente: $('#codigopaciente').val(),
+			codigopaciente: $('#codigopaciente').val(),
 			nombreT: $( "#tratamiento_insert" ).val(),
 			tipo_implante: $( "#implante_insert" ).val(),
 			doctorPaciente: $('#doctor_insertTrat').val(),
@@ -156,15 +125,52 @@ $('#insertarp').on("click","#insertarTratamiento",function () {
 			cbVideo_pre : $('#video_pre_insertTrat').prop('checked'),
 			cbVideo_post : $('#video_post_insertTrat').prop('checked'),
 			linkD : $('#link_insertTrat').val(),
+			pptx : $('#pptx_insertTrat').val(),
+			pdf : $('#pdf_insertTrat').val(),
+			_token: _token
+		},
+		success: function(result){
+			alert(result);
+			Swal.fire(
+				'¡Éxito!',
+				'Tratamiento guardado.',
+				'success'
+				)
+			buscarPaciente();
+		},
+		error: function(result){
+			alert(result);
+			Swal.fire(
+				'¡Error!',
+				'No se ha podido agregar el tratamiento.',
+				'error'
+				)
+		}
+	});
+});
+
+$('#modal-pacientes').on("click", "#agregar_nuevo_tratamiento" ,function(){
+	var _token = document.getElementsByName("_token")[0].value;
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'registroTratamiento',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			codigop: $('#codigop').text(),
+			nombrep: $('#nombrep').text(),
 			_token: _token
 		},
 		success: function(result){
 
-		},
-		error: function () {
+			$('#app').html(result);
 
-		}
-	});
+		}});
 });
 
 $("#agregarPaciente").click(function(){
@@ -187,7 +193,7 @@ $("#agregarPaciente").click(function(){
 			method: 'post',
 			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			data: {
-				codigop: $('#codPacienteAgr').val(),
+				codigop:  $('#codPacienteAgr').val(),
 				nombrep: $('#nombrePacienteAgr').val(),
 				_token: _token
 			},
@@ -215,7 +221,7 @@ $("#agregarPaciente").click(function(){
 							method: 'post',
 							headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 							data: {
-								codigop: $('#codPacienteAgr').val(),
+								codigop: "Cod: " + $('#codPacienteAgr').val(),
 								nombrep: $('#nombrePacienteAgr').val(),
 								_token: _token
 							},
@@ -301,7 +307,6 @@ $("#tablaDiscosConsulta").on("click", ".darBajaDisco", function(){
 });
 
 $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
-	alert($("input[name='rbCirugia-modificar']:checked").val());
 	Swal.fire({
 		title: '¿Estás seguro?',
 		text: "¿El registro se modificará?",
@@ -328,10 +333,11 @@ $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
 				data: {
 					id_pt:id_pt,
 					codigoP:$('#codigop').text(),
-					nombreP:$('#nombrep').text(),
-					nombreD:doctor,
-					nombreA:asesor,
-					tipo_implante:implante,
+					nombreT:$('#tratamiento_actual').text(),
+					nuevoTratamiento:$('#tratamientoPacienteMod').val(),
+					nombreD:$('#doctorPacienteMod').val(),
+					nombreA:$('#asesorPacienteMod').val(),
+					tipo_implante:$('#implantePacienteMod').val(),
 					fecha_inicio:$('#f_inicio-modificar').val(),
 					fecha_definitiva:$('#f_final-modificar').val(),
 					pic_pre:$('#picprovisional-modificar').prop('checked'),
@@ -350,8 +356,9 @@ $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
 					foto_protesis_post:$('#fotoprotesispost-modificar').prop('checked'),
 					foto_protesis_boca_pre:$('#fotoprotesisbocapre-modificar').prop('checked'),
 					foto_protesis_boca_post:$('#fotoprotesisbocapost-modificar').prop('checked'),
-					link:linkDropbox,
-					tratamiento:$('#tratamiento_actual').text(),
+					link:$('#linkDropbox-modificar').val(),
+					pdf:$('#pdf-modificar').val(),
+					powerpoint:$('#pptx-modificar').val(),
 					c_guiada:$("input[name='rbCirugia-modificar']:checked").val(),
 					_token: _token
 				},
@@ -361,8 +368,8 @@ $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
 						'El paciente se ha modificado.',
 						'success'
 						);
-					restaurarTrabajo();
-					buscarTrabajo();
+					restaurarPaciente();
+					buscarPaciente();
 				},
 				error: function () {
 					Swal.fire(
@@ -552,6 +559,9 @@ function restaurarPaciente() {
 	linkDropbox =$('#linkDropbox-modificar').val();
 	finicio = $('#f_inicio-modificar').val();
 	fdef = $('#f_final-modificar').val();
+	pptx =$('#pptx-modificar').val();
+	pdf =$('#pdf-modificar').val();
+
 	$('.x-cerrar').hide();
 	$('#row-btn-files').empty();
 	$('#doctor_fichapaciente').empty();
@@ -634,14 +644,32 @@ function restaurarPaciente() {
 	resetearCB("#icono_fotoprotesisbocapost",'#fotoprotesisbocapost-modal');
 	resetearCB("#icono_videopost",'#videopost-modal');
 
-	$('#dropbox').append('<a href="" target="_blank" id="link_dropbox">' + linkDropbox + '</a>');
+	$('#t_paciente').hide();
+	$('#dropbox').append('<a href="' + linkDropbox + '" target="_blank" id="link_dropbox">' + linkDropbox + '</a>');
+
 
 	$('#row-btn-files').append('<div class="col-md-4 mx-auto" id="powerpoint-modal">'+
-		'<a  id="descargarPPTX"><button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Power Point"><i class="fas fa-download"></i> PPTX</button></a>'+
-		' </div>'+
+		'<a href="' + pptx + '" target="_blank" id="descargarPPTX">'+
+		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>'+
+		'</a>'+
+		'</div>'+
 		'<div class="col-md-4 mx-auto" id="pdf-modal">'+
-		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="PDF"><i class="fas fa-download"></i> PDF</button>'+
+		'<a href="' + pdf + '" target="_blank" id="descargarPDF">'+
+		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>'+
+		'</a>'+
 		'</div>');
+
+	if(!$('#descargarPDF').attr('href')){
+		$('#descargarPDF').hide();
+	} else{
+		$('#descargarPDF').show();
+	}
+
+	if(!$('#descargarPPTX').attr('href')){
+		$('#descargarPPTX').hide();
+	} else{
+		$('#descargarPPTX').show();
+	}
 }
 
 function restaurarDisco() {
@@ -928,6 +956,29 @@ function modificarMaquinaTrabajo(){
 		},
 		success: function(result){
 			$('#maquina_fichatrabajo').html(result);
+		},
+		error: function () {
+
+		}
+	});
+}
+
+function ponerModificarTratamientoPaciente(){
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'ponerModificarTratamientoPaciente',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			_token: _token
+		},
+		success: function(result){
+			$('#tratamiento_fichapaciente').html(result);
 		},
 		error: function () {
 

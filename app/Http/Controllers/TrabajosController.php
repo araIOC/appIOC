@@ -10,7 +10,7 @@ class TrabajosController extends Controller{
 	public function consultarTrabajos(){
 
 		$trabajos = DB::table('pacientes_tratamientos')
-		->join('trabajos', 'pacientes_tratamientos.id', '=', 'trabajos.id_tratamiento')
+		->join('trabajos', 'pacientes_tratamientos.id_pt', '=', 'trabajos.id_tratamiento')
 		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
 		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
 		->select()
@@ -32,7 +32,7 @@ class TrabajosController extends Controller{
 		$tipos_trabajo = DB::table('tipo_trabajo')->select()->get();
 
 		$pacientes = DB::table('pacientes_tratamientos')
-		->join('trabajos', 'pacientes_tratamientos.id', '=', 'trabajos.id_tratamiento')
+		->join('trabajos', 'pacientes_tratamientos.id_pt', '=', 'trabajos.id_tratamiento')
 		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
 		->select()
 		->get();
@@ -55,7 +55,7 @@ class TrabajosController extends Controller{
 
 	public function agregarTrabajo(){
 		$tratamiento = DB::table('trabajos')
-		->join('pacientes_tratamientos', 'pacientes_tratamientos.id', '=', 'trabajo.id_tratamiento')
+		->join('pacientes_tratamientos', 'pacientes_tratamientos.id_pt', '=', 'trabajo.id_tratamiento')
 		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
 		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamiento.id')
 		->whereColumn([

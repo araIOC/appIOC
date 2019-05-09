@@ -51,8 +51,9 @@ class AppController extends Controller{
 	}
 	public function registroTratamiento(){
 		$nombre = request()->nombrep;
-		$codigo = request()->codigop;
+		$codigo = explode(': ', request()->codigop);
 
+		$codigo = $codigo[1];
 		$implantes = DB::table('implantes')->select()->get();
 		$tratamientos = DB::table('tratamientos')->select()->get();
 		$doctores = DB::table('doctores')->select()->get();
@@ -61,20 +62,75 @@ class AppController extends Controller{
 	}
 
 	public function agregarTratamiento(){
-		$id_paciente = DB::table('paciente')
+		$id_doctor = 0;
+		if(request()->doctorPaciente != 0){
+			$id_doctor = DB::table('doctores')->select('id')->where('nombreD', '=',request()->doctorPaciente)->get();
+			$id_doctor = $id_doctor[0]->id;
+		}
+
+		$id_asesor = 0;
+		if(request()->asesorPaciente != 0){
+			$id_asesor = DB::table('asesores')->select('id')->where('nombreA', '=',request()->asesorPaciente)->get();
+			$id_asesor = $id_asesor[0]->id;
+		}
+
+		$id_paciente = DB::table('pacientes')
 		->select('id')
 		->where('codigoP', '=', request()->codigopaciente)
 		->get();
 
-		/*DB::table('pacientes_tratamientos')->insert(
-			[
-				'nombreP' => request()->nombrep,
-				'codigoP' => request()->codigop,
-			]);*/
-
+		$cirugia_guiada = NULL;
+		if(request()->rbCirugia == "c_estatica_insertTrat"){
+			$cirugia_guiada = "Estática";
+		}
+		if(request()->rbCirugia == "c_dinamica_insertTrat"){
+			$cirugia_guiada = "Dinámica";
 		}
 
-		public function buscadorPaciente(){
+		$id_tratamiento = DB::table('tratamientos')
+		->select('id')
+		->where('nombreT', '=', request()->nombreT)
+		->get();
+
+		DB::table('pacientes_tratamientos')->insert([
+			'id_paciente' => $id_paciente[0]->id,
+			'id_tratamiento' => $id_tratamiento[0]->id,
+			'id_doctor' => ($id_doctor > 0) ? $id_doctor : NULL,
+			'id_asesor' => ($id_asesor > 0) ? $id_asesor : NULL,
+			'tipo_implante' => (request()->tipo_implante != "Tipo de implante...") ? request()->tipo_implante : NULL,
+			'c_guiada' => $cirugia_guiada,
+			'fecha_inicio' => request()->fecha_inicio,
+			'fecha_definitiva' => request()->fecha_definitiva,
+			'pic_provisional' => (request()->CBpic_provisional == "true") ? 1 : 0,
+			'fecha_inicio' => date("Y") . "-" . date("m") . "-" . date("d"),
+			'pic_final' => (request()->CBpic_definitivo == "true") ? 1 : 0,
+			'fotos_pre' => (request()->cbFotos_pre == "true") ? 1 : 0,
+			'foto_post' => (request()->cbFotos_post == "true") ? 1 : 0,
+			'orto_pre' => (request()->cbOrto_pre == "true") ? 1 : 0,
+			'orto_post' =>(request()->cbOrto_post == "true") ? 1 : 0,
+			'tac_pre' => (request()->cbTac_pre == "true") ? 1 : 0,
+			'tac_post' => (request()->cbTac_post == "true") ? 1 : 0,
+			'video_pre' => (request()->cbVideo_pre == "true") ? 1 : 0,
+			'video_final' => (request()->cbVideo_post == "true") ? 1 : 0,
+			'ioscan_pre' => (request()->cbIOScan_pre == "true") ? 1 : 0,
+			'ioscan_post' => (request()->cbIOScan_post == "true") ? 1 : 0,
+			'foto_protesis' => (request()->cbFotos_protesis_pre == "true") ? 1 : 0,
+			'foto_protesis_final' => (request()->cbFotos_protesis_post == "true") ? 1 : 0,
+			'foto_protesis_boca_provisional' => (request()->cbFotos_protesis_boca_pre == "true") ? 1 : 0,
+			'foto_protesis_boca_final' => (request()->cbFotos_protesis_boca_post == "true") ? 1 : 0,
+			'link' => request()->linkD,
+		]);
+
+		$id_paciente = DB::table('pacientes')->select('id')->where('codigoP', request()->codigopaciente)->get();
+
+		DB::table('pacientes')->where('id', $id_paciente[0]->id)
+		->update([
+			'powerpoint' => request()->pptx,
+			'pdf' => request()->pdf
+		]);
+	}
+
+	public function buscadorPaciente(){
 		/*$query = 'SELECT * FROM PACIENTES_TRATAMIENTOS as PT
 		LEFT OUTER JOIN PACIENTES as P ON P.ID = PT.ID_PACIENTE
 		LEFT OUTER JOIN tratamientos as t on t.id = pt.id_tratamiento
@@ -208,22 +264,11 @@ class AppController extends Controller{
 		return view('datosPaciente',['pacientes'=>$pacientes]);
 	}
 
-	public function downloadFilepptx(){
-		var_dump(request()->codigopaciente);
-		$pacientes = DB::table('pacientes')
-		->where('codigoP', '=', request()->codigopaciente)
-		->get();
-			//var_dump( $pacientes);
-
-		/*$pathtoFile = public_path().'images/'.$file;
-		return response()->download($pathtoFile);*/
-	}
-
 	public function modificarDoctorPacientes(){
 		$doctores = DB::table('doctores')->select()->get();
 		$nombreDoctor =request()->nombreDoctor;
 
-		$select = '<select class="custom-select mr-sm-2" id="doctorPacienteMod" name="doctorPacienteMod">';
+		$select = '<select class="custom-select mr-sm-2" id="doctorPacienteMod" name="doctorPacienteMod"><option></option>';
 		foreach ($doctores as $doctor) {
 			if($doctor->nombreD == $nombreDoctor){
 				$select .='<option value="'.$doctor->nombreD.'" selected>'.$doctor->nombreD.'</option>';
@@ -240,7 +285,7 @@ class AppController extends Controller{
 		$asesores = DB::table('asesores')->select()->get();
 		$nombreAsesorPaciente = request()->nombreAsesor;
 
-		$select = '<select class="custom-select mr-sm-2" id="asesorPacienteMod" name="asesorPacienteMod">';
+		$select = '<select class="custom-select mr-sm-2" id="asesorPacienteMod" name="asesorPacienteMod"><option></option>';
 		foreach ($asesores as $asesor) {
 			if($asesor->nombreA == $nombreAsesorPaciente){
 				$select .='<option value="'.$asesor->nombreA.'" selected>'.$asesor->nombreA.'</option>';
@@ -256,7 +301,7 @@ class AppController extends Controller{
 		$implantes = DB::table('implantes')->select()->get();
 		$implantePaciente = request()->implante;
 
-		$select = '<select class="custom-select mr-sm-2" id="implantePacienteMod" name="implantePacienteMod">';
+		$select = '<select class="custom-select mr-sm-2" id="implantePacienteMod" name="implantePacienteMod"><option></option>';
 		foreach ($implantes as $implante) {
 			if($implante->tipo == $implantePaciente){
 				$select .='<option value="'.$implante->tipo.'" selected>'.$implante->tipo.'</option>';
@@ -268,19 +313,69 @@ class AppController extends Controller{
 		echo $select;
 	}
 
+	public function ponerModificarTratamientoPaciente(){
+		$tratamientos = DB::table('tratamientos')->select()->get();
+
+		$select = '<select class="custom-select mr-sm-2" id="tratamientoPacienteMod" name="tratamientoPacienteMod">';
+		foreach ($tratamientos as $tratamiento) {
+			$select .='<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
+		}
+		$select .= '</select>';
+		echo $select;
+	}
+
 	public function modificarTratamientoPaciente(){
-		$id_doctor = DB::table('doctores')->select('id')->where('nombreD', '=',request()->nombreD)->get();
-		$id_asesor = DB::table('asesores')->select('id')->where('nombreA', '=',request()->nombreA)->get();
+		$id_doctor = 0;
+		if(request()->nombreD){
+			$id_doctor = DB::table('doctores')->select('id')->where('nombreD', '=',request()->nombreD)->get();
+			$id_doctor = $id_doctor[0]->id;
+		}
+
+		$id_asesor = 0;
+		if(request()->nombreA){
+			$id_asesor = DB::table('asesores')->select('id')->where('nombreA', '=',request()->nombreA)->get();
+			$id_asesor = $id_asesor[0]->id;
+		}
+
+		$codigo_paciente = explode(': ', request()->codigoP);
+		$id_paciente = DB::table('pacientes')->select('id')->where('codigoP', '=',$codigo_paciente[1])->get();
+
+		$id_tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nuevoTratamiento)->get();
+
 
 		DB::table('pacientes_tratamientos')->where('id_pt', request()->id_pt)
 		->update([
-			'materialT' => request()->materialT,
-			'tipo_trabajo' => request()->tipo_trabajoT,
-			'n_piezas' => request()->npiezasT,
-			'color' => request()->colorT,
-			'id_disco' => $id_disco[0]->id,
-			'maquina' => request()->maquinaT,
-			'notas' => request()->notasT
+			'id_doctor' => ($id_doctor != 0) ? $id_doctor : NULL,
+			'id_asesor' => ($id_asesor != 0) ? $id_asesor : NULL,
+			'tipo_implante' => request()->tipo_implante,
+			'c_guiada' => (request()->c_guiada == "rbcestatica-modificar") ? "Estática" : "Dinámica",
+			'fecha_inicio' => request()->fecha_inicio,
+			'fecha_definitiva' => request()->fecha_definitiva,
+			'pic_provisional' => (request()->pic_pre == "true") ? 1 : 0,
+			'pic_final' => (request()->pic_post == "true") ? 1 : 0,
+			'fotos_pre' => (request()->fotos_pre == "true") ? 1 : 0,
+			'foto_post' => (request()->fotos_post == "true") ? 1 : 0,
+			'orto_pre' => (request()->orto_pre == "true") ? 1 : 0,
+			'orto_post' =>(request()->orto_post == "true") ? 1 : 0,
+			'tac_pre' => (request()->tac_pre == "true") ? 1 : 0,
+			'tac_post' => (request()->tac_post == "true") ? 1 : 0,
+			'video_pre' => (request()->video_pre == "true") ? 1 : 0,
+			'video_final' => (request()->video_post == "true") ? 1 : 0,
+			'ioscan_pre' => (request()->ioscan_pre == "true") ? 1 : 0,
+			'ioscan_post' => (request()->ioscan_post == "true") ? 1 : 0,
+			'foto_protesis' => (request()->foto_protesis_pre == "true") ? 1 : 0,
+			'foto_protesis_final' => (request()->foto_protesis_post == "true") ? 1 : 0,
+			'foto_protesis_boca_provisional' => (request()->foto_protesis_boca_pre == "true") ? 1 : 0,
+			'foto_protesis_boca_final' => (request()->foto_protesis_boca_post == "true") ? 1 : 0,
+			'link' => request()->link
+		]);
+
+		$id_paciente = DB::table('pacientes_tratamientos')->select('id_paciente')->where('id_pt', request()->id_pt)->get();
+
+		DB::table('pacientes')->where('id', $id_paciente[0]->id_paciente)
+		->update([
+			'powerpoint' => request()->powerpoint,
+			'pdf' => request()->pdf
 		]);
 	}
 }

@@ -1,4 +1,3 @@
-
 <div class="container py-4">
 	<div class="row">
 		<div class="col-ms-8 mx-auto">
@@ -69,7 +68,7 @@
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-user-md"></i></label>
 								</div>
-								<select class="custom-select mr-sm-2" id="docot" name="docot">
+								<select class="custom-select mr-sm-2" id="doctor_insertTrat" name="doctor_insertTrat">
 									<option selected>Elija un doctor...</option>
 									@foreach($doctores as $doctor)
 									<option value="{{$doctor->nombreD}}" class="highlight">{{$doctor->nombreD}}</option>
@@ -85,7 +84,7 @@
 								<div class="input-group-prepend">
 									<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-user-nurse"></i></label>
 								</div>
-								<select class="custom-select mr-sm-2" id="inputGroupSelect01">
+								<select class="custom-select mr-sm-2" id="asesor_insertTrat" name="asesor_insertTrat">
 									<option selected>Elija un asesor...</option>
 									@foreach($asesores as $asesor)
 									<option value="{{$asesor->nombreA}}" class="highlight">{{$asesor->nombreA}}</option>
@@ -100,11 +99,11 @@
 						<label for="inputTratamiento">Cirugía guiada </label>
 						<div class="input-group">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="c_insertTrat" id="c_estatica_insertTrat" value="option1">
+								<input class="form-check-input" type="radio" name="c_insertTrat" id="c_estatica_insertTrat" value="c_estatica_insertTrat">
 								<label class="form-check-label" for="inlineRadio1">Estática</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="c_insertTrat" id="c_dinamica_insertTrat" value="option2">
+								<input class="form-check-input" type="radio" name="c_insertTrat" id="c_dinamica_insertTrat" value="c_dinamica_insertTrat">
 								<label class="form-check-label" for="inlineRadio2">Dinámica</label>
 							</div>
 						</div>
@@ -251,19 +250,27 @@
 					</div>
 				</div>
 				<div class="form-row pb-3">
-					<div class="col-md-5 mx-auto">
-						<input type="file" class="custom-file-input" id="customFileLang" lang="es">
-						<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PPTX</label>
+					<div class="col-md-6 mx-auto input-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"><i class="fas fa-file-powerpoint mr-sm-2"></i> POWER POINT:</span>
+							</div>
+							<input type="text" class="form-control p-2" name="pptx_insertTrat" id="pptx_insertTrat">
+						</div>
 					</div>
-					<div class="col-md-5 mx-auto">
-						<input type="file" class="custom-file-input" id="customFileLang" lang="es">
-						<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> PDF</label>
+					<div class="col-md-6 mx-auto input-group">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<label class="input-group-text"><i class="fas fa-file-pdf mr-sm-2"></i> PDF:</label>
+							</div>
+							<input type="text" class="form-control p-2" name="pdf_insertTrat" id="pdf_insertTrat">
+						</div>
 					</div>
 				</div>
-
-				<button type="submit" class="btn btn-warning btn-lg btn-block" id="tablaDiscosConsulta"><i class="far fa-save"></i> Guardar</button>
+				<div class="form-row">
+					<button type="submit" class="btn btn-warning btn-lg btn-block" id="guardarTratamiento"><i class="far fa-save"></i> Guardar</button>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-

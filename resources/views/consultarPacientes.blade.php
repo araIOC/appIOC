@@ -251,7 +251,7 @@
 		</tbody>
 	</table>
 	<div class="modal fade modal-ficha-cliente" id="modal-pacientes" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl" >
+		<div class="modal-dialog modal-xl" id="modal-modificar-paciente">
 			<div class="modal-content" id="ficha-paciente-tratamiento">
 				<div class="modal-header">
 					<h5 class="modal-title" id="nombrep"></h5>
@@ -268,8 +268,8 @@
 						<a class="nav-link" id="tratamiento_actual"></a>
 					</li>
 
-					<li class="ml-auto mr-sm-2">
-						<a href="{{route('agregarTratamiento')}}"><button type="button" class="btn btn-lg btn-warning py-2 btn-fichacliente" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento"><i class="fas fa-plus"></i></button></a>
+					<li class="ml-auto mr-sm-2" id="conten_btn">
+						<a id="agregar_nuevo_tratamiento"><button type="button" data-dismiss="modal" class="btn btn-lg btn-warning py-2 btn-fichacliente" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento" id="agregar_tratamiento_pacienteM"><i class="fas fa-plus"></i></button></a>
 						<a id="modificar-tratamiento"><button class="btn btn-lg btn-warning ml-auto btn-fichacliente"   data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button></a>
 					</li>
 				</ul>
@@ -279,7 +279,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<table class="table ">
-										<tbody>
+										<tbody id="tabla_modal_paciente">
 											<tr>
 												<th scope="row">DOCTOR:</th>
 												<td id="doctor_fichapaciente"></td>
@@ -339,10 +339,14 @@
 						</div>
 						<div class="form-row py-2" id="row-btn-files">
 							<div class="col-md-4 mx-auto" id="powerpoint-modal">
-								<a href="{{route('downloadFilepptx')}}" id="descargarPPTX"><button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-download"></i> PPTX</button></a>
+								<a href="" target="_blank" id="descargarPPTX">
+									<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>
+								</a>
 							</div>
 							<div class="col-md-4 mx-auto" id="pdf-modal">
-								<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-download"></i> PDF</button>
+								<a href="" target="_blank" id="descargarPDF">
+									<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>
+								</a>
 							</div>
 						</div>
 					</div>

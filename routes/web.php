@@ -24,6 +24,7 @@ Route::post('modificarDoctorPacientes', 'AppController@modificarDoctorPacientes'
 Route::post('modificarAsesorPacientes', 'AppController@modificarAsesorPacientes')->name('modificarAsesorPacientes');
 Route::post('modificarImplantePaciente', 'AppController@modificarImplantePaciente')->name('modificarImplantePaciente');
 Route::post('modificarTratamientoPaciente', 'AppController@modificarTratamientoPaciente')->name('modificarTratamientoPaciente');
+Route::post('ponerModificarTratamientoPaciente', 'AppController@ponerModificarTratamientoPaciente')->name('ponerModificarTratamientoPaciente');
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
 Route::any('registroTratamiento', 'AppController@registroTratamiento')->name('registroTratamiento');

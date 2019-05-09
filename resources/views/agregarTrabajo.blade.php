@@ -107,7 +107,7 @@
 									<select class="custom-select mr-sm-2" id="inputGroupSelect01">
 										<option selected>Nº disco...</option>
 										@foreach($discos as $disco)
-										<option value="{{$disco->codigo}}" class="highlight">{{$disco->codigo}}</option>
+										<option value="{{$disco->codigoD}}" class="highlight">{{$disco->codigoD}}</option>
 										@endforeach
 									</select>
 								</div>
