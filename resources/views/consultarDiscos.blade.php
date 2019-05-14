@@ -47,6 +47,15 @@
 				</select>
 			</div>
 		</div>
+		<div class="form-inline my-2 my-lg-0">
+				<div class="input-group "  data-toggle="tooltip" data-placement="bottom" title="Fecha de alta">
+						<div class="input-group-prepend">
+							<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
+						</div>
+						<input class="form-control" type="date" id="fecha_alta" name="fecha_alta">
+						<input class="form-control" type="date" id="fecha_alta2" name="fecha_alta2">
+					</div>
+		</div>
 		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" id="limpiarFiltroDiscos" type="submit"data-toggle="tooltip" data-placement="auto" title="Limpiar filtros">Limpiar... <i class="fas fa-brush"></i></button>
 	</div>
 </nav>
@@ -91,26 +100,32 @@
 										<tbody>
 											<tr>
 												<th scope="row">MATERIAL:</th>
+												<input type="hidden" id="hidden_material">
 												<td id="material_fichadisco"></td>
 											</tr>
 											<tr>
 												<th scope="row">MARCA:</th>
+												<input type="hidden" id="hidden_marca">
 												<td id="marca_fichadisco"></td>
 											</tr>
 											<tr>
 												<th scope="row">ESCALA:</th>
+												<input type="hidden" id="hidden_escala">
 												<td id="escala_fichadisco"></td>
 											</tr>
 											<tr>
 												<th scope="row">ALTURA:</th>
+												<input type="hidden" id="hidden_altura">
 												<td id="altura_fichadisco"></td>
 											</tr>
 											<tr>
 												<th scope="row">COLOR:</th>
+												<input type="hidden" id="hidden_color">
 												<td id="color_fichadisco"></td>
 											</tr>
 											<tr>
 												<th scope="row">FECHA DE ALTA:</th>
+												<input type="hidden" id="hidden_fecha_alta_disco">
 												<td id="fecha_alta_fichadisco"></td>
 											</tr>
 										</tbody>

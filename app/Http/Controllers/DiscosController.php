@@ -26,23 +26,23 @@ class DiscosController extends Controller{
 		return view('agregarDisco',['materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'marcas'=>$marcas]);
 	}
 	public function agregarDisco(){
-		$discos = DB::table('discos')->select()->get()
-		->where('codigo',request()->codigo);
+		$colores = DB::table('colores')->select()->get();
+		$materiales = DB::table('material')->select()->get();
+		$marcas = DB::table('marca')->select()->get();
+		$discos = DB::table('discos')->select()->get();
 
-		if (count($discos)>0) {
-			return view('agregarDisco');
-		}else{
-			DB::table('discos')->insert(
-				['codigo' => request()->codigo,'material' => request()->material,'marca' => request()->marca,'escala' => request()->escala,'color' => request()->color,'altura' => request()->altura]
-			);
+		DB::table('discos')->insert(
+			['codigoD' => request()->codigod,'material' => request()->material,'marca' => request()->marca,'escala' => (request()->escala) ? request()->escala : NULL,'color' => request()->color,'altura' => (request()->altura) ? request()->altura : NULL]
+		);
 
-			return redirect()->route('consultarDiscos');
-		}
+		alert()->success('¡Éxito!', 'El disco se a insertado correctamente.');
 	}
 	public function buscadorDisco(){
 		$material = request()->materialDisco;
 		$marca = request()->marcaDisco;
 		$color = request()->colorDisco;
+		$fecha = request()->fecha_alta;
+		$fecha2 = request()->fecha_alta2;
 
 		$query ='SELECT * FROM discos where fecha_baja IS NULL ';
 		if($material != "Material..."){
@@ -54,10 +54,22 @@ class DiscosController extends Controller{
 		if($color != "Color..."){
 			$query = $query." AND color = '".$color."'";
 		}
+		if($fecha && $fecha2 == null){
+			$query.=" AND fecha_alta >= '".$fecha."'";
+		}
+		if($fecha == NULL && $fecha2){
+			$query.=" AND fecha_alta <= '".$fecha2."'";
+		}
+		if($fecha && $fecha2){
+			$query.=" AND fecha_alta BETWEEN '".$fecha."' AND '".$fecha2."'";
+		}
 
 		$discos = DB::select($query);
-		return view('datosDiscos',['discos'=>$discos]);
-
+		if (count($discos)>0) {
+			return view('datosDiscos',['discos'=>$discos]);
+		}else{
+			echo "Sin resultados";
+		}
 	}
 
 	public function darBajaDisco(){

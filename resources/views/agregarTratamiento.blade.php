@@ -253,17 +253,17 @@
 					<div class="col-md-6 mx-auto input-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="input-group-text"><i class="fas fa-file-powerpoint mr-sm-2"></i> POWER POINT:</span>
+								<span class="input-group-text"><i class="fas fa-file-powerpoint"></i></span>
 							</div>
-							<input type="text" class="form-control p-2" name="pptx_insertTrat" id="pptx_insertTrat">
+							<input type="text" class="form-control p-2" placeholder="Power Point" name="pptx_insertTrat" id="pptx_insertTrat">
 						</div>
 					</div>
 					<div class="col-md-6 mx-auto input-group">
 						<div class="input-group">
 							<div class="input-group-prepend">
-								<label class="input-group-text"><i class="fas fa-file-pdf mr-sm-2"></i> PDF:</label>
+								<label class="input-group-text"><i class="fas fa-file-pdf"></i></label>
 							</div>
-							<input type="text" class="form-control p-2" name="pdf_insertTrat" id="pdf_insertTrat">
+							<input type="text" class="form-control p-2" placeholder="PDF" name="pdf_insertTrat" id="pdf_insertTrat">
 						</div>
 					</div>
 				</div>

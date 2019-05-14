@@ -36,10 +36,16 @@ class TrabajosController extends Controller{
 		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
 		->select()
 		->get();
-		return view('agregarTrabajo',['trabajos'=>$trabajos,'materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'maquinas'=>$maquinas,'tratamientos'=>$tratamientos, 'tipos_trabajo' => $tipos_trabajo,'pacientes'=>$pacientes]);
+
+		$nombre = request()->nombrep;
+		$codigo = explode(': ', request()->codigop);
+		$tratamiento = request()->tratamiento;
+		$id_pt = request()->id_pt;
+		echo $id_pt;
+		return view('agregarTrabajo',['trabajos'=>$trabajos,'materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'maquinas'=>$maquinas,'tratamientos'=>$tratamientos, 'tipos_trabajo' => $tipos_trabajo,'pacientes'=>$pacientes,'nombre'=>$nombre,'id_pt'=>$id_pt,'tratamiento'=>$tratamiento,'codigo'=>$codigo[1]]);
 	}
 
-	public function filtroTratamientos(){
+	/* function filtroTratamientos(){
 
 		$codigoP = request()->codigopaciente;
 		$query = DB::select('SELECT  nombreT FROM TRATAMIENTOS T INNER JOIN PACIENTES_TRATAMIENTOS PT ON T.ID = PT.ID_TRATAMIENTO INNER JOIN PACIENTES P ON PT.ID_PACIENTE = P.ID WHERE P.CODIGOP LIKE "%'.$codigoP .'%"');
@@ -50,26 +56,17 @@ class TrabajosController extends Controller{
 				$select .= '<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
 		}
 		echo $select;
-	}
-
+	}*/
 
 	public function agregarTrabajo(){
-		$tratamiento = DB::table('trabajos')
-		->join('pacientes_tratamientos', 'pacientes_tratamientos.id_pt', '=', 'trabajo.id_tratamiento')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
-		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamiento.id')
-		->whereColumn([
-			['codigoP', '=', request()->codigopaciente],
-			['nombreT', '=', request()->tratamientop]
-		])->get();
-		/*
+		$id_disco = DB::table('discos')->select('id')->where('codigoD', '=',request()->codigoDisco_trabajo)->get();
+
 
 		DB::table('trabajos')->insert(
-			['codigo' => request()->codigo,'material' => request()->material,'marca' => request()->marca,'escala' => request()->escala,'color' => request()->color,'altura' => request()->altura]
+			['id_tratamiento' => request()->id_pt,'materialT' => request()->material_trabajo,'stl' => request()->stl_insertTrab,'tipo_trabajo' => request()->t_trabajo,'n_piezas' => request()->numeroPiezas,'color' => request()->color_trabajo,'id_disco' => $id_disco[0]->id,'maquina' => request()->maquina_trabajo,'notas' => request()->notas,'fecha_trabajo' => request()->fecha_alta_trabajo]
 		);
 
-		return redirect()->route('consultarDiscos');*/
-		var_dump($tratamiento);
+		return redirect()->route('consultarTrabajos');
 	}
 
 	public function buscadorTrabajo(){
@@ -88,8 +85,7 @@ class TrabajosController extends Controller{
 		ON PT.ID_TRATAMIENTO = TR.ID
 		LEFT OUTER JOIN DISCOS D
 		ON T.ID_DISCO = D.ID
-		WHERE 1 = 1';
-
+		WHERE 1 = 1 AND t.fecha_baja IS NULL';
 		if($material != "Material..."){
 			$query = $query." AND materialT = '".$material."'";
 		}
@@ -108,6 +104,7 @@ class TrabajosController extends Controller{
 		$trabajos = DB::select($query);
 		return view('datosTrabajos',['trabajos'=>$trabajos]);
 	}
+
 	public function modificarMaterialTrabajo(){
 		$materiales = DB::table('material')->select()->get();
 		$nombreMaterial = request()->material;
@@ -123,6 +120,7 @@ class TrabajosController extends Controller{
 		$select .= '</select>';
 		echo $select;
 	}
+
 	public function modificarTipoTrabajo(){
 		$tipos = DB::table('tipo_trabajo')->select()->get();
 		$tipoTrabajo = request()->tipo_trabajo;
@@ -138,6 +136,7 @@ class TrabajosController extends Controller{
 		$select .= '</select>';
 		echo $select;
 	}
+
 	public function modificarColorTrabajo(){
 		$colores = DB::table('colores')->select()->get();
 		$colorT = request()->colorT;
@@ -153,6 +152,7 @@ class TrabajosController extends Controller{
 		$select .= '</select>';
 		echo $select;
 	}
+
 	public function modificarDiscoTrabajo(){
 		$discos = DB::table('discos')->select()->get();
 		$codigoDisco = request()->codigoDisco;
@@ -168,6 +168,7 @@ class TrabajosController extends Controller{
 		$select .= '</select>';
 		echo $select;
 	}
+
 	public function modificarMaquinaTrabajo(){
 		$maquinas = DB::table('maquina')->select()->get();
 		$maquinaT = request()->maquina;
@@ -194,7 +195,15 @@ class TrabajosController extends Controller{
 			'color' => request()->colorT,
 			'id_disco' => $id_disco[0]->id,
 			'maquina' => request()->maquinaT,
-			'notas' => request()->notasT
+			'notas' => request()->notasT,
+			'stl' => request()->stl
 		]);
+	}
+
+	public function eliminarTrabajo(){
+		DB::table('trabajos')->where('id', request()->id)
+		->update(['fecha_baja' => date("Y") . "-" . date("m") . "-" . date("d")]);
+
+		alert()->success('¡Éxito!', 'El trabajo se ha eliminado correctamente.');
 	}
 }

@@ -83,7 +83,12 @@
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
 							<div class="row pb-2">
-								<div class="col-md-10"></div>
+								<div class="col-md-8"></div>
+								<div class="col-md-2 ml-auto">
+									<a id="eliminar_trabajo">
+										<button class="btn btn-lg btn-warning  mr-2 py-2 btn-fichatrabajo"data-toggle="tooltip" data-placement="auto" title="Eliminar trabajo" type="submit"><i class="fas fa-trash-alt"></i></button>
+									</a>
+								</div>
 								<div class="col-md-2 ml-auto" >
 									<a id="modificar-trabajo"><button class="btn btn-lg btn-warning ml-auto btn-fichatrabajo" id="modificar-trabajo" data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button></a>
 								</div>
@@ -94,45 +99,54 @@
 										<tbody>
 											<tr>
 												<th scope="row">MATERIAL:</th>
+												<input type="hidden" id="hidden_material">
 												<td id="material_fichatrabajo"></td>
 											</tr>
 											<tr>
 												<th scope="row">TIPO DE TRABAJO:</th>
+												<input type="hidden" id="hidden_tipo_trabajo">
 												<td id="tipotrabajo_fichatrabajo"></td>
 											</tr>
 											<tr>
 												<th scope="row">NÚMERO DE PIEZAS:</th>
+												<input type="hidden" id="hidden_n_piezas">
 												<td id="npiezas_fichatrabajo"></td>
 											</tr>
 											<tr>
 												<th scope="row">COLOR:</th>
+												<input type="hidden" id="hidden_color_trabajo">
 												<td id="color_fichatrabajo"></td>
 											</tr>
 											<tr>
 												<th scope="row">MÁQUINA:</th>
+												<input type="hidden" id="hidden_maquina">
 												<td id="maquina_fichatrabajo"></td>
 											</tr>
 											<tr>
 												<th scope="row">CÓDIGO DE DISCO:</th>
+												<input type="hidden" id="hidden_cod_disco">
 												<td id="codDisco_fichatrabajo"></td>
 											</tr>
 											<tr>
 												<th scope="row">NOTAS:</th>
+												<input type="hidden" id="hidden_notas">
 												<td id="notas_fichatrabajo"></td>
 											</tr>
 										</tbody>
 									</table>
 								</div>
 							</div>
-							<div class="row py-2 px-2" id="row-btn-stl">
-								<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Descargar STL" type="submit"><i class="fas fa-download"></i> STL</button>
+							<div class="col-md-12 py-2 px-2" id="row-btn-stl">
+								<input type="hidden" id="hidden_stl">
+								<a href="" target="_blank" id="descargarSTL">
+									<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Descargar STL" type="submit"><i class="fas fa-download"></i> STL</button>
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer"  id="footer-trabajo">
 					<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver disco" type="submit"><i class="far fa-eye"></i> DISCO</button>
-					<a href="{{route('registroDisco')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo disco"><i class="fas fa-plus"></i></button></a>
 				</div>
 			</div>
 		</div>

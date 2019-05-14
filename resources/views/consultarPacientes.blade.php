@@ -264,7 +264,8 @@
 				</div>
 				<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
 
-					<li class="nav-item active">
+					<li class="nav-item active" id="tratamiento_paciente_actual">
+
 						<a class="nav-link" id="tratamiento_actual"></a>
 					</li>
 
@@ -282,30 +283,37 @@
 										<tbody id="tabla_modal_paciente">
 											<tr>
 												<th scope="row">DOCTOR:</th>
+												<input type="hidden" id="dato_anterior-nombred">
 												<td id="doctor_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">ASESOR:</th>
+												<input type="hidden" id="dato_anterior-nombrea">
 												<td id="asesor_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">TIPO DE IMPLANTE</th>
+												<input type="hidden" id="dato_anterior-tipo_implante">
 												<td id="tipo_implante_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">CIRUGIA:</th>
+												<input type="hidden" id="dato_anterior-cirugia">
 												<td id="cirugia_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">FECHA DE INICIO:</th>
+												<input type="hidden" id="dato_anterior-finicio">
 												<td id="fecha_inicio_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row">FECHA DEFINITIVA</th>
+												<input type="hidden" id="dato_anterior-fdef">
 												<td id="fecha_definitiva_fichapaciente"></td>
 											</tr>
 											<tr>
 												<th scope="row"><i class="fab fa-dropbox"></i></th>
+												<input type="hidden" id="dato_anterior-link">
 												<td id="dropbox"><a href="" target="_blank" id="link_dropbox"></a></td>
 											</tr>
 										</tbody>
@@ -313,37 +321,87 @@
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item" id="picprovisional-modal"><i id="icono_picpre"></i> PIC provisional</li>
-										<li class="list-group-item" id="tacpre-modal"><i id="icono_tacpre"></i> TAC pre</li>
-										<li class="list-group-item" id="ortopre-modal"><i id="icono_ortopre"></i> Orto pre</li>
-										<li class="list-group-item" id="ioscanpre-modal"><i id="icono_ioscanpre"></i> IOScan pre</li>
-										<li class="list-group-item" id="fotopre-modal"><i id="icono_fotopre"></i> Fotos pre</li>
-										<li class="list-group-item" id="fotoprotesispre-modal"><i id="icono_fotoprotesispre"></i> Fotos protesis pre</li>
-										<li class="list-group-item" id="fotoprotesisbocapre-modal"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre</li>
-										<li class="list-group-item" id="videopre-modal"><i id="icono_videopre"></i> Video pre</li>
+										<li class="list-group-item" id="picprovisional-modal">
+											<input type="hidden" id="hidden_pic_provisional">
+											<i id="icono_picpre"></i> PIC provisional
+										</li>
+										<li class="list-group-item" id="tacpre-modal">
+											<input type="hidden" id="hidden_tac_pre">
+											<i id="icono_tacpre"></i> TAC pre
+										</li>
+										<li class="list-group-item" id="ortopre-modal">
+											<input type="hidden" id="hidden_orto_pre">
+											<i id="icono_ortopre"></i> Orto pre
+										</li>
+										<li class="list-group-item" id="ioscanpre-modal">
+											<input type="hidden" id="hidden_ioscan_pre">
+											<i id="icono_ioscanpre"></i> IOScan pre
+										</li>
+										<li class="list-group-item" id="fotopre-modal">
+											<input type="hidden" id="hidden_fotos_pre">
+											<i id="icono_fotopre"></i> Fotos pre
+										</li>
+										<li class="list-group-item" id="fotoprotesispre-modal">
+											<input type="hidden" id="hidden_foto_protesis">
+											<i id="icono_fotoprotesispre"></i> Fotos protesis pre
+										</li>
+										<li class="list-group-item" id="fotoprotesisbocapre-modal">
+											<input type="hidden" id="hidden_foto_protesis_boca_provisional">
+											<i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre
+										</li>
+										<li class="list-group-item" id="videopre-modal">
+											<input type="hidden" id="hidden_video_pre">
+											<i id="icono_videopre"></i> Video pre
+										</li>
 									</ul>
 								</div>
 								<div class="col-md-3">
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item" id="picpost-modal"><i id="icono_picpost"></i> PIC definitivo</li>
-										<li class="list-group-item" id="tacpost-modal"><i id="icono_tacpost"></i> TAC post</li>
-										<li class="list-group-item" id="ortopost-modal"><i id="icono_ortopost"></i> Orto post</li>
-										<li class="list-group-item" id="ioscanpost-modal"><i id="icono_ioscanpost"></i> IOScan post</li>
-										<li class="list-group-item" id="fotopost-modal"><i id="icono_fotopost"></i> Fotos post</li>
-										<li class="list-group-item" id="fotoprotesispost-modal"><i id="icono_fotoprotesispost"></i> Fotos protesis post</li>
-										<li class="list-group-item" id="fotoprotesisbocapost-modal"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post</li>
-										<li class="list-group-item" id="videopost-modal"><i id="icono_videopost"></i> Video post</li>
+										<li class="list-group-item" id="picpost-modal">
+											<input type="hidden" id="hidden_pic_final">
+											<i id="icono_picpost"></i> PIC definitivo
+										</li>
+										<li class="list-group-item" id="tacpost-modal">
+											<input type="hidden" id="hidden_tac_post">
+											<i id="icono_tacpost"></i> TAC post
+										</li>
+										<li class="list-group-item" id="ortopost-modal">
+											<input type="hidden" id="hidden_orto_post">
+											<i id="icono_ortopost"></i> Orto post
+										</li>
+										<li class="list-group-item" id="ioscanpost-modal">
+											<input type="hidden" id="hidden_ioscan_post">
+											<i id="icono_ioscanpost"></i> IOScan post
+										</li>
+										<li class="list-group-item" id="fotopost-modal">
+											<input type="hidden" id="hidden_foto_post">
+											<i id="icono_fotopost"></i> Fotos post
+										</li>
+										<li class="list-group-item" id="fotoprotesispost-modal">
+											<input type="hidden" id="hidden_foto_protesis_final">
+											<i id="icono_fotoprotesispost"></i> Fotos protesis post
+										</li>
+										<li class="list-group-item" id="fotoprotesisbocapost-modal">
+											<input type="hidden" id="hidden_foto_protesis_boca_final">
+											<i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post
+										</li>
+										<li class="list-group-item" id="videopost-modal">
+											<input type="hidden" id="hidden_video_final">
+											<i id="icono_videopost"></i> Video post
+										</li>
 									</ul>
 								</div>
 							</div>
 						</div>
 						<div class="form-row py-2" id="row-btn-files">
 							<div class="col-md-4 mx-auto" id="powerpoint-modal">
+								<input type="hidden" id="dato_anterior-pptx">
 								<a href="" target="_blank" id="descargarPPTX">
 									<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>
 								</a>
 							</div>
 							<div class="col-md-4 mx-auto" id="pdf-modal">
+								<input type="hidden" id="dato_anterior-pdf">
 								<a href="" target="_blank" id="descargarPDF">
 									<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>
 								</a>
@@ -353,7 +411,7 @@
 				</div>
 				<div class="modal-footer" id="footer-fichapaciente">
 					<button class="btn btn-lg btn-warning mr-auto"  data-toggle="tooltip" data-placement="auto" title="Ver trabajo" type="submit"><i class="far fa-eye"></i> NOMBRE DEL TRABAJO</button>
-					<a href="{{route('registroTrabajo')}}"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
+					<a id="nuevo_trabajo"><button type="button" class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Nuevo trabajo"><i class="fas fa-plus"></i></button></a>
 
 				</div>
 			</div>

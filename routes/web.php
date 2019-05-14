@@ -17,14 +17,17 @@ Route::get('app', 'AppController@consultarPacientes')->name('app');
 
 Route::get('pacientes', 'AppController@consultarPacientes')->name('consultar');
 Route::get('registroPaciente', 'AppController@registroPacientes')->name('registroPaciente');
-Route::any('agregarPaciente', 'AppController@agregarPacientes')->name('agregarPaciente');
+Route::any('agregarPaciente', 'AppController@agregarPaciente')->name('agregarPaciente');
 Route::any('buscadorPaciente', 'AppController@buscadorPaciente')->name('buscadorPaciente');
-Route::any('downloadFilepptx', 'AppController@downloadFilepptx')->name('downloadFilepptx');
 Route::post('modificarDoctorPacientes', 'AppController@modificarDoctorPacientes')->name('modificarDoctorPacientes');
 Route::post('modificarAsesorPacientes', 'AppController@modificarAsesorPacientes')->name('modificarAsesorPacientes');
 Route::post('modificarImplantePaciente', 'AppController@modificarImplantePaciente')->name('modificarImplantePaciente');
 Route::post('modificarTratamientoPaciente', 'AppController@modificarTratamientoPaciente')->name('modificarTratamientoPaciente');
 Route::post('ponerModificarTratamientoPaciente', 'AppController@ponerModificarTratamientoPaciente')->name('ponerModificarTratamientoPaciente');
+Route::get('agregar', function () {
+        return redirect()->route('consultar');
+})->name('agregar');
+
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
 Route::any('registroTratamiento', 'AppController@registroTratamiento')->name('registroTratamiento');
@@ -42,6 +45,7 @@ Route::post('modificarColorTrabajo', 'TrabajosController@modificarColorTrabajo')
 Route::post('modificarDiscoTrabajo', 'TrabajosController@modificarDiscoTrabajo')->name('modificarDiscoTrabajo');
 Route::post('modificarMaquinaTrabajo', 'TrabajosController@modificarMaquinaTrabajo')->name('modificarMaquinaTrabajo');
 Route::post('modificarTrabajo', 'TrabajosController@modificarTrabajo')->name('modificarTrabajo');
+Route::post('eliminarTrabajo', 'TrabajosController@eliminarTrabajo')->name('eliminarTrabajo');
 
 Route::any('registroDisco', 'DiscosController@registroDisco')->name('registroDisco');
 Route::any('agregarDisco', 'DiscosController@agregarDisco')->name('agregarDisco');
@@ -52,10 +56,14 @@ Route::post('modificarColorDisco', 'DiscosController@modificarColorDisco')->name
 Route::post('modificarMaterialDisco', 'DiscosController@modificarMaterialDisco')->name('modificarMaterialDisco');
 Route::post('modificarMarcaDisco', 'DiscosController@modificarMarcaDisco')->name('modificarMarcaDisco');
 Route::post('modificarDisco', 'DiscosController@modificarDisco')->name('modificarDisco');
+
+Route::get('consultarMaterial', 'consultaMaterialController@consultarMaterial')->name('consultarMaterial');
+Route::get('calcularPiezas', 'consultaMaterialController@calcularPiezas')->name('calcularPiezas');
+
 //Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
-
+/*
 Route::fallback(function () {
-    return view('bienvenido');
+    return redirect()->route('consultar');
 });

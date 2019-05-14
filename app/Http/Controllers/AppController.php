@@ -33,21 +33,10 @@ class AppController extends Controller{
 		return view('agregarPaciente');
 	}
 
-	public function agregarPacientes(){
-
-		$pacientes = DB::table('pacientes')->select()->get()
-		->where('codigoP',request()->codigop);
-		if (count($pacientes)<=0) {
-			DB::table('pacientes')->insert(
-				['nombreP' => request()->nombrep,'codigoP' => request()->codigop]
-			);
-		}/*else{
-			DB::table('pacientes')->insert(
-				['nombreP' => request()->nombrePacienteAgr,'codigoP' => request()->codPacienteAgr]
-			);
-				//return redirect()->route('consultar');
-		}*/
-
+	public function agregarPaciente(){
+		DB::table('pacientes')->insert(
+			['nombreP' => request()->nombrep,'codigoP' => request()->codigop]
+		);
 	}
 	public function registroTratamiento(){
 		$nombre = request()->nombrep;
@@ -60,7 +49,9 @@ class AppController extends Controller{
 		$asesores = DB::table('asesores')->select()->get();
 		return view('agregarTratamiento',['nombre'=>$nombre,'codigo'=>$codigo,'asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes]);
 	}
-
+	public function agregar(){
+		return redirect('consultar');
+	}
 	public function agregarTratamiento(){
 		$id_doctor = 0;
 		if(request()->doctorPaciente != 0){
@@ -121,13 +112,13 @@ class AppController extends Controller{
 			'link' => request()->linkD,
 		]);
 
-		$id_paciente = DB::table('pacientes')->select('id')->where('codigoP', request()->codigopaciente)->get();
-
 		DB::table('pacientes')->where('id', $id_paciente[0]->id)
 		->update([
 			'powerpoint' => request()->pptx,
 			'pdf' => request()->pdf
 		]);
+
+		alert()->success('¡Éxito!', 'El tratamiento se a insertado correctamente.');
 	}
 
 	public function buscadorPaciente(){
@@ -278,7 +269,6 @@ class AppController extends Controller{
 		}
 		$select .= '</select>';
 		echo $select;
-		//return view('modal-modificarPaciente',['doctores'=>$doctores,'nombreDoctor' => $nombreDoctor]);
 	}
 
 	public function modificarAsesorPacientes(){
@@ -316,9 +306,13 @@ class AppController extends Controller{
 	public function ponerModificarTratamientoPaciente(){
 		$tratamientos = DB::table('tratamientos')->select()->get();
 
-		$select = '<select class="custom-select mr-sm-2" id="tratamientoPacienteMod" name="tratamientoPacienteMod">';
+		$select = '<input type="hidden" id="dato_anterior-tratamiento" value="'.request()->tratamiento_actual.'"><select class="custom-select mr-sm-2" id="tratamientoPacienteMod" name="tratamientoPacienteMod">';
 		foreach ($tratamientos as $tratamiento) {
-			$select .='<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
+			if($tratamiento->nombreT == request()->tratamiento_actual){
+			$select .='<option value="'.$tratamiento->nombreT.'" selected>'.$tratamiento->nombreT.'</option>';
+			}else{
+				$select .='<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
+			}
 		}
 		$select .= '</select>';
 		echo $select;
@@ -340,15 +334,26 @@ class AppController extends Controller{
 		$codigo_paciente = explode(': ', request()->codigoP);
 		$id_paciente = DB::table('pacientes')->select('id')->where('codigoP', '=',$codigo_paciente[1])->get();
 
-		$id_tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nuevoTratamiento)->get();
-
-
+		if(request()->nuevoTratamiento){
+			$id_tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nuevoTratamiento)->get();
+			DB::table('pacientes_tratamientos')->where('id_pt', request()->id_pt)
+			->update([
+				'id_tratamiento' => $id_tratamiento[0]->id
+			]);
+		}
+		$c_guiada = NULL;
+		if(request()->c_guiada == "rbcestatica-modificar"){
+			$c_guiada = "Estática";
+		}
+		if(request()->c_guiada == "rbcdinamica-modificar"){
+			$c_guiada = "Dinámica";
+		}
 		DB::table('pacientes_tratamientos')->where('id_pt', request()->id_pt)
 		->update([
 			'id_doctor' => ($id_doctor != 0) ? $id_doctor : NULL,
 			'id_asesor' => ($id_asesor != 0) ? $id_asesor : NULL,
 			'tipo_implante' => request()->tipo_implante,
-			'c_guiada' => (request()->c_guiada == "rbcestatica-modificar") ? "Estática" : "Dinámica",
+			'c_guiada' => $c_guiada,
 			'fecha_inicio' => request()->fecha_inicio,
 			'fecha_definitiva' => request()->fecha_definitiva,
 			'pic_provisional' => (request()->pic_pre == "true") ? 1 : 0,
@@ -377,5 +382,7 @@ class AppController extends Controller{
 			'powerpoint' => request()->powerpoint,
 			'pdf' => request()->pdf
 		]);
+
+		return redirect()->route('consultar');
 	}
 }

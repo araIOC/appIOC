@@ -75,33 +75,42 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 		var id_pt = $(this).data('idpt');
 
 		$('#id_pt').val(id_pt);
+		$('#dato_anterior-nombred').val(nombred);
 		$('#doctor_fichapaciente').text(nombred);
+		$('#dato_anterior-nombrea').val(nombrea);
 		$('#asesor_fichapaciente').text(nombrea);
+		$('#dato_anterior-tipo_implante').val(tipo_implante);
 		$('#tipo_implante_fichapaciente').text(tipo_implante);
+		$('#dato_anterior-cirugia').val(c_guiada);
 		$('#cirugia_fichapaciente').text(c_guiada);
+		$('#dato_anterior-finicio').val(fecha_inicio.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 		$('#fecha_inicio_fichapaciente').text(fecha_inicio.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
+		$('#dato_anterior-fdef').val(fecha_definitiva.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 		$('#fecha_definitiva_fichapaciente').text(fecha_definitiva.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
+		$('#dato_anterior-link').val(link);
 		$('#link_dropbox').text(link).attr('href', link);
 		$('#tratamiento_actual').text(tratamiento);
+		$('#dato_anterior-pptx').val(powerpoint);
 		$('#descargarPPTX').attr('href', powerpoint);
+		$('#dato_anterior-pdf').val(pdf);
 		$('#descargarPDF').attr('href', pdf);
 
-		rellenarListaCB(pic_provisional,'#icono_picpre','#picprovisional-modal');
-		rellenarListaCB(pic_final,'#icono_picpost','#picpost-modal');
-		rellenarListaCB(tac_pre,'#icono_tacpre','#tacpre-modal');
-		rellenarListaCB(tac_post,'#icono_tacpost','#tacpost-modal');
-		rellenarListaCB(orto_pre,'#icono_ortopre','#ortopre-modal');
-		rellenarListaCB(orto_post,'#icono_ortopost','#ortopost-modal');
-		rellenarListaCB(ioscan_pre,'#icono_ioscanpre','#ioscanpre-modal');
-		rellenarListaCB(ioscan_post,'#icono_ioscanpost','#ioscanpost-modal');
-		rellenarListaCB(fotos_pre,'#icono_fotopre','#fotopre-modal');
-		rellenarListaCB(foto_post,'#icono_fotopost','#fotopost-modal');
-		rellenarListaCB(foto_protesis,'#icono_fotoprotesispre','#fotoprotesispre-modal');
-		rellenarListaCB(foto_protesis_final,'#icono_fotoprotesispost','#fotoprotesispost-modal');
-		rellenarListaCB(foto_protesis_boca_provisional,'#icono_fotoprotesisbocapre','#fotoprotesisbocapre-modal');
-		rellenarListaCB(foto_protesis_boca_final,'#icono_fotoprotesisbocapost','#fotoprotesisbocapost-modal');
-		rellenarListaCB(video_pre,'#icono_videopre','#videopre-modal');
-		rellenarListaCB(video_final,'#icono_videopost','#videopost-modal');
+		rellenarListaCB(pic_provisional,'#icono_picpre','#picprovisional-modal','#hidden_pic_provisional');
+		rellenarListaCB(pic_final,'#icono_picpost','#picpost-modal','#hidden_pic_final');
+		rellenarListaCB(tac_pre,'#icono_tacpre','#tacpre-modal','#hidden_tac_pre');
+		rellenarListaCB(tac_post,'#icono_tacpost','#tacpost-modal','#hidden_tac_post');
+		rellenarListaCB(orto_pre,'#icono_ortopre','#ortopre-modal','#hidden_orto_pre');
+		rellenarListaCB(orto_post,'#icono_ortopost','#ortopost-modal','#hidden_orto_post');
+		rellenarListaCB(ioscan_pre,'#icono_ioscanpre','#ioscanpre-modal','#hidden_ioscan_pre');
+		rellenarListaCB(ioscan_post,'#icono_ioscanpost','#ioscanpost-modal','#hidden_ioscan_post');
+		rellenarListaCB(fotos_pre,'#icono_fotopre','#fotopre-modal','#hidden_fotos_pre');
+		rellenarListaCB(foto_post,'#icono_fotopost','#fotopost-modal','#hidden_foto_post');
+		rellenarListaCB(foto_protesis,'#icono_fotoprotesispre','#fotoprotesispre-modal','#hidden_foto_protesis');
+		rellenarListaCB(foto_protesis_final,'#icono_fotoprotesispost','#fotoprotesispost-modal','#hidden_foto_protesis_final');
+		rellenarListaCB(foto_protesis_boca_provisional,'#icono_fotoprotesisbocapre','#fotoprotesisbocapre-modal','#hidden_foto_protesis_boca_provisional');
+		rellenarListaCB(foto_protesis_boca_final,'#icono_fotoprotesisbocapost','#fotoprotesisbocapost-modal','#hidden_foto_protesis_boca_final');
+		rellenarListaCB(video_pre,'#icono_videopre','#videopre-modal','#hidden_video_pre');
+		rellenarListaCB(video_final,'#icono_videopost','#videopost-modal','#hidden_video_final');
 
 		if(!$('#descargarPDF').attr('href')){
 			$('#descargarPDF').hide();
@@ -118,9 +127,6 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 	}
 });
 
-/*$("#modal-pacientes").on('hidden.bs.modal', function () {
-	restaurarPaciente();
-});*/
 
 $("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	var nombrep = $(this).data('nombrep');
@@ -139,26 +145,29 @@ $("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	$('#id_trabajo').val(id_trabajo);
 	$('#nombrep').text(nombrep);
 	$('#nombret').text("Tratamiento: " + nombret);
+	$('#hidden_material').val(material);
 	$('#material_fichatrabajo').text(material);
+	$('#hidden_tipo_trabajo').val(tipotrabajo);
 	$('#tipotrabajo_fichatrabajo').text(tipotrabajo);
+	$('#hidden_n_piezas').val(npiezas);
 	$('#npiezas_fichatrabajo').text(npiezas);
+	$('#hidden_color_trabajo').val(color);
 	$('#color_fichatrabajo').text(color);
+	$('#hidden_maquina').val(maquina);
 	$('#maquina_fichatrabajo').text(maquina);
+	$('#hidden_notas').val(notas);
 	$('#notas_fichatrabajo').text(notas);
+	$('#hidden_cod_disco').val(codigoD);
 	$('#codDisco_fichatrabajo').text(codigoD);
+	$('#hidden_stl').val(stl);
+	$('#descargarSTL').attr('href', stl);
 
-	if(stl === 'No'){
-		$('#row-btn-stl').addClass('sin_stl');
-		$('#row-btn-stl').removeClass('con_stl');
-	}else{
-		$('#row-btn-stl').removeClass('sin_stl');
-		$('#row-btn-stl').addClass('con_stl');
+	if(!$('#descargarSTL').attr('href')){
+		$('#descargarSTL').hide();
+	} else{
+		$('#descargarSTL').show();
 	}
-	if($('#row-btn-stl').hasClass('sin_stl')){
-		$('#row-btn-stl').hide();
-	}else if($('#row-btn-stl').hasClass('con_stl')){
-		$('#row-btn-stl').show();
-	}
+
 });
 
 $("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
@@ -171,11 +180,17 @@ $("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
 	var altura = $(this).data('altura');
 
 	$('#cod_disco').text("Código: " + codigo);
+	$('#hidden_material').val(materiald);
 	$('#material_fichadisco').text(materiald);
+	$('#hidden_marca').val(marcad);
 	$('#marca_fichadisco').text(marcad);
+	$('#hidden_escala').val(escala);
 	$('#escala_fichadisco').text(escala);
 	$('#color_fichadisco').text(color);
+	$('#hidden_color').val(color);
+	$('#hidden_altura').val(altura);
 	$('#altura_fichadisco').text(altura);
+	$('#hidden_fecha_alta_disco').val(fecha_alta.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 	$('#fecha_alta_fichadisco').text(fecha_alta.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 });
 
@@ -183,6 +198,7 @@ $("#modificar-tratamiento").click(function (){
 	$('#modal-pacientes').data('bs.modal')._config.backdrop = 'static';
 	$('#modal-pacientes').data('bs.modal')._config.keyboard = false;
 	$('.btn-fichacliente').hide();
+	$('.x-cerrar').hide();
 	$('#footer-fichapaciente').hide();
 
 	doctor = $('#doctor_fichapaciente').text();
@@ -205,12 +221,15 @@ $("#modificar-tratamiento").click(function (){
 
 	var checkEstatica = "";
 	var checkDinamica = "";
+	var checkNinguna = "";
 	if(cirugia == "Estática"){
 		checkEstatica = 'checked';
-	}
-	if(cirugia == "Dinámica"){
+	}else if(cirugia == "Dinámica"){
 		checkDinamica = 'checked';
+	}else{
+		checkNinguna = 'checked';
 	}
+
 	rb ='<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
 	'<input type="radio" id="rbcestatica-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcestatica-modificar" '+checkEstatica+'>'+
 	'<label class="custom-control-label" for="rbcestatica-modificar">Estática</label>'+
@@ -218,16 +237,21 @@ $("#modificar-tratamiento").click(function (){
 	'<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
 	'<input type="radio" id="rbcdinamica-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcdinamica-modificar" '+checkDinamica+'>'+
 	'<label class="custom-control-label" for="rbcdinamica-modificar">Dinámica</label>'+
+	'</div><div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Ninguna">'+
+	'<input type="radio" id="rbcheckNinguna-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcheckNinguna-modificar" '+checkNinguna+'>'+
+	'<label class="custom-control-label" for="rbcheckNinguna-modificar">Ninguna</label>'+
 	'</div></div>';
 
 	$('#cirugia_fichapaciente').append(rb);
 
+	$('#tratamiento_actual').append('<a id="modificar-tratamiento_actual"><button class="btn btn-lg btn-warning ml-auto btn-fichacliente ml-sm-2"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button></a>');
 
 	ponerModificarFecha('#fecha_inicio_fichapaciente','f_inicio-modificar');
 	ponerModificarFecha('#fecha_definitiva_fichapaciente','f_final-modificar');
 
-	$('#dropbox').append('<input type="text" class="form-control" name="linkDropbox-modificar" id="linkDropbox-modificar">');
+	$('#dropbox').append('<input type="hidden" id="dato_anterior-link"><input type="text" class="form-control" name="linkDropbox-modificar" id="linkDropbox-modificar">');
 	$("#linkDropbox-modificar").val(linkDropbox);
+	$("#dato_anterior-link").val(linkDropbox);
 
 	$('#picprovisional-modal').empty();
 	$('#picpost-modal').empty();
@@ -246,25 +270,25 @@ $("#modificar-tratamiento").click(function (){
 	$('#videopre-modal').empty();
 	$('#videopost-modal').empty();
 
-	ponerCB('#picprovisional-modal','picprovisional-modificar', "Pic Provisional");
-	ponerCB('#picpost-modal','picpost-modificar', "Pic Definitivo");
-	ponerCB('#tacpre-modal','tacpre-modificar', "TAC pre");
-	ponerCB('#tacpost-modal','tacpost-modificar', "TAC post");
-	ponerCB('#ortopre-modal','ortopre-modificar', "Orto pre");
-	ponerCB('#ortopost-modal','ortopost-modificar', "Orto post");
-	ponerCB('#ioscanpre-modal','ioscanpre-modificar', "IOScan pre");
-	ponerCB('#ioscanpost-modal','ioscanpost-modificar', "IOScan post");
-	ponerCB('#fotopre-modal','fotopre-modificar', "Fotos pre");
-	ponerCB('#fotopost-modal','fotopost-modificar', "Fotos post");
-	ponerCB('#fotoprotesispre-modal','fotoprotesispre-modificar', "Fotos protesis pre");
-	ponerCB('#fotoprotesispost-modal','fotoprotesispost-modificar', "Fotos protesis post");
-	ponerCB('#fotoprotesisbocapre-modal','fotoprotesisbocapre-modificar', "Fotos protesis en boca pre");
-	ponerCB('#fotoprotesisbocapost-modal','fotoprotesisbocapost-modificar', "Fotos protesis en boca post");
-	ponerCB('#videopre-modal','videopre-modificar', "Video pre");
-	ponerCB('#videopost-modal','videopost-modificar', "Video post");
+	ponerCB('#picprovisional-modal','picprovisional-modificar', "Pic Provisional",'hidden_pic_provisional');
+	/*ponerCB('#picpost-modal','picpost-modificar', "Pic Definitivo","hidden_pic_final");
+	ponerCB('#tacpre-modal','tacpre-modificar', "TAC pre","hidden_tac_pre");
+	ponerCB('#tacpost-modal','tacpost-modificar', "TAC post","hidden_tac_post");
+	ponerCB('#ortopre-modal','ortopre-modificar', "Orto pre","hidden_orto_pre");
+	ponerCB('#ortopost-modal','ortopost-modificar', "Orto post","hidden_orto_post");
+	ponerCB('#ioscanpre-modal','ioscanpre-modificar', "IOScan pre","hidden_ioscan_pre");
+	ponerCB('#ioscanpost-modal','ioscanpost-modificar', "IOScan post","hidden_ioscan_post");
+	ponerCB('#fotopre-modal','fotopre-modificar', "Fotos pre","hidden_fotos_pre");
+	ponerCB('#fotopost-modal','fotopost-modificar', "Fotos post","hidden_foto_post");
+	ponerCB('#fotoprotesispre-modal','fotoprotesispre-modificar', "Fotos protesis pre","hidden_foto_protesis");
+	ponerCB('#fotoprotesispost-modal','fotoprotesispost-modificar', "Fotos protesis post","hidden_foto_protesis_final");
+	ponerCB('#fotoprotesisbocapre-modal','fotoprotesisbocapre-modificar', "Fotos protesis en boca pre","hidden_foto_protesis_boca_provisional");
+	ponerCB('#fotoprotesisbocapost-modal','fotoprotesisbocapost-modificar', "Fotos protesis en boca post","hidden_foto_protesis_boca_final");
+	ponerCB('#videopre-modal','videopre-modificar', "Video pre","hidden_video_pre");
+	ponerCB('#videopost-modal','videopost-modificar', "Video post","hidden_video_final");*/
 
 
-	$('#row-btn-files').append('<div class="col-md-5 mx-auto input-group">'+
+	$('#row-btn-files').append('<input type="hidden" id="dato_anterior-pptx"><div class="col-md-5 mx-auto input-group">'+
 		'<div class="input-group">'+
 		'	<div class="input-group-prepend">'+
 		'		<span class="input-group-text"><i class="fas fa-file-powerpoint mr-sm-2"></i> POWER POINT:</span>'+
@@ -272,7 +296,7 @@ $("#modificar-tratamiento").click(function (){
 		'	<input type="text" class="form-control p-2" name="pptx-modificar" id="pptx-modificar">'+
 		'	</div>'+
 		'</div>'+
-		'<div class="col-md-5 mx-auto input-group">'+
+		'<input type="hidden" id="dato_anterior-pdf"><div class="col-md-5 mx-auto input-group">'+
 		'	<div class="input-group">'+
 		'		<div class="input-group-prepend">'+
 		'			<label class="input-group-text"><i class="fas fa-file-pdf mr-sm-2"></i> PDF:</label>'+
@@ -283,6 +307,8 @@ $("#modificar-tratamiento").click(function (){
 
 	$("#pptx-modificar").val(pptx);
 	$("#pdf-modificar").val(pdf);
+	$("#dato_anterior-pptx").val(pptx);
+	$("#dato_anterior-pdf").val(pdf);
 
 	$('#ficha-paciente-tratamiento').append('<div class="modal-footer " id="footer-fichapaciente-modificar">'+
 		'<div class="ml-auto">'+
@@ -306,7 +332,9 @@ $("#modificar-trabajo").click(function (){
 	maquina = $('#maquina_fichatrabajo').text();
 	notas = $('#notas_fichatrabajo').text();
 	id_trabajo = $('#id_trabajo').val();
+	stl = $('#descargarPPTX').attr('href');
 
+	$('#descargarSTL').empty();
 	$('#npiezas_fichatrabajo').empty();
 	$('#npiezas_fichatrabajo').append('<input type="text" class="form-control" name="npiezas-modificar" id="npiezas-modificar">');
 	$('#npiezas-modificar').val(npiezas);
@@ -317,16 +345,25 @@ $("#modificar-trabajo").click(function (){
 
 	$('#row-btn-stl').show();
 	$('#row-btn-stl').empty();
-	$('#row-btn-stl').append('<div class="col-md-12 mx-auto">'+
-		'<input type="file" class="custom-file-input" id="customFileLang" lang="es">'+
-		'<label class="btn btn-lg custom-file-label" for="customFile" data-browse="Buscar..."><i class="fas fa-file-upload"></i> STL</label>'+
-		'</div>');
+
 
 	$('#ficha-trabajo').append('<div class="modal-footer " id="footer-fichatrabajo-modificar">'+
 		'<div class="ml-auto">'+
 		'<a id="cerrar_modal-modificar-trabajo"><button class="btn btn-lg btn-warning mr-2 p-2" type="submit"><i class="fas fa-arrow-circle-left"></i> ATRÁS</button></a>'+
 		'<a id="modificar_trabajo"><button class="btn btn-lg btn-warning  py-2" type="submit"><i class="fas fa-save"></i> MODIFICAR</button></a>'+
 		'</div></div>');
+
+	$('#row-btn-stl').append('<div class="col-md-12 mx-auto"><input type="hidden" id="hidden_stl"><div class=" mx-auto input-group">'+
+		'<div class="input-group">'+
+		'	<div class="input-group-prepend">'+
+		'		<span class="input-group-text"><i class="fas fa-file mr-sm-2"></i> STL:</span>'+
+		'	</div>'+
+		'	<input type="text" class="form-control p-2" name="stl-modificar" id="stl-modificar">'+
+		'	</div>'+
+		'</div></div>');
+
+	$("#stl-modificar").val(stl);
+	$("#hidden_stl").val(stl);
 });
 
 $("#modificar-disco").click(function (){
@@ -365,34 +402,53 @@ function ponerModificarFecha(id_fecha, nombreFecha) {
 	$(id_fecha).append('<input class="form-control" type="date" id="'+nombreFecha+'" name="'+nombreFecha+'" value="'+nuevaFecha+'">');
 }
 
-function resetearCB(id_icono,id_td) {
+
+function resetearCB(cb,inputHidden,id_icono,id_td,boton) {
 	$(id_icono).addClass('fas');
-	if($(id_td).hasClass('check')){
-		$(id_icono).addClass('fa-check');
-	}else if($(id_td).hasClass('uncheck')){
-		$(id_icono).addClass('fa-times');
+	if(boton == 'atras'){
+		if($(inputHidden).val() == 'uncheck'){
+			$(id_icono).removeClass('check');
+			$(id_icono).addClass('fa-times');
+		}else{
+			$(id_icono).removeClass('uncheck');
+			$(id_icono).addClass('fa-check');
+		}
 	}
+	if(boton == 'modificar'){
+		if(cb){
+			$(id_icono).removeClass('uncheck');
+			$(id_icono).addClass('fa-check');
+			$(inputHidden).val('check');
+		}else{
+			$(id_icono).removeClass('check');
+			$(id_icono).addClass('fa-times');
+			$(inputHidden).val('uncheck');
+		}
+	}
+
 }
 
-function rellenarListaCB(cb,id_icono, id_td){
+function rellenarListaCB(cb,id_icono, id_td,idInputHidden){
 	$(id_icono).addClass('fas');
 	if(cb == 1){
 		$(id_td).removeClass('uncheck');
 		$(id_icono).addClass('fa-check');
 		$(id_td).addClass('check');
+		$(idInputHidden).val('check');
 
 	}else{
 		$(id_td).removeClass('check');
 		$(id_icono).addClass('fa-times');
 		$(id_td).addClass('uncheck');
+		$(idInputHidden).val('uncheck');
 	}
 }
 
-function ponerCB(id_td, id_input,nombreInput) {
+function ponerCB(id_td, id_input,nombreInput,idInputHidden) {
 	if($(id_td).hasClass('check')){
-		$(id_td).append('<input class="form-check-input" type="checkbox" value="" id="'+ id_input +'" name="'+ id_input +'" checked="checked"><label class="form-check-label" >'+nombreInput+'</label>');
+		$(id_td).append('<input type="hidden" id="'+idInputHidden+'" value="check"><input class="form-check-input" type="checkbox" value="" id="'+ id_input +'" name="'+ id_input +'" checked="checked"><label class="form-check-label" >'+nombreInput+'</label>');
 	}else if($(id_td).hasClass('uncheck')){
-		$(id_td).append('<input class="form-check-input" type="checkbox" value="" id="'+ id_input +'" name="'+ id_input +'"><label class="form-check-label" >'+nombreInput+'</label>');
+		$(id_td).append('<input type="hidden" id="'+idInputHidden+'" value="uncheck"><input class="form-check-input" type="checkbox" value="" id="'+ id_input +'" name="'+ id_input +'"><label class="form-check-label" >'+nombreInput+'</label>');
 	}
 }
 

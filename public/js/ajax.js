@@ -1,6 +1,5 @@
 $(document).ready(function(){
 
-	filtroTratamientoPaciente();
 	buscarDisco();
 	buscarTrabajo();
 	buscarPaciente();
@@ -8,12 +7,26 @@ $(document).ready(function(){
 	$( "#materialDisco,#marcaDisco,#colorDisco" ).on('change', function() {
 		buscarDisco();
 	});
+	$("#fecha_alta,#fecha_alta2" ).on('change', function() {
+		if($('#fecha_alta').val() > $('#fecha_alta2').val()){
+			Swal.fire(
+				'¡Error!',
+				'La fecha de inicio es posterior a la fecha definitiva.',
+				'error'
+				)
+		}
+		buscarDisco();
+	});
 
 	$( "#nombrePTrabajo,#codigoPTrabajo,#materialTrabajo,#tipo_trabajo" ).on('change keyup', function() {
 		buscarTrabajo();
 	});
 
-	$( "#nombrePaciente,#codigoPaciente,#nombreT,#tipo_implante,#doctorPaciente,#asesorPaciente,"+
+	$('#nombrePaciente,#codigoPaciente').on('keyup' , function(){
+		buscarPaciente();
+	});
+
+	$( "#nombreT,#tipo_implante,#doctorPaciente,#asesorPaciente,"+
 		"#cbTac_pre,#CBpic_definitivo,#CBpic_provisional,#cbTac_post,#cbIOScan_pre,#cbIOScan_post,#cbOrto_pre,#cbOrto_post,"+
 		"#cbFotos_pre,#cbFotos_post,#cbFotos_protesis_pre,#cbFotos_protesis_post,#cbFotos_protesis_boca_pre,"+
 		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#customSwitch1,[name='rbCirugia'],[name='rangoFecha']" ).on('change keyup click', function() {
@@ -28,7 +41,30 @@ $( "#modificar-tratamiento" ).on('click', function() {
 	modificarDoctorPaciente();
 	modificarAsesorPaciente();
 	modificarImplantePaciente();
-	ponerModificarTratamientoPaciente();
+});
+$('#nombrePaciente').val(localStorage.getItem("nombrep"));
+$('#codigoPaciente').val(localStorage.getItem("codigop"));
+$('#codigoPaciente').keyup();
+$('.filtros').click(function () {
+	localStorage.setItem("nombrep", "");
+	localStorage.setItem("codigop", "");
+})
+$( "#modal-pacientes" ).on('click','#modificar-tratamiento_actual', function() {
+	Swal.fire({
+		title: '¿Estás seguro que desea modificar el tratamiento?',
+		type: 'warning',
+		confirmButtonText: 'Sí, modificar',
+		showCancelButton: true,
+		cancelButtonText:  'Cancelar',
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		reverseButtons: true
+
+	}).then((result) => {
+		if (result.value) {
+			ponerModificarTratamientoPaciente();
+		}
+	})
 });
 
 $( "#modificar-trabajo" ).on('click', function() {
@@ -79,6 +115,8 @@ $("#limpiarFiltroDiscos").click(function () {
 	$("#materialDisco").val($('#materialDisco > option:first').val());
 	$("#marcaDisco").val($('#marcaDisco > option:first').val());
 	$("#colorDisco").val($('#colorDisco > option:first').val());
+	$('#fecha_alta').val("");
+	$('#fecha_alta2').val("");
 	buscarDisco();
 });
 
@@ -90,7 +128,95 @@ $("#limpiarFiltrosTrabajo").click(function () {
 	buscarTrabajo();
 });
 
+$('#guardar_disco').click(function () {
+	if($('#cod_disco').val() == "" || $('#material').val() == "Elija un material..." || $('#color').val() == "Color..." || $('#marca').val() == "Elija una marca..."){
+		Swal.fire(
+			'¡Atención!',
+			'Los campos código, material, color y marca no pueden estar vacíos.',
+			'warning'
+			)
+	}else{
+		var _token = document.getElementsByName("_token")[0].value;
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: 'agregarDisco',
+			method: 'post',
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			data: {
+				codigod: $('#cod_disco').val(),
+				material: $('#material').val(),
+				marca: $('#marca').val(),
+				escala: $('#escala').val(),
+				color: $('#color').val(),
+				altura: $('#altura').val(),
+				_token: _token
+			},
+			success: function(result){
+				window.location.href = "/disco";
+			},
+			error: function () {
+				Swal.fire(
+					'¡Error!',
+					'No se ha podido insertar el disco.',
+					'error'
+					)
+			}
+		});
+	}
+});
+
+
+$('#guardar_disco').click(function () {
+	if($('#cod_disco').val() == "" || $('#material').val() == "Elija un material..." || $('#color').val() == "Color..." || $('#marca').val() == "Elija una marca..."){
+		Swal.fire(
+			'¡Atención!',
+			'Los campos código, material, color y marca no pueden estar vacíos.',
+			'warning'
+			)
+	}else{
+		var _token = document.getElementsByName("_token")[0].value;
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: 'agergarDisco',
+			method: 'post',
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			data: {
+				codigod: $('#cod_disco').val(),
+				material: $('#material').val(),
+				marca: $('#marca').val(),
+				escala: $('#escala').val(),
+				color: $('#color').val(),
+				altura: $('#altura').val(),
+				_token: _token
+			},
+			success: function(result){
+				window.location.href = "/disco";
+			},
+			error: function () {
+				Swal.fire(
+					'¡Error!',
+					'No se ha podido insertar el disco.',
+					'error'
+					)
+			}
+		});
+	}
+});
+
 $('#app').on("click","#guardarTratamiento",function () {
+	var codigop =  $('#codigopaciente').val();
+	var nombrep = $('#nombrepaciente').val();
+	localStorage.setItem("nombrep", nombrep);
+	localStorage.setItem("codigop", codigop);
+
 	var _token = document.getElementsByName("_token")[0].value;
 	$.ajaxSetup({
 		headers: {
@@ -130,19 +256,70 @@ $('#app').on("click","#guardarTratamiento",function () {
 			_token: _token
 		},
 		success: function(result){
-			alert(result);
-			Swal.fire(
-				'¡Éxito!',
-				'Tratamiento guardado.',
-				'success'
-				)
-			buscarPaciente();
+
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: 'agregar',
+				method: 'get',
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				data: {
+					_token: _token
+				},
+				success: function(result){
+					window.location.href = "/app";
+
+					Swal.fire(
+						'¡Éxito!',
+						'Tratamiento guardado.',
+						'success'
+						)
+				}});
 		},
 		error: function(result){
-			alert(result);
 			Swal.fire(
 				'¡Error!',
 				'No se ha podido agregar el tratamiento.',
+				'error'
+				)
+		}
+	});
+});
+
+$('#app').on('click','#insertarTrabajo',function () {
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'agregarTrabajo',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			id_pt : $('#id_pt_trabajo').val(),
+			material_trabajo: $('#material_trabajo').val(),
+			t_trabajo: $('#t_trabajo').val(),
+			numeroPiezas: $('#numeroPiezas').val(),
+			color_trabajo: $('#color_trabajo').val(),
+			codigoDisco_trabajo: $('#codigoDisco_trabajo').val(),
+			maquina_trabajo: $('#maquina_trabajo').val(),
+			fecha_alta_trabajo: $('#fecha_alta_trabajo').val(),
+			notas: $('#notas').val(),
+			stl_insertTrab: $('#stl_insertTrab').val(),
+			_token: _token
+		},
+		success: function(result){
+			//window.location.href = "/disco";
+		},
+		error: function () {
+			Swal.fire(
+				'¡Error!',
+				'No se ha podido insertar el trabajo.',
 				'error'
 				)
 		}
@@ -174,6 +351,10 @@ $('#modal-pacientes').on("click", "#agregar_nuevo_tratamiento" ,function(){
 });
 
 $("#agregarPaciente").click(function(){
+	var codigop =  $('#codPacienteAgr').val();
+	var nombrep = $('#nombrePacienteAgr').val();
+	localStorage.setItem("nombrep", nombrep);
+	localStorage.setItem("codigop", codigop);
 	if(!$('#codPacienteAgr').val() || !$('#nombrePacienteAgr').val()){
 		Swal.fire(
 			'Campos vacíos.',
@@ -193,8 +374,8 @@ $("#agregarPaciente").click(function(){
 			method: 'post',
 			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			data: {
-				codigop:  $('#codPacienteAgr').val(),
-				nombrep: $('#nombrePacienteAgr').val(),
+				codigop :codigop,
+				nombrep: nombrep,
 				_token: _token
 			},
 			success: function(result){
@@ -204,7 +385,7 @@ $("#agregarPaciente").click(function(){
 					type: 'question',
 					confirmButtonText: 'Sí, ¡Agregar tratamiento!',
 					showCancelButton: true,
-					cancelButtonText:  'Cancelar',
+					cancelButtonText:  'Más tarde.',
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
 					reverseButtons: true
@@ -232,11 +413,28 @@ $("#agregarPaciente").click(function(){
 							}});
 
 					}else{
-						Swal.fire(
-							'Paciente sin tratamiento.',
-							'Puede agregarlo más tarde.',
-							'info'
-							)
+
+						$.ajaxSetup({
+							headers: {
+								'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							}
+						});
+						$.ajax({
+							url: 'agregar',
+							method: 'get',
+							headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+							data: {
+								_token: _token
+							},
+							success: function(result){
+
+								window.location.href = "/app";
+								Swal.fire(
+									'Paciente sin tratamiento.',
+									'Puede agregarlo más tarde.',
+									'info'
+									)
+							}});
 					}
 				})
 			},
@@ -306,12 +504,12 @@ $("#tablaDiscosConsulta").on("click", ".darBajaDisco", function(){
 	})
 });
 
-$("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
+$("#modal-trabajo").on("click", "#eliminar_trabajo", function(){
 	Swal.fire({
 		title: '¿Estás seguro?',
-		text: "¿El registro se modificará?",
+		text: "¿Desea eliminar este trabajo?",
 		type: 'warning',
-		confirmButtonText: 'Modificar',
+		confirmButtonText: 'Sí, ¡Eliminar!',
 		showCancelButton: true,
 		cancelButtonText:  'Cancelar',
 		confirmButtonColor: '#3085d6',
@@ -327,60 +525,128 @@ $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
 				}
 			});
 			$.ajax({
-				url: 'modificarTratamientoPaciente',
+				url: 'eliminarTrabajo',
 				method: 'post',
 				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 				data: {
-					id_pt:id_pt,
-					codigoP:$('#codigop').text(),
-					nombreT:$('#tratamiento_actual').text(),
-					nuevoTratamiento:$('#tratamientoPacienteMod').val(),
-					nombreD:$('#doctorPacienteMod').val(),
-					nombreA:$('#asesorPacienteMod').val(),
-					tipo_implante:$('#implantePacienteMod').val(),
-					fecha_inicio:$('#f_inicio-modificar').val(),
-					fecha_definitiva:$('#f_final-modificar').val(),
-					pic_pre:$('#picprovisional-modificar').prop('checked'),
-					pic_post:$('#picpost-modificar').prop('checked'),
-					orto_pre:$('#ortopre-modificar').prop('checked'),
-					orto_post:$('#ortopost-modificar').prop('checked'),
-					fotos_pre:$('#fotopre-modificar').prop('checked'),
-					fotos_post:$('#fotopost-modificar').prop('checked'),
-					tac_pre:$('#tacpre-modificar').prop('checked'),
-					tac_post:$('#tacpost-modificar').prop('checked'),
-					ioscan_pre:$('#ioscanpre-modificar').prop('checked'),
-					ioscan_post:$('#ioscanpost-modificar').prop('checked'),
-					video_pre:$('#videopre-modificar').prop('checked'),
-					video_post:$('#videopost-modificar').prop('checked'),
-					foto_protesis_pre:$('#fotoprotesispre-modificar').prop('checked'),
-					foto_protesis_post:$('#fotoprotesispost-modificar').prop('checked'),
-					foto_protesis_boca_pre:$('#fotoprotesisbocapre-modificar').prop('checked'),
-					foto_protesis_boca_post:$('#fotoprotesisbocapost-modificar').prop('checked'),
-					link:$('#linkDropbox-modificar').val(),
-					pdf:$('#pdf-modificar').val(),
-					powerpoint:$('#pptx-modificar').val(),
-					c_guiada:$("input[name='rbCirugia-modificar']:checked").val(),
+					id: $('#id_trabajo').val(),
 					_token: _token
 				},
 				success: function(result){
-					Swal.fire(
-						'¡Éxito!',
-						'El paciente se ha modificado.',
-						'success'
-						);
-					restaurarPaciente();
-					buscarPaciente();
+					window.location.href = "/trabajos";
 				},
 				error: function () {
 					Swal.fire(
 						'¡Error!',
-						'No se ha podido modificar.',
+						'No se ha podido eliminar el trabajo.',
 						'error'
 						)
 				}
 			});
+
+		}else{
+			Swal.fire(
+				'',
+				'El trabajo no se ha eliminado.',
+				'info'
+				)
 		}
 	})
+});
+
+$("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
+	if($('#f_inicio-modificar').val() > $('#f_final-modificar').val()){
+		Swal.fire(
+			'¡Error!',
+			'La fecha de inicio es posterior a la fecha definitiva.',
+			'error'
+			)
+	}else{
+		Swal.fire({
+			title: '¿Estás seguro?',
+			text: "¿El registro se modificará?",
+			type: 'warning',
+			confirmButtonText: 'Modificar',
+			showCancelButton: true,
+			cancelButtonText:  'Cancelar',
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			reverseButtons: true
+
+		}).then((result) => {
+			if (result.value) {
+				var _token = document.getElementsByName("_token")[0].value;
+				$.ajaxSetup({
+					headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+					}
+				});
+				$.ajax({
+					url: 'modificarTratamientoPaciente',
+					method: 'post',
+					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+					data: {
+						id_pt:id_pt,
+						codigoP:$('#codigop').text(),
+						nombreT:$('#tratamiento_actual').text(),
+						nuevoTratamiento:$('#tratamientoPacienteMod').val(),
+						nombreD:$('#doctorPacienteMod').val(),
+						nombreA:$('#asesorPacienteMod').val(),
+						tipo_implante:$('#implantePacienteMod').val(),
+						fecha_inicio:$('#f_inicio-modificar').val(),
+						fecha_definitiva:$('#f_final-modificar').val(),
+						pic_pre:$('#picprovisional-modificar').prop('checked'),
+						pic_post:$('#picpost-modificar').prop('checked'),
+						orto_pre:$('#ortopre-modificar').prop('checked'),
+						orto_post:$('#ortopost-modificar').prop('checked'),
+						fotos_pre:$('#fotopre-modificar').prop('checked'),
+						fotos_post:$('#fotopost-modificar').prop('checked'),
+						tac_pre:$('#tacpre-modificar').prop('checked'),
+						tac_post:$('#tacpost-modificar').prop('checked'),
+						ioscan_pre:$('#ioscanpre-modificar').prop('checked'),
+						ioscan_post:$('#ioscanpost-modificar').prop('checked'),
+						video_pre:$('#videopre-modificar').prop('checked'),
+						video_post:$('#videopost-modificar').prop('checked'),
+						foto_protesis_pre:$('#fotoprotesispre-modificar').prop('checked'),
+						foto_protesis_post:$('#fotoprotesispost-modificar').prop('checked'),
+						foto_protesis_boca_pre:$('#fotoprotesisbocapre-modificar').prop('checked'),
+						foto_protesis_boca_post:$('#fotoprotesisbocapost-modificar').prop('checked'),
+						link:$('#linkDropbox-modificar').val(),
+						pdf:$('#pdf-modificar').val(),
+						powerpoint:$('#pptx-modificar').val(),
+						c_guiada:$("input[name='rbCirugia-modificar']:checked").val(),
+						_token: _token
+					},
+					success: function(result){
+						Swal.fire(
+							'¡Éxito!',
+							'El paciente se ha modificado.',
+							'success'
+							);
+						doctor = $('#doctorPacienteMod').val();
+						asesor = $('#asesorPacienteMod').val();
+						implanteMod = $("#implantePacienteMod").val();
+						cirugia = $("input[name='rbCirugia-modificar']:checked").val();
+						linkDropbox =$('#linkDropbox-modificar').val();
+						finicio = $('#f_inicio-modificar').val();
+						fdef = $('#f_final-modificar').val();
+						pptx =$('#pptx-modificar').val();
+						pdf =$('#pdf-modificar').val();
+
+						restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'modificar');
+						buscarPaciente();
+					},
+					error: function () {
+						Swal.fire(
+							'¡Error!',
+							'No se ha podido modificar.',
+							'error'
+							)
+					}
+				});
+			}
+		})
+	}
 });
 
 $("#modal-pacientes").on('click',"#cerrar_modal-modificar-paciente", function () {
@@ -397,7 +663,19 @@ $("#modal-pacientes").on('click',"#cerrar_modal-modificar-paciente", function ()
 
 	}).then((result) => {
 		if (result.value) {
-			restaurarPaciente();
+
+			finicio = $('#dato_anterior-finicio').val();
+			fdef = $('#dato_anterior-fdef').val();
+
+			doctor = $('#dato_anterior-nombred').val();
+			asesor = $('#dato_anterior-nombrea').val();
+			implanteMod = $('#dato_anterior-tipo_implante').val();
+			cirugia = $('#dato_anterior-cirugia').val();
+			linkDropbox = $('#dato_anterior-link').val();
+			pdf = $('#dato_anterior-pptx').val();
+			pptx = $('#dato_anterior-pdf').val();
+
+			restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'atras');
 		}
 	})
 });
@@ -416,7 +694,15 @@ $("#modal-trabajo").on("click", "#cerrar_modal-modificar-trabajo", function(){
 
 	}).then((result) => {
 		if (result.value) {
-			restaurarTrabajo();
+			material = $('#hidden_material').val();
+			tipo_trabajo = $('#hidden_tipo_trabajo').val();
+			npiezas = $('#hidden_n_piezas').val();
+			color = $('#hidden_color_trabajo').val();
+			codigoDisco = $('#hidden_cod_disco').val();
+			maquina = $('#hidden_maquina').val();
+			notas = $('#hidden_notas').val();
+			stl = $('#hidden_stl').val();
+			restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl);
 		}
 	})
 });
@@ -454,6 +740,7 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 					codigoDiscoT : $('#discoTrabajoMod').val(),
 					maquinaT : $('#maquinaTrabajoMod').val(),
 					notasT : $('#notas-modificar').val(),
+					stl : $('#stl-modificar').val(),
 					_token: _token
 				},
 				success: function(result){
@@ -462,7 +749,17 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 						'El traabajo se ha modificado.',
 						'success'
 						);
-					restaurarTrabajo();
+
+					material = $('#materialTrabajoMod').val();
+					tipo_trabajo = $('#tipoTrabajoMod').val();
+					npiezas = $('#npiezas-modificar').val();
+					color = $('#colorTrabajoMod').val();
+					codigoDisco = $('#discoTrabajoMod').val();
+					maquina = $('#maquinaTrabajoMod').val();
+					notas = $('#notas-modificar').val();
+					stl = $('#stl-modificar').val();
+
+					restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl);
 					buscarTrabajo();
 				},
 				error: function () {
@@ -475,6 +772,35 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 			});
 		}
 	})
+});
+
+$("#modal-pacientes").on('click',"#nuevo_trabajo", function () {
+	var _token = document.getElementsByName("_token")[0].value;
+	var modal = $(this).closest('.modal');
+	$(modal).modal('hide');
+	$('.modal-backdrop.fade').removeClass('show');
+
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'registroTrabajo',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			codigop: $('#codigop').text(),
+			nombrep: $('#nombrep').text(),
+			tratamiento: $('#tratamiento_actual').text(),
+			id_pt:$('#id_pt').val(),
+			_token: _token
+		},
+		success: function(result){
+
+			$('#contenido').html(result);
+
+		}});
 });
 
 $("#modal-disco").on("click", "#cerrar_modal-modificar-disco", function(){
@@ -491,7 +817,13 @@ $("#modal-disco").on("click", "#cerrar_modal-modificar-disco", function(){
 
 	}).then((result) => {
 		if (result.value) {
-			restaurarDisco();
+			materialD = $('#hidden_material').val();
+			marcad = $('#hidden_marca').val();
+			escala = $('#hidden_escala').val();
+			altura = $('#hidden_altura').val();
+			color = $('#hidden_color').val();
+			fecha = $('#hidden_fecha_alta_disco').val();
+			restaurarDisco(materialD,marcad,escala,altura,color,fecha);
 		}
 	})
 });
@@ -536,7 +868,14 @@ $("#modal-disco").on("click", "#modificar_disco", function(){
 						'El disco se ha modificado.',
 						'success'
 						);
-					restaurarDisco();
+					materialD = $('#materialDiscoMod').val();
+					marcad = $('#marcaDiscoMod').val();
+					escala = $('#escala-modificar').val();
+					altura = $('#altura-modificar').val();
+					color = $('#colorDiscoMod').val();
+					fecha = $('#fecha_alta_disco-mod').val();
+
+					restaurarDisco(materialD,marcad,escala,altura,color,fecha);
 					buscarDisco();
 				},
 				error: function () {
@@ -551,18 +890,34 @@ $("#modal-disco").on("click", "#modificar_disco", function(){
 	})
 });
 
-function restaurarPaciente() {
-	doctor = $('#doctorPacienteMod').val();
-	asesor = $('#asesorPacienteMod').val();
-	implanteMod = $("#implantePacienteMod").val();
-	cirugia = $("input[name='rbCirugia-modificar']:checked").val();
-	linkDropbox =$('#linkDropbox-modificar').val();
-	finicio = $('#f_inicio-modificar').val();
-	fdef = $('#f_final-modificar').val();
-	pptx =$('#pptx-modificar').val();
-	pdf =$('#pdf-modificar').val();
+$('#consultarPiezas').on("click" ,function(){
+	var _token = document.getElementsByName("_token")[0].value;
 
-	$('.x-cerrar').hide();
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'calcularPiezas',
+		method: 'get',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			primera_fecha: $('#piezas_primera_fecha').text(),
+			segunda_fecha: $('#piezas_segunda_fecha').text(),
+			color: $('#piezas_material').text(),
+			material: $('#piezas_color').text(),
+			_token: _token
+		},
+		success: function(result){
+
+			$('#piezasResultado').html(result);
+
+		}});
+});
+
+function restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,boton) {
+
 	$('#row-btn-files').empty();
 	$('#doctor_fichapaciente').empty();
 	$('#asesor_fichapaciente').empty();
@@ -583,13 +938,52 @@ function restaurarPaciente() {
 	if(cirugia == 'rbcdinamica-modificar'){
 		cirugia = "Dinámica";
 	}
-
+	if(cirugia == 'rbcheckNinguna-modificar'){
+		cirugia = "";
+	}
 	$('#cirugia_fichapaciente').text(cirugia);
 
 	$('#modal-pacientes').data('bs.modal')._config.backdrop = 'open';
 	$('#modal-pacientes').data('bs.modal')._config.keyboard = true;
 	$('.btn-fichacliente').show();
 	$('#footer-fichapaciente').show();
+	$('.x-cerrar').show();
+
+	var picpre = $('#picprovisional-modificar').prop('checked');
+	var picpost = $('#picpost-modificar').prop('checked');
+	var tacpre = $('#tacpre-modificar').prop('checked');
+	var tacpost = $('#tacpost-modificar').prop('checked');
+	var ortopre = $('#ortopre-modificar').prop('checked');
+	var ortopost = $('#ortopost-modificar').prop('checked');
+	var ioscanpre = $('#ioscanpre-modificar').prop('checked');
+	var ioscanpost = $('#ioscanpost-modificar').prop('checked');
+	var fotopre = $('#fotopre-modificar').prop('checked');
+	var fotopost = $('#fotopost-modificar').prop('checked');
+	var fotoprotesispre = $('#fotoprotesispre-modificar').prop('checked');
+	var fotoprotesispost = $('#fotoprotesispost-modificar').prop('checked');
+	var fotoprotesisbocapre = $('#fotoprotesisbocapre-modificar').prop('checked');
+	var fotoprotesisbocapost = $('#fotoprotesisbocapost-modificar').prop('checked');
+	var videopre = $('#videopre-modificar').prop('checked');
+	var videopost = $('#videopost-modificar').prop('checked');
+
+	if(boton == "atras"){
+		picpre = $('#hidden_pic_provisional').val();
+		picpost = $('#hidden_pic_final').val();
+		tacpre = $('#hidden_tac_pre').val();
+		tacpost = $('#hidden_tac_post').val();
+		ortopre = $('#hidden_orto_pre').val();
+		ortopost = $('#hidden_orto_post').val();
+		ioscanpre = $('#hidden_ioscan_pre').val();
+		ioscanpost = $('#hidden_ioscan_post').val();
+		fotopre = $('#hidden_fotos_pre').val();
+		fotopost = $('#hidden_foto_post').val();
+		fotoprotesispre = $('#hidden_foto_protesis').val();
+		fotoprotesispost = $('#hidden_foto_protesis_final').val();
+		fotoprotesisbocapre = $('#hidden_foto_protesis_boca_provisional').val();
+		fotoprotesisbocapost = $('#hidden_foto_protesis_boca_final').val();
+		videopre = $('#hidden_video_pre').val();
+		videopost = $('#hidden_video_final').val();
+	}
 
 	$('#picprovisional-modal').empty();
 	$('#picpost-modal').empty();
@@ -608,52 +1002,52 @@ function restaurarPaciente() {
 	$('#videopre-modal').empty();
 	$('#videopost-modal').empty();
 
-	$('#picprovisional-modal').append('<i id="icono_picpre"></i> PIC provisional');
-	$('#tacpre-modal').append('<i id="icono_tacpre"></i> TAC pre');
-	$('#ortopre-modal').append('<i id="icono_ortopre"></i> Orto pre');
-	$('#ioscanpre-modal').append('<i id="icono_ioscanpre"></i> IOScan pre');
-	$('#fotopre-modal').append('<i id="icono_fotopre"></i> Fotos pre');
-	$('#fotoprotesispre-modal').append('<i id="icono_fotoprotesispre"></i> Fotos protesis pre');
-	$('#fotoprotesisbocapre-modal').append('<i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre');
-	$('#videopre-modal').append('<i id="icono_videopre"></i> Video pre');
+	$('#picprovisional-modal').append('<input type="hidden" id="hidden_pic_provisional" value="'+picpre+'"><i id="icono_picpre"></i> PIC provisional');
+	$('#tacpre-modal').append('<input type="hidden" id="hidden_tac_pre" value="'+tacpre+'"><i id="icono_tacpre"></i> TAC pre');
+	$('#ortopre-modal').append('<input type="hidden" id="hidden_orto_pre" value="'+ortopre+'"><i id="icono_ortopre"></i> Orto pre');
+	$('#ioscanpre-modal').append('<input type="hidden" id="hidden_ioscan_pre" value="'+ioscanpre+'"><i id="icono_ioscanpre"></i> IOScan pre');
+	$('#fotopre-modal').append('<input type="hidden" id="hidden_fotos_pre" value="'+fotopre+'"><i id="icono_fotopre"></i> Fotos pre');
+	$('#fotoprotesispre-modal').append('<input type="hidden" id="hidden_foto_protesis" value="'+fotoprotesispre+'"><i id="icono_fotoprotesispre"></i> Fotos protesis pre');
+	$('#fotoprotesisbocapre-modal').append('<input type="hidden" id="hidden_foto_protesis_boca_provisional" value="'+fotoprotesisbocapre+'"><i id="icono_fotoprotesisbocapre"></i> Fotos protesis en boca pre');
+	$('#videopre-modal').append('<input type="hidden" id="hidden_video_pre" value="'+videopre+'"><i id="icono_videopre"></i> Video pre');
 
-	resetearCB("#icono_picpre",'#picprovisional-modal');
-	resetearCB("#icono_tacpre",'#tacpre-modal');
-	resetearCB("#icono_ortopre",'#ortopre-modal');
-	resetearCB("#icono_ioscanpre",'#ioscanpre-modal');
-	resetearCB("#icono_fotopre",'#fotopre-modal');
-	resetearCB("#icono_fotoprotesispre",'#fotoprotesispre-modal');
-	resetearCB("#icono_fotoprotesisbocapre",'#fotoprotesisbocapre-modal');
-	resetearCB("#icono_videopre",'#videopre-modal');
+	resetearCB(picpre, "#hidden_pic_provisional" ,"#icono_picpre",'#picprovisional-modal',boton);
+	resetearCB(tacpre , "#hidden_tac_pre","#icono_tacpre",'#tacpre-modal',boton);
+	resetearCB( ortopre, "#hidden_orto_pre","#icono_ortopre",'#ortopre-modal',boton);
+	resetearCB( ioscanpre, "#hidden_ioscan_pre","#icono_ioscanpre",'#ioscanpre-modal',boton);
+	resetearCB(fotopre , "#hidden_fotos_pre","#icono_fotopre",'#fotopre-modal',boton);
+	resetearCB( fotoprotesispre, "#hidden_foto_protesis","#icono_fotoprotesispre",'#fotoprotesispre-modal',boton);
+	resetearCB(fotoprotesisbocapre , "#hidden_foto_protesis_boca_provisional","#icono_fotoprotesisbocapre",'#fotoprotesisbocapre-modal',boton);
+	resetearCB( videopre, "#hidden_video_pre","#icono_videopre",'#videopre-modal',boton);
 
-	$('#picpost-modal').append('<i id="icono_picpost"></i> PIC definitivo');
-	$('#tacpost-modal').append('<i id="icono_tacpost"></i> TAC post');
-	$('#ortopost-modal').append('<i id="icono_ortopost"></i> Orto post');
-	$('#ioscanpost-modal').append('<i id="icono_ioscanpost"></i> IOScan post');
-	$('#fotopost-modal').append('<i id="icono_fotopost"></i> Fotos post');
-	$('#fotoprotesispost-modal').append('<i id="icono_fotoprotesispost"></i> Fotos protesis post');
-	$('#fotoprotesisbocapost-modal').append('<i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post');
-	$('#videopost-modal').append('<i id="icono_videopost"></i> Video post');
+	$('#picpost-modal').append('<input type="hidden" id="hidden_pic_final" value="'+picpost+'"><i id="icono_picpost"></i> PIC definitivo');
+	$('#tacpost-modal').append('<input type="hidden" id="hidden_tac_post" value="'+tacpost+'"><i id="icono_tacpost"></i> TAC post');
+	$('#ortopost-modal').append('<input type="hidden" id="hidden_orto_post" value="'+ortopost+'"><i id="icono_ortopost"></i> Orto post');
+	$('#ioscanpost-modal').append('<input type="hidden" id="hidden_ioscan_post" value="'+ioscanpre+'"><i id="icono_ioscanpost"></i> IOScan post');
+	$('#fotopost-modal').append('<input type="hidden" id="hidden_foto_post" value="'+fotopost+'"><i id="icono_fotopost"></i> Fotos post');
+	$('#fotoprotesispost-modal').append('<input type="hidden" id="hidden_foto_protesis_final" value="'+fotoprotesispost+'"><i id="icono_fotoprotesispost"></i> Fotos protesis post');
+	$('#fotoprotesisbocapost-modal').append('<input type="hidden" id="hidden_foto_protesis_boca_final" value="'+fotoprotesisbocapost+'"><i id="icono_fotoprotesisbocapost"></i> Fotos protesis en boca post');
+	$('#videopost-modal').append('<input type="hidden" id="hidden_video_final" value="'+videopost+'"><i id="icono_videopost"></i> Video post');
 
-	resetearCB("#icono_picpost",'#picpost-modal');
-	resetearCB("#icono_tacpost",'#tacpost-modal');
-	resetearCB("#icono_ortopost",'#ortopost-modal');
-	resetearCB("#icono_ioscanpost",'#ioscanpost-modal');
-	resetearCB("#icono_fotopost",'#fotopost-modal');
-	resetearCB("#icono_fotoprotesispost",'#fotoprotesispost-modal');
-	resetearCB("#icono_fotoprotesisbocapost",'#fotoprotesisbocapost-modal');
-	resetearCB("#icono_videopost",'#videopost-modal');
+	resetearCB(picpost, "#hidden_pic_final","#icono_picpost",'#picpost-modal',boton);
+	resetearCB(tacpost, "#hidden_tac_post","#icono_tacpost",'#tacpost-modal',boton);
+	resetearCB(ortopost, "#hidden_orto_post","#icono_ortopost",'#ortopost-modal',boton);
+	resetearCB(ioscanpost, "#hidden_ioscan_post","#icono_ioscanpost",'#ioscanpost-modal',boton);
+	resetearCB(fotopost, "#hidden_foto_post","#icono_fotopost",'#fotopost-modal',boton);
+	resetearCB(fotoprotesispost, "#hidden_foto_protesis_final","#icono_fotoprotesispost",'#fotoprotesispost-modal',boton);
+	resetearCB(fotoprotesisbocapost, "#hidden_foto_protesis_boca_final","#icono_fotoprotesisbocapost",'#fotoprotesisbocapost-modal',boton);
+	resetearCB(videopost, "#hidden_video_final","#icono_videopost",'#videopost-modal',boton);
 
 	$('#t_paciente').hide();
 	$('#dropbox').append('<a href="' + linkDropbox + '" target="_blank" id="link_dropbox">' + linkDropbox + '</a>');
 
 
 	$('#row-btn-files').append('<div class="col-md-4 mx-auto" id="powerpoint-modal">'+
-		'<a href="' + pptx + '" target="_blank" id="descargarPPTX">'+
+		'<a href="' + pptx + '" target="_blank" id="descargarPPTX"><input type="hidden" id="dato_anterior-pptx" value="'+pptx+'">'+
 		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>'+
 		'</a>'+
 		'</div>'+
-		'<div class="col-md-4 mx-auto" id="pdf-modal">'+
+		'<div class="col-md-4 mx-auto" id="pdf-modal"><input type="hidden" id="dato_anterior-pdf" value="'+pdf+'">'+
 		'<a href="' + pdf + '" target="_blank" id="descargarPDF">'+
 		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>'+
 		'</a>'+
@@ -670,21 +1064,22 @@ function restaurarPaciente() {
 	} else{
 		$('#descargarPPTX').show();
 	}
+
+	trat =$('#tratamiento_actual').text();
+
+	if( $('#tratamientoPacienteMod').val()){
+		trat =$('#tratamientoPacienteMod').val();
+	}
+
+	$('#tratamiento_paciente_actual').empty();
+	$('#tratamiento_paciente_actual').append('<a class="nav-link" id="tratamiento_actual">'+ trat + '</a>');
 }
 
-function restaurarDisco() {
+function restaurarDisco(materialD,marcad,escala,altura,color,fecha) {
 	$('#modal-disco').data('bs.modal')._config.backdrop = 'open';
 	$('#modal-disco').data('bs.modal')._config.keyboard = true;
 
 	$('#modificar-disco').show();
-
-	materialD = $('#materialDiscoMod').val();
-	marcad = $('#marcaDiscoMod').val();
-	escala = $('#escala-modificar').val();
-	altura = $('#altura-modificar').val();
-	color = $('#colorDiscoMod').val();
-	fecha = $('#fecha_alta_disco-mod').val();
-
 
 	$('#material_fichadisco').empty();
 	$('#marca_fichadisco').empty();
@@ -704,20 +1099,14 @@ function restaurarDisco() {
 	$('#footer-fichadisco-modificar').remove();
 }
 
-function restaurarTrabajo() {
+function restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl) {
 	$('#modal-trabajo').data('bs.modal')._config.backdrop = 'open';
 	$('#modal-trabajo').data('bs.modal')._config.keyboard = true;
 
 	$('.btn-fichatrabajo').show();
 	$('#footer-trabajo').show();
 
-	material = $('#materialTrabajoMod').val();
-	tipo_trabajo = $('#tipoTrabajoMod').val();
-	npiezas = $('#npiezas-modificar').val();
-	color = $('#colorTrabajoMod').val();
-	codigoDisco = $('#discoTrabajoMod').val();
-	maquina = $('#maquinaTrabajoMod').val();
-	notas = $('#notas-modificar').val();
+
 
 	$('#material_fichatrabajo').empty();
 	$('#tipotrabajo_fichatrabajo').empty();
@@ -740,10 +1129,17 @@ function restaurarTrabajo() {
 
 	$('#footer-fichatrabajo-modificar').remove();
 
-	if($('#row-btn-stl').hasClass('sin_stl')){
-		$('#row-btn-stl').hide();
-	}else if($('#row-btn-stl').hasClass('con_stl')){
-		$('#row-btn-stl').show();
+	$('#row-btn-stl').empty();
+
+	$('#row-btn-stl').append('<div class="col-md-12 py-2 px-2" id="row-btn-stl">'+
+		'<a href="'+stl+'" target="_blank" id="descargarSTL">'+
+		'<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Ir a STL" type="submit"><i class="fas fa-download"></i> STL</button>'+
+		'</a>'+
+		'</div>');
+	if(!$('#descargarSTL').attr('href')){
+		$('#descargarSTL').hide();
+	} else{
+		$('#descargarSTL').show();
 	}
 }
 
@@ -978,7 +1374,7 @@ function ponerModificarTratamientoPaciente(){
 			_token: _token
 		},
 		success: function(result){
-			$('#tratamiento_fichapaciente').html(result);
+			$('#tratamiento_paciente_actual').html(result);
 		},
 		error: function () {
 
@@ -1100,13 +1496,58 @@ function buscarPaciente(){
 			_token: _token
 		},
 		success: function(result){
-			$('#tablaPacientesConsulta').html(result);
 
-		},
-		error: function () {
 
-		}
-	});
+			if (!result) {
+				/*Swal.fire(
+					'No se han encontrado resultados.',
+					'',
+					'info'
+					);*/
+					/*Swal.fire({
+						title: 'No se han encontrados resultados.',
+						text: "¿Desea agregar un paciente?",
+						type: 'question',
+						confirmButtonText: 'Sí, ¡Agregar paciente!',
+						showCancelButton: true,
+						cancelButtonText:  'Más tarde.',
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						reverseButtons: true
+
+					}).then((result) => {
+						if (result.value) {
+							$.ajaxSetup({
+								headers: {
+									'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+								}
+							});
+							$.ajax({
+								url: 'registroTrabajo',
+								method: 'get',
+								headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+								data: {
+									codigop: $('#codigoPaciente').val(),
+									nombrep: $('#nombrePaciente').val(),
+									_token: _token
+								},
+								success: function(result){
+
+									$('body').html(result);
+
+								}});
+						}
+					})*/
+				} else {
+					$('#tablaPacientesConsulta').html(result);
+				}
+
+
+			},
+			error: function () {
+
+			}
+		});
 }
 
 function buscarTrabajo(){
@@ -1137,7 +1578,6 @@ function buscarTrabajo(){
 
 function buscarDisco (){
 	var _token = document.getElementsByName("_token")[0].value;
-
 	$.ajaxSetup({
 		headers: {
 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1151,6 +1591,8 @@ function buscarDisco (){
 			materialDisco: $( "#materialDisco" ).val(),
 			marcaDisco: $( "#marcaDisco" ).val(),
 			colorDisco: $( "#colorDisco" ).val(),
+			fecha_alta: $( "#fecha_alta" ).val(),
+			fecha_alta2: $( "#fecha_alta2" ).val(),
 			_token: _token
 		},
 		success: function(result){
@@ -1160,30 +1602,29 @@ function buscarDisco (){
 		}});
 }
 
-function filtroTratamientoPaciente(){
+/*function filtroTratamientoPaciente(){
 
 	//rellenar select con los tratamientos del paciente introducido
 	//al agregar un nuevo buscadorTrabajo
-	$( "#codigopaciente" ).keyup(function() {
-		var codigopaciente = document.getElementsByName("codigopaciente")[0].value;
-		var _token = document.getElementsByName("_token")[0].value;
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-		$.ajax({
-			url: 'filtroTratamientos',
-			method: 'post',
-			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-			data: {
-				codigopaciente: codigopaciente,
-				_token: _token
-			},
-			success: function(result){
 
-				$('#tratamientop').html(result);
-
-			}});
+	var codigopaciente = document.getElementsByName("codigopaciente")[0].value;
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
 	});
-}
+	$.ajax({
+		url: 'filtroTratamientos',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			codigopaciente: codigopaciente,
+			_token: _token
+		},
+		success: function(result){
+
+			$('#tratamientop').html(result);
+
+		}});
+	}*/

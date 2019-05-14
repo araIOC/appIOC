@@ -23,8 +23,8 @@
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<i class="fas fa-address-card"></i> PACIENTES
 					</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="{{ route('consultar') }}"><i class="fas fa-search"></i> CONSULTAR</a>
+					<div class="dropdown-menu filtros" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item filtros" href="{{ route('consultar') }}"><i class="fas fa-search"></i> CONSULTAR</a>
 						<a class="dropdown-item" href="{{ route('registroPaciente') }}"><i class="fas fa-user-plus"></i> AGREGAR</a>
 					</div>
 				</li>
@@ -34,7 +34,6 @@
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="{{ route('consultarTrabajos') }}"><i class="fas fa-search"></i> CONSULTAR</a>
-						<a class="dropdown-item" href="{{ route('registroTrabajo') }}"><i class="fas fa-plus-circle"></i> AGREGAR</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">
@@ -47,13 +46,18 @@
 					</div>
 				</li>
 				<li class="nav-item">
+					<a class="nav-link" href="{{ route('consultarMaterial') }}" id="navbarDropdown">
+						<i class="fas fa-list-alt"></i> CONSULTA
+					</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" href="{{ route('logout') }}"><i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN</a>
 				</li>
 			</ul>
 		</div>
 	</nav>
 	<main id="app">
-		<section class="content">
+		<section class="content" id="contenido">
 			@yield('content')
 
 		</section>
