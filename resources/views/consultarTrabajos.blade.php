@@ -59,7 +59,6 @@
 				<th scope="col">Cod Paciente</th>
 				<th scope="col">Paciente</th>
 				<th scope="col">Tipo de trabajo</th>
-				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody id="tablaTrabajosConsulta">
@@ -79,20 +78,17 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<ul class="nav nav-tabs" id="tabTrabajo" role="tablist">
+					<li class="ml-auto mr-sm-2" id="conten_btn">
+						<a id="eliminar_trabajo">
+							<button class="btn btn-lg btn-warning  mr-2 py-2 btn-fichatrabajo"data-toggle="tooltip" data-placement="auto" title="Eliminar trabajo" type="submit"><i class="fas fa-trash-alt"></i></button>
+						</a>
+						<a id="modificar-trabajo"><button class="btn btn-lg btn-warning ml-auto btn-fichatrabajo mr-2" id="modificar-trabajo" data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button></a>
+					</li>
+				</ul>
 				<div class="modal-body">
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
-							<div class="row pb-2">
-								<div class="col-md-8"></div>
-								<div class="col-md-2 ml-auto">
-									<a id="eliminar_trabajo">
-										<button class="btn btn-lg btn-warning  mr-2 py-2 btn-fichatrabajo"data-toggle="tooltip" data-placement="auto" title="Eliminar trabajo" type="submit"><i class="fas fa-trash-alt"></i></button>
-									</a>
-								</div>
-								<div class="col-md-2 ml-auto" >
-									<a id="modificar-trabajo"><button class="btn btn-lg btn-warning ml-auto btn-fichatrabajo" id="modificar-trabajo" data-toggle="tooltip" data-placement="auto" title="Modificar trabajo" type="submit"><i class="fas fa-sync-alt"></i></button></a>
-								</div>
-							</div>
 							<div class="row">
 								<div class="col-md-12">
 									<table class="table ">

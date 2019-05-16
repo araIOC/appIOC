@@ -243,7 +243,6 @@
 				<th scope="col">Cod</th>
 				<th scope="col">Nombre</th>
 				<th scope="col">Tratamiento</th>
-				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody id="tablaPacientesConsulta">
@@ -255,44 +254,45 @@
 			<div class="modal-content" id="ficha-paciente-tratamiento">
 				<div class="modal-header">
 					<h5 class="modal-title" id="nombrep"></h5>
-					<input type="hidden" id="id_pt">
+					<input type="hidden" id="id_pt"><input type="hidden" id="hidden_id_p"><input type="hidden" id="hidden_nombre"><input type="hidden" id="hidden_codigo">
 
-					<h5 class="modal-title ml-auto" id="codigop"></h5>
+					<h5 class="modal-title ml-auto mr-2" id="codigop"></h5>
+					<a id="modificar-paciente" class="pt-1" data-toggle="tooltip" data-placement="auto" title="Modificar paciente"><i class="fas fa-sync-alt"></i></a>
 					<button type="button" class="close mx-0 x-cerrar" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<ul class="nav nav-tabs" id="tabTratamiento" role="tablist">
 
-					<li class="nav-item active" id="tratamiento_paciente_actual">
-
-						<a class="nav-link" id="tratamiento_actual"></a>
+					<li class="nav-item active " id="tratamiento_paciente_actual">
+						<input type="hidden" id="hidden_tratamiento_actual">
+						<a class="nav-link mr-2" id="tratamiento_actual"></a>
 					</li>
 
 					<li class="ml-auto mr-sm-2" id="conten_btn">
 						<a id="agregar_nuevo_tratamiento"><button type="button" data-dismiss="modal" class="btn btn-lg btn-warning py-2 btn-fichacliente" data-toggle="tooltip" data-placement="auto" title="Nuevo tratamiento" id="agregar_tratamiento_pacienteM"><i class="fas fa-plus"></i></button></a>
-						<a id="modificar-tratamiento"><button class="btn btn-lg btn-warning ml-auto btn-fichacliente"   data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button></a>
+						<a id="modificar-tratamiento"><button class="btn btn-lg btn-warning ml-auto btn-fichacliente mr-2"   data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button></a>
 					</li>
 				</ul>
 				<div class="modal-body">
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-6 table-responsive">
 									<table class="table ">
 										<tbody id="tabla_modal_paciente">
-											<tr>
-												<th scope="row">DOCTOR:</th>
+											<tr id="tr_doctor">
+												<th scope="row" class="th_tabla_paciente_modificar">DOCTOR:</th>
 												<input type="hidden" id="dato_anterior-nombred">
 												<td id="doctor_fichapaciente"></td>
 											</tr>
-											<tr>
-												<th scope="row">ASESOR:</th>
+											<tr id="tr_asesor">
+												<th scope="row" class="th_tabla_paciente_modificar">ASESOR:</th>
 												<input type="hidden" id="dato_anterior-nombrea">
 												<td id="asesor_fichapaciente"></td>
 											</tr>
-											<tr>
-												<th scope="row">TIPO DE IMPLANTE</th>
+											<tr id="tr_implante">
+												<th scope="row" class="th_tabla_paciente_modificar">TIPO DE IMPLANTE</th>
 												<input type="hidden" id="dato_anterior-tipo_implante">
 												<td id="tipo_implante_fichapaciente"></td>
 											</tr>
@@ -397,13 +397,13 @@
 							<div class="col-md-4 mx-auto" id="powerpoint-modal">
 								<input type="hidden" id="dato_anterior-pptx">
 								<a href="" target="_blank" id="descargarPPTX">
-									<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>
+									<button class="btn btn-lg btn-warning btn-block mb-2" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>
 								</a>
 							</div>
 							<div class="col-md-4 mx-auto" id="pdf-modal">
 								<input type="hidden" id="dato_anterior-pdf">
 								<a href="" target="_blank" id="descargarPDF">
-									<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>
+									<button class="btn btn-lg btn-warning btn-block mb-2" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>
 								</a>
 							</div>
 						</div>

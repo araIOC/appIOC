@@ -8,7 +8,7 @@ $(document).ready(function(){
 		buscarDisco();
 	});
 	$("#fecha_alta,#fecha_alta2" ).on('change', function() {
-		if($('#fecha_alta').val() > $('#fecha_alta2').val()){
+		if($('#fecha_alta').val() > $('#fecha_alta2').val() && $('#fecha_alta2').val() && $('#fecha_alta').val()){
 			Swal.fire(
 				'¡Error!',
 				'La fecha de inicio es posterior a la fecha definitiva.',
@@ -42,13 +42,17 @@ $( "#modificar-tratamiento" ).on('click', function() {
 	modificarAsesorPaciente();
 	modificarImplantePaciente();
 });
+
 $('#nombrePaciente').val(localStorage.getItem("nombrep"));
 $('#codigoPaciente').val(localStorage.getItem("codigop"));
+$('#nombreT').val(localStorage.getItem("nombreT"));
 $('#codigoPaciente').keyup();
 $('.filtros').click(function () {
 	localStorage.setItem("nombrep", "");
 	localStorage.setItem("codigop", "");
+	localStorage.setItem("nombreT", "Elija un tratamiento...");
 })
+
 $( "#modal-pacientes" ).on('click','#modificar-tratamiento_actual', function() {
 	Swal.fire({
 		title: '¿Estás seguro que desea modificar el tratamiento?',
@@ -168,7 +172,6 @@ $('#guardar_disco').click(function () {
 		});
 	}
 });
-
 
 $('#guardar_disco').click(function () {
 	if($('#cod_disco').val() == "" || $('#material').val() == "Elija un material..." || $('#color').val() == "Color..." || $('#marca').val() == "Elija una marca..."){
@@ -290,40 +293,59 @@ $('#app').on("click","#guardarTratamiento",function () {
 });
 
 $('#app').on('click','#insertarTrabajo',function () {
-	var _token = document.getElementsByName("_token")[0].value;
-	$.ajaxSetup({
-		headers: {
-			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-		}
-	});
-	$.ajax({
-		url: 'agregarTrabajo',
-		method: 'post',
-		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		data: {
-			id_pt : $('#id_pt_trabajo').val(),
-			material_trabajo: $('#material_trabajo').val(),
-			t_trabajo: $('#t_trabajo').val(),
-			numeroPiezas: $('#numeroPiezas').val(),
-			color_trabajo: $('#color_trabajo').val(),
-			codigoDisco_trabajo: $('#codigoDisco_trabajo').val(),
-			maquina_trabajo: $('#maquina_trabajo').val(),
-			fecha_alta_trabajo: $('#fecha_alta_trabajo').val(),
-			notas: $('#notas').val(),
-			stl_insertTrab: $('#stl_insertTrab').val(),
-			_token: _token
-		},
-		success: function(result){
-			//window.location.href = "/disco";
-		},
-		error: function () {
-			Swal.fire(
-				'¡Error!',
-				'No se ha podido insertar el trabajo.',
-				'error'
-				)
-		}
-	});
+	var codigop =  $('#codigopaciente').val();
+	var nombrep = $('#nombrePacienteTrabajo').val();
+	var tratamiento = $('#tratamientop').val();
+	localStorage.setItem("nombrep", nombrep);
+	localStorage.setItem("codigop", codigop);
+	localStorage.setItem("nombreT", tratamiento);
+
+
+	if($('#codigoDisco_trabajo').val() == "Nº disco..." && $('#material_trabajo').val() == "Elija un material..."
+		&& $('#t_trabajo').val() == "Tipo de trabajo..." && $('#color_trabajo').val() == "Color...."
+		&& $('#maquina_trabajo').val() == "Máquina..."){
+		Swal.fire(
+			'¡Atención!',
+			'Los campos código de disco, material, maquina, tipo de trabajo y color no pueden estar vacíos.',
+			'warning'
+			)
+	}else{
+		var _token = document.getElementsByName("_token")[0].value;
+		$.ajaxSetup({
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			}
+		});
+		$.ajax({
+			url: 'agregarTrabajo',
+			method: 'post',
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+			data: {
+				id_pt : $('#id_pt_trabajo').val(),
+				material_trabajo: $('#material_trabajo').val(),
+				t_trabajo: $('#t_trabajo').val(),
+				numeroPiezas: $('#numeroPiezas').val(),
+				color_trabajo: $('#color_trabajo').val(),
+				codigoDisco_trabajo: $('#codigoDisco_trabajo').val(),
+				maquina_trabajo: $('#maquina_trabajo').val(),
+				fecha_alta_trabajo: $('#fecha_alta_trabajo').val(),
+				notas: $('#notas').val(),
+				stl_insertTrab: $('#stl_insertTrab').val(),
+				_token: _token
+			},
+			success: function(result){
+				window.location.href = "/app";
+			},
+			error: function () {
+				Swal.fire(
+					'¡Error!',
+					'No se ha podido insertar el trabajo.',
+					'error'
+					)
+			}
+		});
+	}
+
 });
 
 $('#modal-pacientes').on("click", "#agregar_nuevo_tratamiento" ,function(){
@@ -632,8 +654,8 @@ $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
 						fdef = $('#f_final-modificar').val();
 						pptx =$('#pptx-modificar').val();
 						pdf =$('#pdf-modificar').val();
-
-						restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'modificar');
+						tratamiento =$('#tratamientoPacienteMod').val();
+						restaurarTratamiento(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'modificar',tratamiento);
 						buscarPaciente();
 					},
 					error: function () {
@@ -667,6 +689,7 @@ $("#modal-pacientes").on('click',"#cerrar_modal-modificar-paciente", function ()
 			finicio = $('#dato_anterior-finicio').val();
 			fdef = $('#dato_anterior-fdef').val();
 
+			tratamiento = $('#hidden_tratamiento_actual').val();
 			doctor = $('#dato_anterior-nombred').val();
 			asesor = $('#dato_anterior-nombrea').val();
 			implanteMod = $('#dato_anterior-tipo_implante').val();
@@ -675,7 +698,7 @@ $("#modal-pacientes").on('click',"#cerrar_modal-modificar-paciente", function ()
 			pdf = $('#dato_anterior-pptx').val();
 			pptx = $('#dato_anterior-pdf').val();
 
-			restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'atras');
+			restaurarTratamiento(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'atras',tratamiento);
 		}
 	})
 });
@@ -746,7 +769,7 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 				success: function(result){
 					Swal.fire(
 						'¡Éxito!',
-						'El traabajo se ha modificado.',
+						'El trabajo se ha modificado.',
 						'success'
 						);
 
@@ -916,19 +939,125 @@ $('#consultarPiezas').on("click" ,function(){
 		}});
 });
 
-function restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,boton) {
+$("#modal-pacientes").on('click',"#mod_paciente", function () {
+	Swal.fire({
+		title: '¿Estás seguro?',
+		text: "¿El registro se modificará?",
+		type: 'warning',
+		confirmButtonText: 'Modificar',
+		showCancelButton: true,
+		cancelButtonText:  'Cancelar',
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		reverseButtons: true
+
+	}).then((result) => {
+		if (result.value) {
+			var _token = document.getElementsByName("_token")[0].value;
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+			$.ajax({
+				url: 'modificarPaciente',
+				method: 'get',
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				data: {
+					id_p : $('#hidden_id_p').val(),
+					nombre : $('#nombrepaciente_mod').val(),
+					codigo : $('#codigopaciente_mod').val(),
+					_token: _token
+				},
+				success: function(result){
+					Swal.fire(
+						'¡Éxito!',
+						'El paciente se ha modificado.',
+						'success'
+						);
+
+					nombre = $('#nombrepaciente_mod').val();
+					codigo = $('#codigopaciente_mod').val();
+
+					restaurarPaciente(nombre,codigo);
+					buscarPaciente();
+				},
+				error: function () {
+					Swal.fire(
+						'¡Error!',
+						'No se ha podido modificar.',
+						'error'
+						)
+				}
+			});
+		}
+	})
+});
+
+$("#modal-pacientes").on('click',"#cerrar_modal-atras_p", function () {
+	Swal.fire({
+		title: '¿Estás seguro que desea volver?',
+		text: "No se guardarán los datos modificados.",
+		type: 'warning',
+		confirmButtonText: 'Sí, volver',
+		showCancelButton: true,
+		cancelButtonText:  'Cancelar',
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		reverseButtons: true
+
+	}).then((result) => {
+		if (result.value) {
+
+			nombre = $('#hidden_nombre').val();
+			codigo = $('#hidden_codigo').val();
+
+			restaurarPaciente(nombre,codigo);
+		}
+	})
+});
+
+function restaurarPaciente(nombre,codigo) {
+	$('#modal-pacientes').data('bs.modal')._config.backdrop = 'open';
+	$('#modal-pacientes').data('bs.modal')._config.keyboard = true;
+	$('.btn-fichacliente').show();
+	$('#footer-fichapaciente').show();
+	$('.x-cerrar').show();
+
+	id_p = $('#hidden_id_p').val()
+	id_pt = $('#id_pt').val();
+
+	$('.modal-header').empty();
+	$('.modal-header').append('<h5 class="modal-title" id="nombrep">'+nombre+'</h5>'+
+		'<input type="hidden" id="id_pt" value="'+id_pt+'"><input type="hidden" id="hidden_id_p" value="'+id_p+'"><input type="hidden" id="hidden_nombre" value="'+nombre+'"><input type="hidden" id="hidden_codigo" value="'+codigo+'">'+
+		'<h5 class="modal-title ml-auto mr-2" id="codigop">Código: '+codigo+'</h5>'+
+		'<a id="modificar-paciente" class="pt-1" data-toggle="tooltip" data-placement="auto" title="Modificar paciente"><i class="fas fa-sync-alt"></i></a>'+
+		'<button type="button" class="close mx-0 x-cerrar" data-dismiss="modal" aria-label="Close">'+
+		'<span aria-hidden="true">&times;</span>'+
+		'</button>');
+}
+
+function restaurarTratamiento(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,boton,tratamiento) {
 
 	$('#row-btn-files').empty();
-	$('#doctor_fichapaciente').empty();
-	$('#asesor_fichapaciente').empty();
-	$('#tipo_implante_fichapaciente').empty();
+	$('#tr_doctor').empty();
+	$('#tr_asesor').empty();
+	$('#tr_implante').empty();
 	$('#cirugia_fichapaciente').empty();
 	$('#dropbox').empty();
 
+
 	$('#footer-fichapaciente-modificar').remove();
+
+	$('#tr_doctor').append('<th scope="row" class="th_tabla_paciente_modificar">DOCTOR:</th><input type="hidden" id="dato_anterior-nombred" value="'+doctor+'"><td id="doctor_fichapaciente"></td>');
 	$('#doctor_fichapaciente').text(doctor);
+
+	$('#tr_asesor').append('<th scope="row" class="th_tabla_paciente_modificar">ASESOR:</th><input type="hidden" id="dato_anterior-nombrea" value="'+asesor+'"><td id="asesor_fichapaciente"></td>');
 	$('#asesor_fichapaciente').text(asesor);
+
+	$('#tr_implante').append('<th scope="row" class="th_tabla_paciente_modificar">TIPO DE IMPLANTE</th><input type="hidden" id="dato_anterior-tipo_implante" value="'+implanteMod+'"><td id="tipo_implante_fichapaciente"></td>');
 	$('#tipo_implante_fichapaciente').text(implanteMod);
+
 	$('#fecha_inicio_fichapaciente').text(finicio.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 	$('#fecha_definitiva_fichapaciente').text(fdef.replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3/$2/$1'));
 
@@ -1044,12 +1173,12 @@ function restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio
 
 	$('#row-btn-files').append('<div class="col-md-4 mx-auto" id="powerpoint-modal">'+
 		'<a href="' + pptx + '" target="_blank" id="descargarPPTX"><input type="hidden" id="dato_anterior-pptx" value="'+pptx+'">'+
-		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>'+
+		'<button class="btn btn-lg btn-warning btn-block mb-2" data-toggle="tooltip" data-placement="auto" title="Descargar Power Point"><i class="fas fa-file-powerpoint"></i> PPTX</button>'+
 		'</a>'+
 		'</div>'+
 		'<div class="col-md-4 mx-auto" id="pdf-modal"><input type="hidden" id="dato_anterior-pdf" value="'+pdf+'">'+
 		'<a href="' + pdf + '" target="_blank" id="descargarPDF">'+
-		'<button class="btn btn-lg btn-warning btn-block" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>'+
+		'<button class="btn btn-lg btn-warning btn-block mb-2" data-toggle="tooltip" data-placement="auto" title="Descargar PDF"><i class="fas fa-file-pdf"></i>PDF</button>'+
 		'</a>'+
 		'</div>');
 
@@ -1072,13 +1201,13 @@ function restaurarPaciente(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio
 	}
 
 	$('#tratamiento_paciente_actual').empty();
-	$('#tratamiento_paciente_actual').append('<a class="nav-link" id="tratamiento_actual">'+ trat + '</a>');
+	$('#tratamiento_paciente_actual').append('<input type="hidden" id="hidden_tratamiento_actual" value="'+ tratamiento +'"><a class="nav-link" id="tratamiento_actual">'+ tratamiento + '</a>');
 }
 
 function restaurarDisco(materialD,marcad,escala,altura,color,fecha) {
 	$('#modal-disco').data('bs.modal')._config.backdrop = 'open';
 	$('#modal-disco').data('bs.modal')._config.keyboard = true;
-
+	$('.x-cerrar').show();
 	$('#modificar-disco').show();
 
 	$('#material_fichadisco').empty();
@@ -1102,11 +1231,9 @@ function restaurarDisco(materialD,marcad,escala,altura,color,fecha) {
 function restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl) {
 	$('#modal-trabajo').data('bs.modal')._config.backdrop = 'open';
 	$('#modal-trabajo').data('bs.modal')._config.keyboard = true;
-
+	$('.x-cerrar').show();
 	$('.btn-fichatrabajo').show();
 	$('#footer-trabajo').show();
-
-
 
 	$('#material_fichatrabajo').empty();
 	$('#tipotrabajo_fichatrabajo').empty();
@@ -1371,6 +1498,7 @@ function ponerModificarTratamientoPaciente(){
 		method: 'post',
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		data: {
+			tratamiento: $('#tratamiento_actual').text(),
 			_token: _token
 		},
 		success: function(result){
@@ -1398,7 +1526,7 @@ function modificarImplantePaciente(){
 			_token: _token
 		},
 		success: function(result){
-			$('#tipo_implante_fichapaciente').html(result);
+			$('#tr_implante').html(result);
 		},
 		error: function () {
 
@@ -1422,7 +1550,7 @@ function modificarDoctorPaciente(){
 			_token: _token
 		},
 		success: function(result){
-			$('#doctor_fichapaciente').html(result);
+			$('#tr_doctor').html(result);
 		},
 		error: function () {
 
@@ -1446,7 +1574,7 @@ function modificarAsesorPaciente(){
 			_token: _token
 		},
 		success: function(result){
-			$('#asesor_fichapaciente').html(result);
+			$('#tr_asesor').html(result);
 		},
 		error: function () {
 

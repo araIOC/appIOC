@@ -17,6 +17,7 @@ Route::get('app', 'AppController@consultarPacientes')->name('app');
 
 Route::get('pacientes', 'AppController@consultarPacientes')->name('consultar');
 Route::get('registroPaciente', 'AppController@registroPacientes')->name('registroPaciente');
+Route::get('modificarPaciente', 'AppController@modificarPaciente')->name('modificarPaciente');
 Route::any('agregarPaciente', 'AppController@agregarPaciente')->name('agregarPaciente');
 Route::any('buscadorPaciente', 'AppController@buscadorPaciente')->name('buscadorPaciente');
 Route::post('modificarDoctorPacientes', 'AppController@modificarDoctorPacientes')->name('modificarDoctorPacientes');
@@ -27,7 +28,6 @@ Route::post('ponerModificarTratamientoPaciente', 'AppController@ponerModificarTr
 Route::get('agregar', function () {
         return redirect()->route('consultar');
 })->name('agregar');
-
 
 Route::any('agregarTratamiento', 'AppController@agregarTratamiento')->name('agregarTratamiento');
 Route::any('registroTratamiento', 'AppController@registroTratamiento')->name('registroTratamiento');

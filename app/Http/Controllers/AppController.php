@@ -19,10 +19,10 @@ class AppController extends Controller{
 		$asesores = DB::table('asesores')->select()->get();
 
 		$query = 'SELECT * FROM PACIENTES_TRATAMIENTOS as PT
-		LEFT OUTER JOIN PACIENTES as P ON P.ID = PT.ID_PACIENTE
+		LEFT OUTER JOIN PACIENTES as P ON P.ID_P = PT.ID_PACIENTE
 		UNION
 		SELECT * FROM PACIENTES_TRATAMIENTOS as PT
-		RIGHT OUTER JOIN PACIENTES as P ON P.ID = PT.ID_PACIENTE
+		RIGHT OUTER JOIN PACIENTES as P ON P.ID_P = PT.ID_PACIENTE
 		ORDER BY id_paciente';
 
 		$pacientes = DB::select($query);
@@ -138,7 +138,7 @@ class AppController extends Controller{
 		$query = 'SELECT *
 		FROM PACIENTES AS P
 		LEFT OUTER JOIN PACIENTES_TRATAMIENTOS AS PT
-		ON P.ID = PT.ID_PACIENTE
+		ON P.ID_P = PT.ID_PACIENTE
 		LEFT OUTER JOIN TRATAMIENTOS AS T
 		ON PT.ID_TRATAMIENTO = T.ID
 		LEFT OUTER JOIN DOCTORES AS D
@@ -259,7 +259,10 @@ class AppController extends Controller{
 		$doctores = DB::table('doctores')->select()->get();
 		$nombreDoctor =request()->nombreDoctor;
 
-		$select = '<select class="custom-select mr-sm-2" id="doctorPacienteMod" name="doctorPacienteMod"><option></option>';
+		$select = '<input type="hidden" id="dato_anterior-nombred" value="'.$nombreDoctor.'"><td colspan="2"><div class="input-group">
+		<div class="input-group-prepend">
+		<label class="btn btn-outline-secondary" for="inputGroupSelect01">DOCTOR</label>
+		</div><select class="custom-select mr-sm-2" id="doctorPacienteMod" name="doctorPacienteMod"><option></option>';
 		foreach ($doctores as $doctor) {
 			if($doctor->nombreD == $nombreDoctor){
 				$select .='<option value="'.$doctor->nombreD.'" selected>'.$doctor->nombreD.'</option>';
@@ -267,7 +270,8 @@ class AppController extends Controller{
 				$select .='<option value="'.$doctor->nombreD.'">'.$doctor->nombreD.'</option>';
 			}
 		}
-		$select .= '</select>';
+
+		$select .= '</select></div></td>';
 		echo $select;
 	}
 
@@ -275,7 +279,10 @@ class AppController extends Controller{
 		$asesores = DB::table('asesores')->select()->get();
 		$nombreAsesorPaciente = request()->nombreAsesor;
 
-		$select = '<select class="custom-select mr-sm-2" id="asesorPacienteMod" name="asesorPacienteMod"><option></option>';
+		$select = '<input type="hidden" id="dato_anterior-nombrea" value="'.$nombreAsesorPaciente.'"><td colspan="2"><div class="input-group">
+		<div class="input-group-prepend">
+		<label class="btn btn-outline-secondary" for="inputGroupSelect01">ASESOR</label>
+		</div><select class="custom-select mr-sm-2" id="asesorPacienteMod" name="asesorPacienteMod"><option></option>';
 		foreach ($asesores as $asesor) {
 			if($asesor->nombreA == $nombreAsesorPaciente){
 				$select .='<option value="'.$asesor->nombreA.'" selected>'.$asesor->nombreA.'</option>';
@@ -283,7 +290,7 @@ class AppController extends Controller{
 				$select .='<option value="'.$asesor->nombreA.'">'.$asesor->nombreA.'</option>';
 			}
 		}
-		$select .= '</select>';
+		$select .= '</select></div></td>';
 		echo $select;
 	}
 
@@ -291,7 +298,10 @@ class AppController extends Controller{
 		$implantes = DB::table('implantes')->select()->get();
 		$implantePaciente = request()->implante;
 
-		$select = '<select class="custom-select mr-sm-2" id="implantePacienteMod" name="implantePacienteMod"><option></option>';
+		$select = '<input type="hidden" id="dato_anterior-tipo_implante" value="'.$implantePaciente.'"><td colspan="2"><div class="input-group">
+		<div class="input-group-prepend">
+		<label class="btn btn-outline-secondary" for="inputGroupSelect01">IMPLANTE</label>
+		</div><select class="custom-select mr-sm-2" id="implantePacienteMod" name="implantePacienteMod"><option></option>';
 		foreach ($implantes as $implante) {
 			if($implante->tipo == $implantePaciente){
 				$select .='<option value="'.$implante->tipo.'" selected>'.$implante->tipo.'</option>';
@@ -299,17 +309,17 @@ class AppController extends Controller{
 				$select .='<option value="'.$implante->tipo.'">'.$implante->tipo.'</option>';
 			}
 		}
-		$select .= '</select>';
+		$select .= '</select></div></td>';
 		echo $select;
 	}
 
 	public function ponerModificarTratamientoPaciente(){
 		$tratamientos = DB::table('tratamientos')->select()->get();
 
-		$select = '<input type="hidden" id="dato_anterior-tratamiento" value="'.request()->tratamiento_actual.'"><select class="custom-select mr-sm-2" id="tratamientoPacienteMod" name="tratamientoPacienteMod">';
+		$select = '<input type="hidden" id="hidden_tratamiento_actual" value="'.request()->tratamiento.'"><select class="custom-select mr-sm-2" id="tratamientoPacienteMod" name="tratamientoPacienteMod">';
 		foreach ($tratamientos as $tratamiento) {
-			if($tratamiento->nombreT == request()->tratamiento_actual){
-			$select .='<option value="'.$tratamiento->nombreT.'" selected>'.$tratamiento->nombreT.'</option>';
+			if($tratamiento->nombreT == request()->tratamiento){
+				$select .='<option value="'.$tratamiento->nombreT.'" selected>'.$tratamiento->nombreT.'</option>';
 			}else{
 				$select .='<option value="'.$tratamiento->nombreT.'">'.$tratamiento->nombreT.'</option>';
 			}
@@ -332,7 +342,7 @@ class AppController extends Controller{
 		}
 
 		$codigo_paciente = explode(': ', request()->codigoP);
-		$id_paciente = DB::table('pacientes')->select('id')->where('codigoP', '=',$codigo_paciente[1])->get();
+		$id_paciente = DB::table('pacientes')->select('id_p')->where('codigoP', '=',$codigo_paciente[1])->get();
 
 		if(request()->nuevoTratamiento){
 			$id_tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nuevoTratamiento)->get();
@@ -377,12 +387,20 @@ class AppController extends Controller{
 
 		$id_paciente = DB::table('pacientes_tratamientos')->select('id_paciente')->where('id_pt', request()->id_pt)->get();
 
-		DB::table('pacientes')->where('id', $id_paciente[0]->id_paciente)
+		DB::table('pacientes')->where('id_p', $id_paciente[0]->id_paciente)
 		->update([
 			'powerpoint' => request()->powerpoint,
 			'pdf' => request()->pdf
 		]);
 
 		return redirect()->route('consultar');
+	}
+
+	public function modificarPaciente(){
+		DB::table('pacientes')->where('id_p', request()->id_p)
+		->update([
+			'nombreP' => request()->nombre,
+			'codigoP' => request()->codigo
+		]);
 	}
 }

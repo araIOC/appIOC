@@ -33,7 +33,7 @@ class TrabajosController extends Controller{
 
 		$pacientes = DB::table('pacientes_tratamientos')
 		->join('trabajos', 'pacientes_tratamientos.id_pt', '=', 'trabajos.id_tratamiento')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id_p')
 		->select()
 		->get();
 
@@ -41,7 +41,7 @@ class TrabajosController extends Controller{
 		$codigo = explode(': ', request()->codigop);
 		$tratamiento = request()->tratamiento;
 		$id_pt = request()->id_pt;
-		echo $id_pt;
+
 		return view('agregarTrabajo',['trabajos'=>$trabajos,'materiales'=>$materiales,'colores'=>$colores,'discos'=>$discos,'maquinas'=>$maquinas,'tratamientos'=>$tratamientos, 'tipos_trabajo' => $tipos_trabajo,'pacientes'=>$pacientes,'nombre'=>$nombre,'id_pt'=>$id_pt,'tratamiento'=>$tratamiento,'codigo'=>$codigo[1]]);
 	}
 
@@ -59,14 +59,17 @@ class TrabajosController extends Controller{
 	}*/
 
 	public function agregarTrabajo(){
-		$id_disco = DB::table('discos')->select('id')->where('codigoD', '=',request()->codigoDisco_trabajo)->get();
+		$id_disco = DB::table('discos')->select('id','fecha_alta')->where('codigoD', '=',request()->codigoDisco_trabajo)->get();
 
 
 		DB::table('trabajos')->insert(
 			['id_tratamiento' => request()->id_pt,'materialT' => request()->material_trabajo,'stl' => request()->stl_insertTrab,'tipo_trabajo' => request()->t_trabajo,'n_piezas' => request()->numeroPiezas,'color' => request()->color_trabajo,'id_disco' => $id_disco[0]->id,'maquina' => request()->maquina_trabajo,'notas' => request()->notas,'fecha_trabajo' => request()->fecha_alta_trabajo]
 		);
 
-		return redirect()->route('consultarTrabajos');
+		if($id_disco[0]->fecha_alta == NULL){
+			DB::table('discos')->where('id', $id_disco[0]->id)
+			->update(['fecha_alta' => date("Y") . "-" . date("m") . "-" . date("d")]);
+		}
 	}
 
 	public function buscadorTrabajo(){
@@ -80,7 +83,7 @@ class TrabajosController extends Controller{
 		INNER JOIN PACIENTES_TRATAMIENTOS PT
 		ON PT.ID_PT = T.ID_TRATAMIENTO
 		INNER JOIN PACIENTES P
-		ON PT.ID_PACIENTE = P.ID
+		ON PT.ID_PACIENTE = P.ID_P
 		INNER JOIN TRATAMIENTOS TR
 		ON PT.ID_TRATAMIENTO = TR.ID
 		LEFT OUTER JOIN DISCOS D
@@ -109,7 +112,7 @@ class TrabajosController extends Controller{
 		$materiales = DB::table('material')->select()->get();
 		$nombreMaterial = request()->material;
 
-		$select = '<select class="custom-select mr-sm-2" id="materialTrabajoMod" name="materialTrabajoMod">';
+		$select = '<select class="custom-select mr-sm-2" id="materialTrabajoMod" name="materialTrabajoMod"><option></option>';
 		foreach ($materiales as $material){
 			if($material->nombreM == $nombreMaterial){
 				$select .='<option value="'.$material->nombreM.'" selected>'.$material->nombreM.'</option>';
@@ -125,7 +128,7 @@ class TrabajosController extends Controller{
 		$tipos = DB::table('tipo_trabajo')->select()->get();
 		$tipoTrabajo = request()->tipo_trabajo;
 
-		$select = '<select class="custom-select mr-sm-2" id="tipoTrabajoMod" name="tipoTrabajoMod">';
+		$select = '<select class="custom-select mr-sm-2" id="tipoTrabajoMod" name="tipoTrabajoMod"><option></option>';
 		foreach ($tipos as $tipo){
 			if($tipo->tipoT == $tipoTrabajo){
 				$select .='<option value="'.$tipo->tipoT.'" selected>'.$tipo->tipoT.'</option>';

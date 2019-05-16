@@ -268,7 +268,7 @@
 					</div>
 				</div>
 				<div class="form-row">
-					<button type="submit" class="btn btn-warning btn-lg btn-block" id="guardarTratamiento"><i class="far fa-save"></i> Guardar</button>
+					<button type="submit" class="btn btn-warning btn-lg btn-block" id="guardarTratamiento"><i class="fas fa-save"></i> Guardar</button>
 				</div>
 			</div>
 		</div>

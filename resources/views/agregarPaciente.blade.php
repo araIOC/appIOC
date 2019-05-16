@@ -18,7 +18,7 @@
 							<input type="text" class="form-control" name="codigo"id="codPacienteAgr" placeholder="Código..." required>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-warning btn-block" id="agregarPaciente"><i class="far fa-save"></i> REGISTRAR</button>
+					<button type="submit" class="btn btn-warning btn-block" id="agregarPaciente"><i class="fas fa-save"></i> REGISTRAR</button>
 			</div>
 		</div>
 	</div>

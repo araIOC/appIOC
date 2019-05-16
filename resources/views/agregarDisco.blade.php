@@ -87,7 +87,7 @@
 						</div>
 					</div>
 				</div>
-				<button type="submit" class="btn btn-warning btn-lg btn-block" id="guardar_disco">Guardar</button>
+				<button type="submit" class="btn btn-warning btn-lg btn-block" id="guardar_disco"><i class="fas fa-save"></i> Guardar</button>
 			</div>
 		</div>
 	</div>

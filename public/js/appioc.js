@@ -24,6 +24,8 @@ $("#btnFiltros").click(function () {
 $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 	var codigoP = $(this).data('codigop');
 	var nombrep = $(this).data('nombrep');
+	$('#hidden_nombre').val(nombrep);
+	$('#hidden_codigo').val(codigoP);
 
 	$('#codigop').text("Código: " + codigoP);
 	$('#nombrep').text(nombrep);
@@ -41,7 +43,7 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 		$('#agregar_tratamiento_pacienteM').empty().append('<i class="fas fa-plus"></i>');
 		$('#conten_btn').removeClass('p-4 mx-auto').addClass('ml-auto mr-sm-2');
 		$('#modificar-tratamiento').show();
-		$('#tratamiento_actual').text(tratamiento);
+
 		$('.modal-body').show();
 		$('#footer-fichapaciente').show();
 		$('#modal-modificar-paciente').removeClass('modal-md').addClass('modal-xl');
@@ -73,8 +75,13 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 		var powerpoint = $(this).data('powerpoint');
 		var pdf = $(this).data('pdf');
 		var id_pt = $(this).data('idpt');
+		var id_p = $(this).data('idp');
+
+		$('#tratamiento_actual').text(tratamiento);
+		$('#hidden_tratamiento_actual').val(tratamiento);
 
 		$('#id_pt').val(id_pt);
+		$('#hidden_id_p').val(id_p);
 		$('#dato_anterior-nombred').val(nombred);
 		$('#doctor_fichapaciente').text(nombred);
 		$('#dato_anterior-nombrea').val(nombrea);
@@ -127,7 +134,6 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 	}
 });
 
-
 $("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	var nombrep = $(this).data('nombrep');
 	var apellidos = $(this).data('apellidos');
@@ -167,7 +173,6 @@ $("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	} else{
 		$('#descargarSTL').show();
 	}
-
 });
 
 $("#tablaDiscosConsulta").on("click", ".td-datosdisco", function(){
@@ -211,9 +216,12 @@ $("#modificar-tratamiento").click(function (){
 	pptx = $('#descargarPPTX').attr('href');
 
 	$('#row-btn-files').empty();
+
+	$('.th_tabla_paciente_modificar').empty();
 	$('#doctor_fichapaciente').empty();
 	$('#asesor_fichapaciente').empty();
 	$('#tipo_implante_fichapaciente').empty();
+
 	$('#cirugia_fichapaciente').empty();
 	$('#dropbox').empty();
 	$('#descargarPDF').empty();
@@ -230,21 +238,23 @@ $("#modificar-tratamiento").click(function (){
 		checkNinguna = 'checked';
 	}
 
-	rb ='<div class="d-flex"><div class="custom-control custom-radio  mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía estática">'+
-	'<input type="radio" id="rbcestatica-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcestatica-modificar" '+checkEstatica+'>'+
-	'<label class="custom-control-label" for="rbcestatica-modificar">Estática</label>'+
+	rb ='<div class="form-check form-check-inline">'+
+	'<input class="form-check-input" type="radio" id="rbcestatica-modificar" name="rbCirugia-modificar" value="rbcestatica-modificar" '+checkEstatica+'>'+
+	'<label class="form-check-label" for="rbcestatica-modificar">Estática</label>'+
 	'</div>'+
-	'<div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Cirugía dinámica">'+
-	'<input type="radio" id="rbcdinamica-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcdinamica-modificar" '+checkDinamica+'>'+
-	'<label class="custom-control-label" for="rbcdinamica-modificar">Dinámica</label>'+
-	'</div><div class="custom-control custom-radio mr-auto" data-toggle="tooltip" data-placement="left" title="Ninguna">'+
-	'<input type="radio" id="rbcheckNinguna-modificar" name="rbCirugia-modificar" class="custom-control-input" value="rbcheckNinguna-modificar" '+checkNinguna+'>'+
-	'<label class="custom-control-label" for="rbcheckNinguna-modificar">Ninguna</label>'+
-	'</div></div>';
+	'<div class="form-check form-check-inline">'+
+	'<input class="form-check-input" type="radio"  id="rbcdinamica-modificar" name="rbCirugia-modificar" value="rbcdinamica-modificar" '+checkDinamica+'>'+
+	'<label class="form-check-label" for="rbcdinamica-modificar">Dinámica</label>'+
+	'</div>'+
+	'<div class="form-check form-check-inline">'+
+	'<input class="form-check-input" type="radio" id="rbcheckNinguna-modificar" name="rbCirugia-modificar" value="rbcheckNinguna-modificar" '+checkNinguna+'>'+
+	'<label class="form-check-label"  for="rbcheckNinguna-modificar">Ninguna</label>'+
+	'</div>';
 
 	$('#cirugia_fichapaciente').append(rb);
 
-	$('#tratamiento_actual').append('<a id="modificar-tratamiento_actual"><button class="btn btn-lg btn-warning ml-auto btn-fichacliente ml-sm-2"  data-toggle="tooltip" data-placement="auto" title="Modificar tratamiento" type="submit"><i class="fas fa-sync-alt"></i></button></a>');
+	$('#tratamiento_actual').append('<input type="hidden" id="hidden_tratamiento_actual"><a id="modificar-tratamiento_actual" class="pl-2 pt-1" data-toggle="tooltip" data-placement="auto" title="Modificar paciente"><i class="fas fa-sync-alt"></i></a>');
+	$('#hidden_tratamiento_actual').val();
 
 	ponerModificarFecha('#fecha_inicio_fichapaciente','f_inicio-modificar');
 	ponerModificarFecha('#fecha_definitiva_fichapaciente','f_final-modificar');
@@ -271,7 +281,7 @@ $("#modificar-tratamiento").click(function (){
 	$('#videopost-modal').empty();
 
 	ponerCB('#picprovisional-modal','picprovisional-modificar', "Pic Provisional",'hidden_pic_provisional');
-	/*ponerCB('#picpost-modal','picpost-modificar', "Pic Definitivo","hidden_pic_final");
+	ponerCB('#picpost-modal','picpost-modificar', "Pic Definitivo","hidden_pic_final");
 	ponerCB('#tacpre-modal','tacpre-modificar', "TAC pre","hidden_tac_pre");
 	ponerCB('#tacpost-modal','tacpost-modificar', "TAC post","hidden_tac_post");
 	ponerCB('#ortopre-modal','ortopre-modificar', "Orto pre","hidden_orto_pre");
@@ -285,21 +295,21 @@ $("#modificar-tratamiento").click(function (){
 	ponerCB('#fotoprotesisbocapre-modal','fotoprotesisbocapre-modificar', "Fotos protesis en boca pre","hidden_foto_protesis_boca_provisional");
 	ponerCB('#fotoprotesisbocapost-modal','fotoprotesisbocapost-modificar', "Fotos protesis en boca post","hidden_foto_protesis_boca_final");
 	ponerCB('#videopre-modal','videopre-modificar', "Video pre","hidden_video_pre");
-	ponerCB('#videopost-modal','videopost-modificar', "Video post","hidden_video_final");*/
+	ponerCB('#videopost-modal','videopost-modificar', "Video post","hidden_video_final");
 
 
 	$('#row-btn-files').append('<input type="hidden" id="dato_anterior-pptx"><div class="col-md-5 mx-auto input-group">'+
-		'<div class="input-group">'+
+		'<div class="input-group mb-2">'+
 		'	<div class="input-group-prepend">'+
-		'		<span class="input-group-text"><i class="fas fa-file-powerpoint mr-sm-2"></i> POWER POINT:</span>'+
+		'		<span class="input-group-text"><i class="fas fa-file-powerpoint mr-2"></i> POWER POINT:</span>'+
 		'	</div>'+
 		'	<input type="text" class="form-control p-2" name="pptx-modificar" id="pptx-modificar">'+
 		'	</div>'+
 		'</div>'+
 		'<input type="hidden" id="dato_anterior-pdf"><div class="col-md-5 mx-auto input-group">'+
-		'	<div class="input-group">'+
+		'	<div class="input-group mb-2">'+
 		'		<div class="input-group-prepend">'+
-		'			<label class="input-group-text"><i class="fas fa-file-pdf mr-sm-2"></i> PDF:</label>'+
+		'			<label class="input-group-text"><i class="fas fa-file-pdf mr-2"></i> PDF:</label>'+
 		'		</div>'+
 		'		<input type="text" class="form-control p-2" name="pdf-modificar" id="pdf-modificar">'+
 		'	</div>'+
@@ -310,10 +320,11 @@ $("#modificar-tratamiento").click(function (){
 	$("#dato_anterior-pptx").val(pptx);
 	$("#dato_anterior-pdf").val(pdf);
 
+
 	$('#ficha-paciente-tratamiento').append('<div class="modal-footer " id="footer-fichapaciente-modificar">'+
 		'<div class="ml-auto">'+
-		'<a id="cerrar_modal-modificar-paciente"><button class="btn btn-lg btn-warning mr-2" type="submit"><i class="fas fa-arrow-circle-left"></i> ATRÁS</button></a>'+
-		'<a id="modificar_tratamiento_paciente"><button class="btn btn-lg btn-warning " type="submit"><i class="fas fa-save"></i> MODIFICAR</button></a>'+
+		'<a id="cerrar_modal-modificar-paciente"><button class="btn btn-lg btn-warning mr-2 p-2" type="submit"><i class="fas fa-arrow-circle-left"></i> ATRÁS</button></a>'+
+		'<a id="modificar_tratamiento_paciente"><button class="btn btn-lg btn-warning  py-2" type="submit"><i class="fas fa-save"></i> MODIFICAR</button></a>'+
 		'</div></div>');
 });
 
@@ -332,7 +343,7 @@ $("#modificar-trabajo").click(function (){
 	maquina = $('#maquina_fichatrabajo').text();
 	notas = $('#notas_fichatrabajo').text();
 	id_trabajo = $('#id_trabajo').val();
-	stl = $('#descargarPPTX').attr('href');
+	stl = $('#descargarSTL').attr('href');
 
 	$('#descargarSTL').empty();
 	$('#npiezas_fichatrabajo').empty();
@@ -394,6 +405,48 @@ $("#modificar-disco").click(function (){
 		'</div></div>');
 });
 
+$("#modal-pacientes").on('click','#modificar-paciente',function (){
+	$('#modal-pacientes').data('bs.modal')._config.backdrop = 'static';
+	$('#modal-pacientes').data('bs.modal')._config.keyboard = false;
+	$('#modificar-paciente').hide();
+	$('.x-cerrar').hide();
+	$('#footer-fichapaciente').hide();
+
+	nombre = $('#hidden_nombre').val();
+	codigo = $('#hidden_codigo').val();
+
+	$('#nombrep').remove();
+	$('#codigop').remove();
+	$('.modal-header').append('<div class="form-row col-md-12 pr-0"><div class="form-group col-md-3">'+
+		'	<label for="inputDoctor">Nombre del paciente</label>'+
+		'	<div class=" my-2 my-lg-0">'+
+		'		<div class="input-group">'+
+		'			<div class="input-group-prepend">'+
+		'				<span class="input-group-text" id="basic-addon1"><i class="fas fa-address-card"></i></span>'+
+		'			</div>'+
+		'			<input type="hidden" id="hidden_nombre" value="'+nombre+'">'+
+		'			<input class="form-control mr-sm-2" type="text" name="nombrepaciente_mod" id="nombrepaciente_mod" value="'+nombre+'">'+
+		'		</div>'+
+		'	</div>'+
+		'</div>'+
+		'<div class="form-group col-md-3">'+
+		'	<label for="inputDoctor">Código del paciente</label>'+
+		'	<div class=" my-2 my-lg-0">'+
+		'		<div class="input-group">'+
+		'			<div class="input-group-prepend">'+
+		'				<label class="input-group-text" for="inputGroupSelect01"><i class="fas fa-tags"></i></label>'+
+		'			</div>'+
+		'			<input type="hidden" id="hidden_codigo" value="'+codigo+'">'+
+		'			<input type="text" class="form-control" id="codigopaciente_mod" name="codigopaciente_mod" value="'+codigo+'">'+
+		'		</div>'+
+		'	</div>'+
+		'</div>'+
+		'<div class="form-group col-md-2 mt-md-4"><div class="btn-group ml-auto" role="group" aria-label="Basic example">'+
+		'	<a id="cerrar_modal-atras_p"><button class="btn btn-lg btn-warning mr-2" data-toggle="tooltip" data-placement="auto" title="Atrás" type="submit"><i class="fas fa-arrow-circle-left"></i></button></a>'+
+		'	<a id="mod_paciente"><button class="btn btn-lg btn-warning" data-toggle="tooltip" data-placement="auto" title="Modificar paciente" type="submit"><i class="fas fa-save"></i></button></a>'+
+		'</div></div>');
+});
+
 function ponerModificarFecha(id_fecha, nombreFecha) {
 	fecha = $(id_fecha).text();
 	$(id_fecha).empty();
@@ -401,7 +454,6 @@ function ponerModificarFecha(id_fecha, nombreFecha) {
 	nuevaFecha = nuevaFecha[2]+ '-' + nuevaFecha[1] + '-' + nuevaFecha[0];
 	$(id_fecha).append('<input class="form-control" type="date" id="'+nombreFecha+'" name="'+nombreFecha+'" value="'+nuevaFecha+'">');
 }
-
 
 function resetearCB(cb,inputHidden,id_icono,id_td,boton) {
 	$(id_icono).addClass('fas');
@@ -425,7 +477,6 @@ function resetearCB(cb,inputHidden,id_icono,id_td,boton) {
 			$(inputHidden).val('uncheck');
 		}
 	}
-
 }
 
 function rellenarListaCB(cb,id_icono, id_td,idInputHidden){

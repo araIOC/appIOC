@@ -48,13 +48,13 @@
 			</div>
 		</div>
 		<div class="form-inline my-2 my-lg-0">
-				<div class="input-group "  data-toggle="tooltip" data-placement="bottom" title="Fecha de alta">
-						<div class="input-group-prepend">
-							<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
-						</div>
-						<input class="form-control" type="date" id="fecha_alta" name="fecha_alta">
-						<input class="form-control" type="date" id="fecha_alta2" name="fecha_alta2">
-					</div>
+			<div class="input-group "  data-toggle="tooltip" data-placement="bottom" title="Fecha de alta">
+				<div class="input-group-prepend">
+					<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
+				</div>
+				<input class="form-control" type="date" id="fecha_alta" name="fecha_alta">
+				<input class="form-control" type="date" id="fecha_alta2" name="fecha_alta2">
+			</div>
 		</div>
 		<button class="btn btn-outline-warning my-2 my-sm-0 ml-auto" id="limpiarFiltroDiscos" type="submit"data-toggle="tooltip" data-placement="auto" title="Limpiar filtros">Limpiar... <i class="fas fa-brush"></i></button>
 	</div>
@@ -80,20 +80,20 @@
 			<div class="modal-content" id="ficha-disco">
 				<div class="modal-header">
 
-					<h5 class="modal-title ml-auto" id="cod_disco"></h5>
+					<h5 class="modal-title" id="cod_disco"></h5>
 					<button type="button" class="close mx-0 x-cerrar" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<ul class="nav nav-tabs" id="tabTrabajo" role="tablist">
+					<li class="ml-auto mr-sm-2" id="conten_btn">
+						<button class="btn btn-lg btn-warning ml-auto mr-2" id="modificar-disco"  data-toggle="tooltip" data-placement="auto" title="Modificar disco" type="submit"><i class="fas fa-sync-alt"></i></button>
+					</li>
+				</ul>
 				<div class="modal-body">
 					<div class="tab-content" id="tabTratamiento">
 						<div class="tab-pane fade show active" id="test" role="tabpanel" aria-labelledby="test-tab">
-							<div class="row pb-2">
-								<div class="col-md-10"></div>
-								<div class="col-md-2">
-									<button class="btn btn-lg btn-warning ml-auto" id="modificar-disco"  data-toggle="tooltip" data-placement="auto" title="Modificar disco" type="submit"><i class="fas fa-sync-alt"></i></button>
-								</div>
-							</div>
+
 							<div class="row">
 								<div class="col-md-12">
 									<table class="table ">
