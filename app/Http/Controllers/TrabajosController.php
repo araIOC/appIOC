@@ -11,7 +11,7 @@ class TrabajosController extends Controller{
 
 		$trabajos = DB::table('pacientes_tratamientos')
 		->join('trabajos', 'pacientes_tratamientos.id_pt', '=', 'trabajos.id_tratamiento')
-		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id')
+		->join('pacientes', 'pacientes_tratamientos.id_paciente', '=', 'pacientes.id_p')
 		->join('tratamientos', 'pacientes_tratamientos.id_tratamiento', '=', 'tratamientos.id')
 		->select()
 		->get();
@@ -63,7 +63,19 @@ class TrabajosController extends Controller{
 
 
 		DB::table('trabajos')->insert(
-			['id_tratamiento' => request()->id_pt,'materialT' => request()->material_trabajo,'stl' => request()->stl_insertTrab,'tipo_trabajo' => request()->t_trabajo,'n_piezas' => request()->numeroPiezas,'color' => request()->color_trabajo,'id_disco' => $id_disco[0]->id,'maquina' => request()->maquina_trabajo,'notas' => request()->notas,'fecha_trabajo' => request()->fecha_alta_trabajo]
+			[
+				'id_tratamiento' => request()->id_pt,
+				'materialT' => request()->material_trabajo,
+				'stl' => request()->stl_insertTrab,
+				'tipo_trabajo' => request()->t_trabajo,
+				'n_piezas' => request()->numeroPiezas,
+				'color' => request()->color_trabajo,
+				'id_disco' => $id_disco[0]->id,
+				'maquina' => request()->maquina_trabajo,
+				'notas' => request()->notas,
+				'fecha_trabajo' => request()->fecha_alta_trabajo,
+				'repetido' => (request()->repetido == "true") ? 1 : 0
+			]
 		);
 
 		if($id_disco[0]->fecha_alta == NULL){
@@ -208,5 +220,10 @@ class TrabajosController extends Controller{
 		->update(['fecha_baja' => date("Y") . "-" . date("m") . "-" . date("d")]);
 
 		alert()->success('¡Éxito!', 'El trabajo se ha eliminado correctamente.');
+	}
+
+	public function repetirTrabajo(){
+		$query = DB::select('Select (Select codigoD from discos where Id = t.id_disco), t.* from trabajos t where id_tratamiento = '.request()->id_pt.';');
+		echo json_encode($query);
 	}
 }

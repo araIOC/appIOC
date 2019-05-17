@@ -6,7 +6,7 @@
 				{!! csrf_field() !!}
 
 				<div class="form-row">
-					<div class="form-group col-md-4">
+					<div class="form-group col-md-5">
 						<input type="hidden" value="{{$id_pt}}" id="id_pt_trabajo">
 						<label for="inputDoctor">Código del paciente</label>
 						<div class=" my-2 my-lg-0">
@@ -18,7 +18,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group col-md-4">
+					<div class="form-group col-md-5">
 						<label for="inputDoctor">Nombre del paciente</label>
 						<div class=" my-2 my-lg-0">
 							<div class="input-group">
@@ -29,15 +29,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="form-group col-md-4">
-
-						<div class="input-group mb-3 ">
-							<div class="input-group-prepend">
-								<div class="input-group-text">
-									<input type="checkbox" aria-label="Checkbox for following text input">
+					<div class="form-group col-md-2">
+						<label for="inputDoctor" class="text-dark">Repetir</label>
+						<div class=" my-2 my-lg-0">
+							<div class="input-group mb-3 mt-1">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="repetirTrabajo">
+									<label for="inputGroupSelect01">Repetir</label>
 								</div>
 							</div>
-							<input type="text" class="form-control" aria-label="Text input with checkbox">
 						</div>
 					</div>
 				</div>
@@ -159,7 +159,7 @@
 										<div class="input-group-prepend">
 											<label class="input-group-text" for="inputGroupSelect01"><i class="far fa-calendar-alt"></i></label>
 										</div>
-										<input class="form-control" type="date" value="2011-08-19" id="fecha_alta_trabajo" data-toggle="tooltip" data-placement="auto" title="Fecha inicial">
+										<input class="form-control" type="date" value="" id="fecha_alta_trabajo" data-toggle="tooltip" data-placement="auto" title="Fecha inicial">
 									</div>
 								</div>
 							</div>

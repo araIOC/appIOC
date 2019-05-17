@@ -124,6 +124,11 @@
 												<td id="codDisco_fichatrabajo"></td>
 											</tr>
 											<tr>
+												<th scope="row">REPETIDO:</th>
+												<input type="hidden" id="hidden_repetido">
+												<td id="repetido_fichatrabajo"></td>
+											</tr>
+											<tr>
 												<th scope="row">NOTAS:</th>
 												<input type="hidden" id="hidden_notas">
 												<td id="notas_fichatrabajo"></td>

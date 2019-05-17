@@ -46,6 +46,7 @@ Route::post('modificarDiscoTrabajo', 'TrabajosController@modificarDiscoTrabajo')
 Route::post('modificarMaquinaTrabajo', 'TrabajosController@modificarMaquinaTrabajo')->name('modificarMaquinaTrabajo');
 Route::post('modificarTrabajo', 'TrabajosController@modificarTrabajo')->name('modificarTrabajo');
 Route::post('eliminarTrabajo', 'TrabajosController@eliminarTrabajo')->name('eliminarTrabajo');
+Route::post('repetirTrabajo', 'TrabajosController@repetirTrabajo')->name('repetirTrabajo');
 
 Route::any('registroDisco', 'DiscosController@registroDisco')->name('registroDisco');
 Route::any('agregarDisco', 'DiscosController@agregarDisco')->name('agregarDisco');

@@ -344,12 +344,13 @@ class AppController extends Controller{
 		$codigo_paciente = explode(': ', request()->codigoP);
 		$id_paciente = DB::table('pacientes')->select('id_p')->where('codigoP', '=',$codigo_paciente[1])->get();
 
+		$id_tratamiento = 0;
 		if(request()->nuevoTratamiento){
-			$id_tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nuevoTratamiento)->get();
-			DB::table('pacientes_tratamientos')->where('id_pt', request()->id_pt)
-			->update([
-				'id_tratamiento' => $id_tratamiento[0]->id
-			]);
+			$tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nuevoTratamiento)->get();
+			$id_tratamiento = $tratamiento[0]->id;
+		}else{
+			$tratamiento = DB::table('tratamientos')->select('id')->where('nombreT',request()->nombreT)->get();
+			$id_tratamiento = $tratamiento[0]->id;
 		}
 		$c_guiada = NULL;
 		if(request()->c_guiada == "rbcestatica-modificar"){
@@ -360,6 +361,7 @@ class AppController extends Controller{
 		}
 		DB::table('pacientes_tratamientos')->where('id_pt', request()->id_pt)
 		->update([
+			'id_tratamiento' => $id_tratamiento,
 			'id_doctor' => ($id_doctor != 0) ? $id_doctor : NULL,
 			'id_asesor' => ($id_asesor != 0) ? $id_asesor : NULL,
 			'tipo_implante' => request()->tipo_implante,

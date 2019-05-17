@@ -309,42 +309,89 @@ $('#app').on('click','#insertarTrabajo',function () {
 			'Los campos código de disco, material, maquina, tipo de trabajo y color no pueden estar vacíos.',
 			'warning'
 			)
-	}else{
-		var _token = document.getElementsByName("_token")[0].value;
-		$.ajaxSetup({
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			}
-		});
-		$.ajax({
-			url: 'agregarTrabajo',
-			method: 'post',
-			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-			data: {
-				id_pt : $('#id_pt_trabajo').val(),
-				material_trabajo: $('#material_trabajo').val(),
-				t_trabajo: $('#t_trabajo').val(),
-				numeroPiezas: $('#numeroPiezas').val(),
-				color_trabajo: $('#color_trabajo').val(),
-				codigoDisco_trabajo: $('#codigoDisco_trabajo').val(),
-				maquina_trabajo: $('#maquina_trabajo').val(),
-				fecha_alta_trabajo: $('#fecha_alta_trabajo').val(),
-				notas: $('#notas').val(),
-				stl_insertTrab: $('#stl_insertTrab').val(),
-				_token: _token
-			},
-			success: function(result){
-				window.location.href = "/app";
-			},
-			error: function () {
+}else{
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'agregarTrabajo',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		data: {
+			id_pt : $('#id_pt_trabajo').val(),
+			material_trabajo: $('#material_trabajo').val(),
+			t_trabajo: $('#t_trabajo').val(),
+			numeroPiezas: $('#numeroPiezas').val(),
+			color_trabajo: $('#color_trabajo').val(),
+			codigoDisco_trabajo: $('#codigoDisco_trabajo').val(),
+			maquina_trabajo: $('#maquina_trabajo').val(),
+			fecha_alta_trabajo: $('#fecha_alta_trabajo').val(),
+			notas: $('#notas').val(),
+			stl_insertTrab: $('#stl_insertTrab').val(),
+			_token: _token
+		},
+		success: function(result){
+			window.location.href = "/app";
+		},
+		error: function () {
+			Swal.fire(
+				'¡Error!',
+				'No se ha podido insertar el trabajo.',
+				'error'
+				)
+		}
+	});
+}
+
+});
+
+$('#app').on('change','#repetirTrabajo',function () {
+
+	var _token = document.getElementsByName("_token")[0].value;
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$.ajax({
+		url: 'repetirTrabajo',
+		method: 'post',
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		dataType:"json",
+		data: {
+			id_pt : $('#id_pt_trabajo').val(),
+			_token: _token
+		},
+		success: function(result){
+			console.log(result);
+			if(result == ''){
 				Swal.fire(
-					'¡Error!',
-					'No se ha podido insertar el trabajo.',
-					'error'
+					'¡Atención!',
+					'Este paciente no tiene trabajo para repetir.',
+					'warning'
 					)
+				$('#repetirTrabajo').prop('checked',false);
+			}else if(result == 2){
+				alert("fds")
+			}else{
+				$('#color_trabajo').val(result[0]['color']);
+				$('#material_trabajo').val(result[0].materialT);
+				$('#t_trabajo').val(result[0].tipo_trabajo);
+				$('#numeroPiezas').val(result[0].n_piezas);
+				$('#codigoDisco_trabajo').val(result[0]['(Select codigoD from discos where Id = t.id_disco)']);
+				$('#maquina_trabajo').val(result[0].maquina);
+				$('#fecha_alta_trabajo').val(result[0].fecha_trabajo);
+				$('#notas').val(result[0].notas);
+				$('#stl_insertTrab').val(result[0].stl);
 			}
-		});
-	}
+		},
+		error: function () {
+		}
+	});
+	//}
 
 });
 
@@ -654,7 +701,12 @@ $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
 						fdef = $('#f_final-modificar').val();
 						pptx =$('#pptx-modificar').val();
 						pdf =$('#pdf-modificar').val();
-						tratamiento =$('#tratamientoPacienteMod').val();
+
+						tratamiento = $('#hidden_tratamiento_actual').val();
+						if($('#tratamientoPacienteMod').val()){
+							tratamiento =$('#tratamientoPacienteMod').val();
+						}
+
 						restaurarTratamiento(doctor,asesor,implanteMod,cirugia,linkDropbox,finicio,fdef,pptx,pdf,'modificar',tratamiento);
 						buscarPaciente();
 					},
@@ -725,7 +777,9 @@ $("#modal-trabajo").on("click", "#cerrar_modal-modificar-trabajo", function(){
 			maquina = $('#hidden_maquina').val();
 			notas = $('#hidden_notas').val();
 			stl = $('#hidden_stl').val();
-			restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl);
+			repetido = $('#hidden_repetido').val();
+
+			restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl,repetido);
 		}
 	})
 });
@@ -764,6 +818,7 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 					maquinaT : $('#maquinaTrabajoMod').val(),
 					notasT : $('#notas-modificar').val(),
 					stl : $('#stl-modificar').val(),
+					repetido : $('#trabajo_repetido').prop('checked'),
 					_token: _token
 				},
 				success: function(result){
@@ -781,8 +836,10 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 					maquina = $('#maquinaTrabajoMod').val();
 					notas = $('#notas-modificar').val();
 					stl = $('#stl-modificar').val();
+					repetido = $('#trabajo_repetido').prop('checked');
 
-					restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl);
+
+					restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl,repetido);
 					buscarTrabajo();
 				},
 				error: function () {
@@ -1228,7 +1285,7 @@ function restaurarDisco(materialD,marcad,escala,altura,color,fecha) {
 	$('#footer-fichadisco-modificar').remove();
 }
 
-function restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl) {
+function restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl,repetido) {
 	$('#modal-trabajo').data('bs.modal')._config.backdrop = 'open';
 	$('#modal-trabajo').data('bs.modal')._config.keyboard = true;
 	$('.x-cerrar').show();
@@ -1263,11 +1320,15 @@ function restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquin
 		'<button class="btn btn-lg btn-warning btn-block"  data-toggle="tooltip" data-placement="auto" title="Ir a STL" type="submit"><i class="fas fa-download"></i> STL</button>'+
 		'</a>'+
 		'</div>');
+
 	if(!$('#descargarSTL').attr('href')){
 		$('#descargarSTL').hide();
 	} else{
 		$('#descargarSTL').show();
 	}
+
+	$('#repetido_fichatrabajo').empty();
+	$('#repetido_fichatrabajo').append();
 }
 
 function modificarMaterialTrabajo(){

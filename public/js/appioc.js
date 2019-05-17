@@ -147,7 +147,16 @@ $("#tablaTrabajosConsulta").on("click", ".td-datostrabajo", function(){
 	var codigoD = $(this).data('disco');
 	var id_trabajo = $(this).data('idtrabajo');
 	var stl = $(this).data('stl');
+	var repetido = $(this).data('repetido');
 
+	if(repetido == 1){
+		repetido = 'Sí';
+	}else{
+		repetido = 'No'
+	}
+
+	$('#hidden_repetido').val(repetido);
+	$('#repetido_fichatrabajo').text(repetido);
 	$('#id_trabajo').val(id_trabajo);
 	$('#nombrep').text(nombrep);
 	$('#nombret').text("Tratamiento: " + nombret);
@@ -344,7 +353,14 @@ $("#modificar-trabajo").click(function (){
 	notas = $('#notas_fichatrabajo').text();
 	id_trabajo = $('#id_trabajo').val();
 	stl = $('#descargarSTL').attr('href');
+	repetido = $('#repetido_fichatrabajo').text();
 
+	esRepetido = '';
+	if(repetido == 'Sí'){
+		esRepetido = 'checked';
+	}
+	$('#repetido_fichatrabajo').empty();
+	$('#repetido_fichatrabajo').append('<input type="hidden" id="'+repetido+'" value="'+esRepetido+'"><input class="form-check-input" type="checkbox" id="trabajo_repetido" name="trabajo_repetido" '+esRepetido+'><label class="form-check-label" > Repetido</label>');
 	$('#descargarSTL').empty();
 	$('#npiezas_fichatrabajo').empty();
 	$('#npiezas_fichatrabajo').append('<input type="text" class="form-control" name="npiezas-modificar" id="npiezas-modificar">');
@@ -375,6 +391,8 @@ $("#modificar-trabajo").click(function (){
 
 	$("#stl-modificar").val(stl);
 	$("#hidden_stl").val(stl);
+
+
 });
 
 $("#modificar-disco").click(function (){
