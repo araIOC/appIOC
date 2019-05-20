@@ -23,7 +23,7 @@ class AppController extends Controller{
 		UNION
 		SELECT * FROM PACIENTES_TRATAMIENTOS as PT
 		RIGHT OUTER JOIN PACIENTES as P ON P.ID_P = PT.ID_PACIENTE
-		ORDER BY id_paciente';
+		ORDER BY fecha_inicio desc';
 
 		$pacientes = DB::select($query);
 		return view('consultarPacientes',['asesores'=>$asesores,'doctores'=>$doctores,'tratamientos'=>$tratamientos,'implantes'=>$implantes,'pacientes'=>$pacientes]);
@@ -66,7 +66,7 @@ class AppController extends Controller{
 		}
 
 		$id_paciente = DB::table('pacientes')
-		->select('id')
+		->select('id_p')
 		->where('codigoP', '=', request()->codigopaciente)
 		->get();
 
@@ -84,7 +84,7 @@ class AppController extends Controller{
 		->get();
 
 		DB::table('pacientes_tratamientos')->insert([
-			'id_paciente' => $id_paciente[0]->id,
+			'id_paciente' => $id_paciente[0]->id_p,
 			'id_tratamiento' => $id_tratamiento[0]->id,
 			'id_doctor' => ($id_doctor > 0) ? $id_doctor : NULL,
 			'id_asesor' => ($id_asesor > 0) ? $id_asesor : NULL,
@@ -112,7 +112,7 @@ class AppController extends Controller{
 			'link' => request()->linkD,
 		]);
 
-		DB::table('pacientes')->where('id', $id_paciente[0]->id)
+		DB::table('pacientes')->where('id_p', $id_paciente[0]->id_p)
 		->update([
 			'powerpoint' => request()->pptx,
 			'pdf' => request()->pdf
@@ -135,7 +135,10 @@ class AppController extends Controller{
 		RIGHT OUTER JOIN doctores as d on d.id = pt.id_doctor
 		RIGHT OUTER JOIN asesores as a on a.id = pt.id_asesor
 		where 1 = 1';*/
-		$query = 'SELECT *
+		$query = 'SELECT *,
+		(SELECT TR.TIPO_TRABAJO
+		FROM TRABAJOS TR
+		WHERE TR.ID_TRATAMIENTO = PT.ID_TRATAMIENTO) AS "TIPO_TRABAJO"
 		FROM PACIENTES AS P
 		LEFT OUTER JOIN PACIENTES_TRATAMIENTOS AS PT
 		ON P.ID_P = PT.ID_PACIENTE
@@ -145,7 +148,7 @@ class AppController extends Controller{
 		ON PT.ID_DOCTOR = D.ID
 		LEFT OUTER JOIN ASESORES AS A
 		ON PT.ID_ASESOR = A.ID
-		where 1 = 1';
+		WHERE 1 = 1';
 
 
 		if(request()->nombrePaciente){
@@ -249,9 +252,10 @@ class AppController extends Controller{
 		if(request()->rangoFecha && request()->Dfecha_inicial){
 			$query.=" AND pt.".$tipo_fecha." >= '".request()->Dfecha_inicial."'";
 		}
-		//var_dump($query.$query2);
-		//$pacientes = DB::select($query.$query2);
+		$query .= " ORDER BY fecha_inicio desc";
 		$pacientes = DB::select($query);
+
+		var_dump($pacientes);
 		return view('datosPaciente',['pacientes'=>$pacientes]);
 	}
 

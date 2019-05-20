@@ -76,7 +76,9 @@ $("#tablaPacientesConsulta").on("click", ".td-datospaciente", function(){
 		var pdf = $(this).data('pdf');
 		var id_pt = $(this).data('idpt');
 		var id_p = $(this).data('idp');
+		var trabajos = $(this).data('trabajos');
 
+		console.log(trabajos);
 		$('#tratamiento_actual').text(tratamiento);
 		$('#hidden_tratamiento_actual').val(tratamiento);
 

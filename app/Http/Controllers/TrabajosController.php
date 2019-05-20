@@ -211,7 +211,8 @@ class TrabajosController extends Controller{
 			'id_disco' => $id_disco[0]->id,
 			'maquina' => request()->maquinaT,
 			'notas' => request()->notasT,
-			'stl' => request()->stl
+			'stl' => request()->stl,
+			'repetido' => (request()->repetido == "true") ? 1 : 0
 		]);
 	}
 
@@ -223,7 +224,8 @@ class TrabajosController extends Controller{
 	}
 
 	public function repetirTrabajo(){
-		$query = DB::select('Select (Select codigoD from discos where Id = t.id_disco), t.* from trabajos t where id_tratamiento = '.request()->id_pt.';');
+		$query = DB::select('Select (Select codigoD from discos where Id = t.id_disco), t.* from trabajos t where id_tratamiento = '.request()->id_pt.' order by fecha_trabajo desc;');
+
 		echo json_encode($query);
 	}
 }

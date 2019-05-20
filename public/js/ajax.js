@@ -300,7 +300,6 @@ $('#app').on('click','#insertarTrabajo',function () {
 	localStorage.setItem("codigop", codigop);
 	localStorage.setItem("nombreT", tratamiento);
 
-
 	if($('#codigoDisco_trabajo').val() == "Nº disco..." && $('#material_trabajo').val() == "Elija un material..."
 		&& $('#t_trabajo').val() == "Tipo de trabajo..." && $('#color_trabajo').val() == "Color...."
 		&& $('#maquina_trabajo').val() == "Máquina..."){
@@ -331,6 +330,7 @@ $('#app').on('click','#insertarTrabajo',function () {
 			fecha_alta_trabajo: $('#fecha_alta_trabajo').val(),
 			notas: $('#notas').val(),
 			stl_insertTrab: $('#stl_insertTrab').val(),
+			repetido : $('#repetirTrabajo').prop('checked'),
 			_token: _token
 		},
 		success: function(result){
@@ -838,7 +838,6 @@ $("#modal-trabajo").on("click", "#modificar_trabajo", function(){
 					stl = $('#stl-modificar').val();
 					repetido = $('#trabajo_repetido').prop('checked');
 
-
 					restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquina,notas,stl,repetido);
 					buscarTrabajo();
 				},
@@ -1327,8 +1326,15 @@ function restaurarTrabajo(material,tipo_trabajo,npiezas,color,codigoDisco,maquin
 		$('#descargarSTL').show();
 	}
 
+	$('#hidden_repetido').val(repetido);
+	if($('#hidden_repetido').val() == "true"){
+		repetido = 'Sí';
+	}else{
+		repetido = 'No'
+	}
 	$('#repetido_fichatrabajo').empty();
-	$('#repetido_fichatrabajo').append();
+	$('#repetido_fichatrabajo').append(repetido);
+
 }
 
 function modificarMaterialTrabajo(){

@@ -60,6 +60,7 @@ Route::post('modificarDisco', 'DiscosController@modificarDisco')->name('modifica
 
 Route::get('consultarMaterial', 'consultaMaterialController@consultarMaterial')->name('consultarMaterial');
 Route::get('calcularPiezas', 'consultaMaterialController@calcularPiezas')->name('calcularPiezas');
+Route::get('pdf', 'consultaMaterialController@generarPDF')->name('pdf');
 
 //Auth::routes();
 
