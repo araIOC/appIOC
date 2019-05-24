@@ -122,19 +122,7 @@ class AppController extends Controller{
 	}
 
 	public function buscadorPaciente(){
-		/*$query = 'SELECT * FROM PACIENTES_TRATAMIENTOS as PT
-		LEFT OUTER JOIN PACIENTES as P ON P.ID = PT.ID_PACIENTE
-		LEFT OUTER JOIN tratamientos as t on t.id = pt.id_tratamiento
-		LEFT OUTER JOIN doctores as d on d.id = pt.id_doctor
-		LEFT OUTER JOIN asesores as a on a.id = pt.id_asesor
-		where 1=1';
-		$query2 = ' UNION
-		SELECT * FROM PACIENTES_TRATAMIENTOS as PT
-		RIGHT OUTER JOIN PACIENTES as P ON P.ID = PT.ID_PACIENTE
-		RIGHT OUTER JOIN tratamientos as t on t.id = pt.id_tratamiento
-		RIGHT OUTER JOIN doctores as d on d.id = pt.id_doctor
-		RIGHT OUTER JOIN asesores as a on a.id = pt.id_asesor
-		where 1 = 1';*/
+
 		$query = 'SELECT *,
 		(SELECT TR.TIPO_TRABAJO
 		FROM TRABAJOS TR
@@ -150,6 +138,17 @@ class AppController extends Controller{
 		ON PT.ID_ASESOR = A.ID
 		WHERE 1 = 1';
 
+		$pacientes = DB::table('pacientes')
+		->leftJoin('pacientes_tratamientos','pacientes.id_p','=','pacientes_tratamientos.id_pt')
+		->leftJoin('tratamientos','tratamientos.id','=','pacientes_tratamientos.id_pt')
+		->leftJoin('doctores','doctores.id','=','pacientes_tratamientos.id_doctor')
+		->leftJoin('asesores','asesores.id','=','pacientes_tratamientos.id_asesor')
+		->where(function ($query) {
+			if(request()->nombrePaciente){
+				$query->where('pacientes.nombreP', 'like' ,'%'.request()->nombrePaciente.'%');
+			}
+		})
+		->get();
 
 		if(request()->nombrePaciente){
 			$query.=" AND p.nombreP LIKE '%".request()->nombrePaciente."%'";
@@ -158,21 +157,27 @@ class AppController extends Controller{
 		if(request()->codigoPaciente){
 			$query.=" AND p.codigoP LIKE '".request()->codigoPaciente."%'";
 		}
+
 		if(request()->nombreT != "Elija un tratamiento..."){
 			$query.=" AND t.nombreT = '".request()->nombreT."'";
 		}
+
 		if(request()->tipo_implante != "Tipo de implante..."){
 			$query.=" AND pt.tipo_implante = '".request()->tipo_implante."'";
 		}
+
 		if(request()->doctorPaciente != "Elija un doctor..."){
 			$query.=" AND d.nombreD = '".request()->doctorPaciente."'";
 		}
+
 		if(request()->asesorPaciente != "Elija un asesor..."){
 			$query.=" AND a.nombreA = '".request()->asesorPaciente."'";
 		}
+
 		if(request()->rbCirugia == "rbcdinamica"){
 			$query.=" AND pt.c_guiada = 'Dinámica'";
 		}
+
 		if(request()->rbCirugia == "rbcestatica"){
 			$query.=" AND pt.c_guiada = 'Estática'";
 		}
@@ -181,57 +186,73 @@ class AppController extends Controller{
 		if (request()->invertir == 'false') {
 			$estado = '1';
 		}
+
 		if (request()->invertir == "true") {
 			$estado = '0';
 		}
+
 		if(request()->CBpic_definitivo == 'true'){
 			$query.=" AND pt.pic_final = '".$estado."'";
 		}
+
 		if(request()->CBpic_provisional == 'true'){
 			$query.=" AND pt.pic_provisional = '".$estado."'";
 		}
+
 		if(request()->cbTac_pre == 'true'){
 			$query.=" AND pt.tac_pre = '".$estado."'";
 		}
+
 		if(request()->cbTac_post == 'true'){
 			$query.=" AND pt.tac_post = '".$estado."'";
 		}
+
 		if(request()->cbIOScan_pre == 'true'){
 			$query.=" AND pt.ioscan_pre = '".$estado."'";
 		}
+
 		if(request()->cbIOScan_post == 'true'){
 			$query.=" AND pt.ioscan_post = '".$estado."'";
 		}
+
 		if(request()->cbOrto_pre == 'true'){
 			$query.=" AND pt.orto_pre = '".$estado."'";
 		}
+
 		if(request()->cbOrto_post == 'true'){
 			$query.=" AND pt.orto_post = '".$estado."'";
 		}
+
 		if(request()->cbFotos_pre == 'true'){
 			$query.=" AND pt.fotos_pre = '".$estado."'";
 		}
+
 		if(request()->cbFotos_post == 'true'){
 			$query.=" AND pt.foto_post = '".$estado."'";
 		}
+
 		if(request()->cbFotos_protesis_pre == 'true'){
 			$query.=" AND pt.foto_protesis = '".$estado."'";
 		}
 		if(request()->cbFotos_protesis_post == 'true'){
 			$query.=" AND pt.foto_protesis_final = '".$estado."'";
 		}
+
 		if(request()->cbFotos_protesis_boca_pre == 'true'){
 			$query.=" AND pt.foto_protesis_boca_provisional = '".$estado."'";
 		}
 		if(request()->cbFotos_protesis_boca_post == 'true'){
 			$query.=" AND pt.foto_protesis_boca_final = '".$estado."'";
 		}
+
 		if(request()->cbVideo_pre == 'true'){
 			$query.=" AND pt.video_pre = '".$estado."'";
 		}
+
 		if(request()->cbVideo_post == 'true'){
 			$query.=" AND pt.video_final = '".$estado."'";
 		}
+
 		$tipo_fecha = "";
 		if(request()->rangoFecha == "f_inicio"){
 			$tipo_fecha = "fecha_inicio";
@@ -241,17 +262,20 @@ class AppController extends Controller{
 		}
 		if(request()->rangoFecha && request()->fecha_definitiva && request()->Dfecha_inicial){
 			$query.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
-
 		}
+
 		if(request()->rangoFecha && request()->fecha_definitiva && request()->Dfecha_inicial){
 			$query.=" AND pt.".$tipo_fecha." BETWEEN '".request()->Dfecha_inicial."' AND '".request()->fecha_definitiva."'";
 		}
+
 		if(request()->rangoFecha && request()->fecha_definitiva){
 			$query.=" AND pt.".$tipo_fecha." <= '".request()->fecha_definitiva."'";
 		}
+
 		if(request()->rangoFecha && request()->Dfecha_inicial){
 			$query.=" AND pt.".$tipo_fecha." >= '".request()->Dfecha_inicial."'";
 		}
+
 		$query .= " ORDER BY fecha_inicio desc";
 		$pacientes = DB::select($query);
 

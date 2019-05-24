@@ -18,6 +18,7 @@ class consultaMaterialController extends Controller{
 		$materiales = DB::table('material')->select()->get();
 		$arrayDientes1 = ['18','17','16','15','14','13','12','11','21','22','23','24','25','26','27','28'];
 		$numero_piezas = 0;
+
 		foreach ($materiales as $material) {
 			$piezas = DB::table('trabajos')->select('n_piezas')
 			->where([
@@ -38,7 +39,6 @@ class consultaMaterialController extends Controller{
 					}else{
 						$numero_piezas ++;
 					}
-
 				}
 			}
 			return view ('pdfPiezas');*/

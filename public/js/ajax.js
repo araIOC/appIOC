@@ -30,9 +30,15 @@ $(document).ready(function(){
 		"#cbTac_pre,#CBpic_definitivo,#CBpic_provisional,#cbTac_post,#cbIOScan_pre,#cbIOScan_post,#cbOrto_pre,#cbOrto_post,"+
 		"#cbFotos_pre,#cbFotos_post,#cbFotos_protesis_pre,#cbFotos_protesis_post,#cbFotos_protesis_boca_pre,"+
 		"#cbFotos_protesis_boca_post,#cbVideo_pre,#cbVideo_post,#customSwitch1,[name='rbCirugia'],[name='rangoFecha']" ).on('change keyup click', function() {
+			localStorage.setItem("nombrep", "");
+			localStorage.setItem("codigop", "");
+			localStorage.setItem("nombreT", "Elija un tratamiento...");
 			buscarPaciente();
 		});
 		$("#Dfecha_inicial,#Dfecha_final" ).on('change', function() {
+			localStorage.setItem("nombrep", "");
+			localStorage.setItem("codigop", "");
+			localStorage.setItem("nombreT", "Elija un tratamiento...");
 			buscarPaciente();
 		});
 	});
@@ -112,6 +118,9 @@ $("#limpiarFiltroPacientes").click(function () {
 	$("#Dfecha_final").val("");
 	$("#Dfecha_inicial").val("");
 	$('#customSwitch1').prop('checked', false);
+	localStorage.setItem("nombrep", "");
+	localStorage.setItem("codigop", "");
+	localStorage.setItem("nombreT", "Elija un tratamiento...");
 	buscarPaciente();
 });
 
@@ -624,7 +633,7 @@ $("#modal-trabajo").on("click", "#eliminar_trabajo", function(){
 });
 
 $("#modal-pacientes").on("click", "#modificar_tratamiento_paciente", function(){
-	if($('#f_inicio-modificar').val() > $('#f_final-modificar').val()){
+	if($('#f_inicio-modificar').val() > $('#f_final-modificar').val() && $('#f_final-modificar').val()){
 		Swal.fire(
 			'¡Error!',
 			'La fecha de inicio es posterior a la fecha definitiva.',
